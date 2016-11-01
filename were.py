@@ -1,8 +1,4 @@
-
-
 from random import randint
-
-
 
 majoy_s = []
 majoy_round = []
