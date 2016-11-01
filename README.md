@@ -1,16 +1,17 @@
     Werewolf is a pretty simple game for a large group of people (seven or more.) It requires nothing more than players and a few pieces of paper. Once you got the players and the paper then get yourself ready for some accusations, lying, bluffing, second-guessing, assassination, and mob hysteria. Party!!
 
-The Rules
+#The Rules
 
-Setting Up
-Get a group of players. An odd number is best, although not absolutely necessary. There should be at least seven players; nine or eleven is better (or more if you can them).
+##Setting Up
+ Get a group of players. An odd number is best, although not absolutely necessary. There should be at least seven players; nine or eleven is better (or more if you can them).
 
-Make up a set of cards (pieces of scrap paper), one for each player, with a role written on each one:
+##Make up a set of cards (pieces of scrap paper), one for each player, with a role written on each one:
 
- One “Narrator”
- Two “Werewolf”
- One “Seer”
- All the rest “Villager”
+  One “Narrator”
+  Some “Werewolf”
+  One “Seer”
+  One "Witch"
+  All the rest “Villager”
 
 Shuffle the cards and hand them out, face down. Each player should look at his card, but must keep it secret. Only the narrator reveals his card and shows himself to be the narrator.
 
