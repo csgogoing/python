@@ -1,0 +1,3 @@
+my god ,because i lost an 's' in line 15  so that it always cause AttributeError named"'ThreadedDict' object has no attribute 'room'".
+I really didnt see that little mistake and try to figure out why session has been created but didnt be changed.Oh my god until see this mistake.
+I learnt from it that if i dont want to pay more attention to make sure the progrem is right, it will take you tons of time to be confused.
