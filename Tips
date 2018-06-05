@@ -1,0 +1,1 @@
+国内pip镜像网址：pip install '包名' pymongo'' -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com

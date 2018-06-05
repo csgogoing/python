@@ -11,9 +11,9 @@ class SpiderMain(object):
         self.output = html_output.HtmlOutput()
 
     def craw(self):
-        for i in range(1,106):
+        for i in range(1,114):
             url = 'http://kaijiang.zhcw.com/zhcw/html/ssq/list_%d.html' % i
-            print 'craw %d :%s' % (i, url)
+            print('craw %d :%s' % (i, url))
             html_cont = self.downloader.download(url)
             rdata, bdata, mdate = self.parser.parse(html_cont)
             self.output.collect_data(rdata ,bdata, mdate)
