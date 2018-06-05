@@ -5,6 +5,7 @@ class HtmlParser(object):
 
 
     def _get_new_data(self, soup):
+        #根据页面元素匹配获取数字
         red = []
         blue = []
         mdate = []
@@ -29,7 +30,6 @@ class HtmlParser(object):
     def parse(self, html_cont):
         if  html_cont is None:
             return
-        
         soup = BeautifulSoup(html_cont,'html.parser', from_encoding='utf8')
         rdata, bdata, mdate = self._get_new_data(soup)
         return rdata, bdata, mdate

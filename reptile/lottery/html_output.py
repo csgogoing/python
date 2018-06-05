@@ -11,8 +11,9 @@ class HtmlOutput(object):
         self.rrows = []
         self.brows = []
         self.mydate = []
-        
+
     def collect_data(self, rdata ,bdata, mdate):
+        #每行6个红球，1个蓝球和1个日期
         if rdata is None and bdata is None and mdate is None:
             return 
         self.rdatas.append(rdata)
