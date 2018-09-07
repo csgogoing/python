@@ -35,7 +35,7 @@ class quick_ask(Test_appnium):
 			self.fid('com.xywy.askxywy:id/et_question_describe').send_keys(input_massage+"三湘四水医生%d" %random.randrange(1,1000,1))
 			time.sleep(1)
 			#下一步
-			self.fid('com.xywy.askxywy:id/btn_right').click()
+			self.fid('com.xywy.askxywy:id/next_txt').click()
 			for i in range(1,4):
 				try:
 					dujun = self.driver.find_element_by_android_uiautomator('new UiSelector().text("三湘四水")')
@@ -60,7 +60,7 @@ class quick_ask(Test_appnium):
 			self.fid('com.xywy.askxywy:id/et_question_describe').send_keys(input_massage+"3元%d" %random.randrange(1,1000,1))
 			time.sleep(1)
 			#下一步
-			self.fid('com.xywy.askxywy:id/btn_right').click()
+			self.fid('com.xywy.askxywy:id/next_txt').click()
 			#选择悬赏提问
 			self.fid('com.xywy.askxywy:id/reward_text').click()
 			self.fid('com.xywy.askxywy:id/submitBtn').click()
@@ -77,13 +77,13 @@ class quick_ask(Test_appnium):
 			self.fid('com.xywy.askxywy:id/et_question_describe').send_keys(input_massage+"5元%d" %random.randrange(1,1000,1))
 			time.sleep(1)
 			#下一步
-			self.fid('com.xywy.askxywy:id/btn_right').click()
+			self.fid('com.xywy.askxywy:id/next_txt').click()
 			#选择悬赏提问
 			self.fid('com.xywy.askxywy:id/reward_text').click()
 			self.fid('com.xywy.askxywy:id/submitBtn').click()
 			self.driver.find_element_by_android_uiautomator('new UiSelector().text("二甲及以上级别医生为您服务")').click()
 			#提交问题
-			#self.fid('com.xywy.askxywy:id/btn_commit').click()
+			self.fid('com.xywy.askxywy:id/btn_commit').click()
 			print("""创建5元医生订单成功
 				""")
 
@@ -94,7 +94,7 @@ class quick_ask(Test_appnium):
 			self.fid('com.xywy.askxywy:id/et_question_describe').send_keys(input_massage+"10元%d" %random.randrange(1,1000,1))
 			time.sleep(1)
 			#下一步
-			self.fid('com.xywy.askxywy:id/btn_right').click()
+			self.fid('com.xywy.askxywy:id/next_txt').click()
 			#选择悬赏提问
 			self.fid('com.xywy.askxywy:id/reward_text').click()
 			self.fid('com.xywy.askxywy:id/submitBtn').click()
@@ -111,7 +111,7 @@ class quick_ask(Test_appnium):
 			self.fid('com.xywy.askxywy:id/et_question_describe').send_keys(input_massage+"免费%d" %random.randrange(1,1000,1))
 			time.sleep(1)
 			#下一步
-			self.fid('com.xywy.askxywy:id/btn_right').click()
+			self.fid('com.xywy.askxywy:id/next_txt').click()
 			#选择悬赏提问
 			self.fid('com.xywy.askxywy:id/reward_text').click()
 			self.fid('com.xywy.askxywy:id/submitBtn').click()

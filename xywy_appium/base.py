@@ -17,3 +17,6 @@ class Init_open(object):
 
 	def close(self):
 		self.driver.close()
+
+	def quit(self):
+		self.driver.quit()

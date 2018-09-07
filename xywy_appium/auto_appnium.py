@@ -37,7 +37,7 @@ class Test_appnium:
 					print("连接失败，正在重试")
 					continue
 				else:
-					print('连接手机失败，请确认appium客户端已运行')
+					print('连接手机失败，请尝试重新启动appium客户端')
 					sys.exit()
 			else:
 				time.sleep(5)
@@ -49,7 +49,7 @@ class Test_appnium:
 				self.fid('com.xywy.askxywy:id/tabMine').click()
 				# 判断登陆
 				try:
-					logined = self.fid('com.xywy.askxywy:id/tv_title_mine')
+					logined = self.fid('com.xywy.askxywy:id/mine_phone')
 				except:
 					# 未登陆，登陆
 					account_pwd = self.fids('com.xywy.askxywy:id/input_edit_text')
@@ -58,7 +58,7 @@ class Test_appnium:
 					self.fid('com.xywy.askxywy:id/login_btn_tv').click()
 				else:
 					# 已登陆，跳过
-					self.fid('com.xywy.askxywy:id/tabQuery').click()
+					self.fid('com.xywy.askxywy:id/ivTabIconLogo').click()
 				print("登陆完毕")
 				break
 

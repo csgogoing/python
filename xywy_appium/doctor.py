@@ -19,7 +19,7 @@ class Im_doctor(Init_open):
 
 	def Actions(self, mtype):
 		#登陆
-		if mtype == 0:
+		if mtype == 1:
 			id = 117333237
 		else:
 			id = 117333219
@@ -37,12 +37,19 @@ class Im_doctor(Init_open):
 		self.driver.switch_to_window(handles[1])
 		#问题库抢题
 		self.Load_button()
-		self.driver.find_element_by_xpath('/html/body/div[2]/div/div[2]/div[1]/div[1]/div[2]/span[1]').click()
-		sleep(1)
 		#点击第1个问题
 		#self.driver.find_element_by_xpath('//*[@id="mCSB_2_container"]').click()
-		My_questions = self.driver.find_elements_by_class_name('message-user-item')
-		My_questions[0].click()
+		while True:
+			self.driver.find_element_by_xpath('/html/body/div[2]/div/div[2]/div[1]/div[1]/div[2]/span[1]').click()
+			sleep(1)
+			My_questions = self.driver.find_elements_by_class_name('message-user-item')
+			try:
+			 	My_questions[0].click()
+			except:
+			 	pass
+			else:
+				My_questions[0].click()
+				break
 		self.Load_button()
 		self.driver.find_element_by_link_text('抢题').click()
 		#点击处理中标签
@@ -50,7 +57,8 @@ class Im_doctor(Init_open):
 		self.driver.find_element_by_xpath('/html/body/div[2]/div/div[2]/div[1]/div[1]/div[1]/span[1]').click()
 		self.Load_button()
 		self.driver.find_element_by_xpath('/html/body/div[2]/div/div[2]/div[2]/div[1]/div[6]/div[1]/ul/li[1]').click()
-
+		sleep(1)
+		self.driver.find_element_by_xpath('/html/body/div[2]/div/div[2]/div[2]/div[1]/div[6]/div[1]/ul/li[1]').click()
 if __name__ == '__main__':
 	doctor = Im_doctor('http://test.dr.xywy.com/site/login')
 	doctor.Actions(1)

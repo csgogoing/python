@@ -2,6 +2,7 @@
 
 from time import sleep
 from base import Init_open
+import urllib
 
 
 class Im_id(Init_open):
@@ -31,11 +32,10 @@ class Im_id(Init_open):
 		self.driver.switch_to_window(handles[1])
 		#获取问题ID
 		id = self.driver.find_element_by_xpath('/html/body/div[1]/div[1]/section[2]/div/div/div[1]/div[2]/table/tbody/tr[1]/td[1]').text
-		return id
+		urllib.request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%s' %id)
+		self.quit()
 
 
 if __name__ == '__main__':
 	doctor = Im_id('http://test.admin.d.xywy.com/question/default/index')
-	a = doctor.Actions()
-	print(a)
 
