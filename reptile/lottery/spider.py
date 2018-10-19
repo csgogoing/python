@@ -12,7 +12,7 @@ class SpiderMain(object):
 
     def craw(self):
         #主爬虫
-        for i in range(1,114):
+        for i in range(1,3):
             url = 'http://kaijiang.zhcw.com/zhcw/html/ssq/list_%d.html' % i
             print('craw %d :%s' % (i, url))
             #获取网页数据

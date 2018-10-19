@@ -1,0 +1,27 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BeautifulSoup	.\html_parser.py	/^from bs4 import BeautifulSoup$/;"	i
+HtmlDownloader	.\html_downloader.py	/^class HtmlDownloader(object):$/;"	c
+HtmlOutput	.\html_output.py	/^class HtmlOutput(object):$/;"	c
+HtmlParser	.\html_parser.py	/^class HtmlParser(object):$/;"	c
+SpiderMain	.\spider.py	/^class SpiderMain(object):$/;"	c
+__init__	.\html_output.py	/^    def __init__(self):$/;"	m	class:HtmlOutput
+__init__	.\spider.py	/^    def __init__(self):$/;"	m	class:SpiderMain
+_get_new_data	.\html_parser.py	/^    def _get_new_data(self, soup):$/;"	m	class:HtmlParser
+collect_data	.\html_output.py	/^    def collect_data(self, rdata ,bdata, mdate):$/;"	m	class:HtmlOutput
+craw	.\spider.py	/^    def craw(self):$/;"	m	class:SpiderMain
+csv	.\html_output.py	/^import csv$/;"	i
+download	.\html_downloader.py	/^    def download(self, url):$/;"	m	class:HtmlDownloader
+html_downloader	.\spider.py	/^import html_downloader$/;"	i
+html_output	.\spider.py	/^import html_output$/;"	i
+html_parser	.\spider.py	/^import html_parser$/;"	i
+obj_spider	.\spider.py	/^    obj_spider = SpiderMain()$/;"	v	class:SpiderMain
+output_text	.\html_output.py	/^    def output_text(self):$/;"	m	class:HtmlOutput
+parse	.\html_parser.py	/^    def parse(self, html_cont):$/;"	m	class:HtmlParser
+re	.\html_parser.py	/^import re$/;"	i
+request	.\html_downloader.py	/^import urllib.request$/;"	i
+urllib	.\html_downloader.py	/^import urllib.request$/;"	i

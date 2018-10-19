@@ -47,9 +47,9 @@ class HtmlOutput(object):
                 self.mydate.append(row_d)        
 
         
-        red_f = open("rcsv.csv", 'wb')
-        blue_f = open("bcsv.csv", 'wb')
-        date_f = open("dcsv.csv", 'wb')
+        red_f = open("rcsv.csv", 'w')
+        blue_f = open("bcsv.csv", 'w')
+        date_f = open("dcsv.csv", 'w')
         
         rwriter = csv.writer(red_f, dialect='excel')
         bwriter = csv.writer(blue_f, dialect='excel')
