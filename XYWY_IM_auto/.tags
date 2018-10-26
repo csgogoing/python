@@ -1,0 +1,93 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+A	.\xywy\test_case\page_obj\im_ask.py	/^	A = Ask()$/;"	v
+ActionChains	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^from selenium.webdriver.common.action_chains import ActionChains$/;"	i
+Ask	.\xywy\test_case\page_obj\im_ask.py	/^class Ask(object):$/;"	c
+By	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^from selenium.webdriver.common.by import By$/;"	i
+HTMLTestRunner	.\XYWY_tests.py	/^from HTMLTestRunner import HTMLTestRunner$/;"	i
+Header	.\XYWY_tests.py	/^from email.header import Header$/;"	i
+MIMEText	.\XYWY_tests.py	/^from email.mime.text import MIMEText$/;"	i
+MyTest	.\xywy\test_case\models\myunit.py	/^class MyTest(unittest.TestCase):$/;"	c
+Page	.\xywy\test_case\page_obj\base.py	/^class Page(object):$/;"	c
+Page	.\xywy\test_case\page_obj\im_ask.py	/^from .base import Page$/;"	i
+Page	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^from .base import Page$/;"	i
+__init__	.\xywy\test_case\page_obj\base.py	/^	def __init__(self, selenium_driver, base_url=xywy_url, parent=None):$/;"	m	class:Page
+baidu_page	.\xywy\test_case\page_obj\im_ask.py	/^	def baidu_page(self, q_type, uid=456654, doctor_ids=68258667, pay_amount=300, firset_dep='内科', second_dep='呼吸内科'):$/;"	m	class:Ask
+browser	.\xywy\test_case\models\driver.py	/^def browser():$/;"	f
+browser	.\xywy\test_case\models\myunit.py	/^from .driver import browser$/;"	i
+data	.\xywy\test_case\page_obj\im_ask.py	/^	data = {'qid': '%d'%(now_time)}$/;"	v
+description	.\XYWY_tests.py	/^							description=u'环境：windows7 浏览器：Firefox')$/;"	v
+discover	.\XYWY_tests.py	/^	discover = unittest.defaultTestLoader.discover('.\/xywy\/test_case',$/;"	v
+dr	.\xywy\test_case\models\driver.py	/^	dr = browser()$/;"	v
+driver	.\xywy\test_case\models\function.py	/^	driver = webdriver.Chrome()$/;"	v
+error_hint	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	def error_hint(self):$/;"	m	class:login
+error_hint_loc	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	error_hint_loc = (By.CLASS_NAME, "Login-Ts")$/;"	v	class:login
+file_path	.\XYWY_tests.py	/^	file_path = new_report('.\/xywy\/report\/')$/;"	v
+filename	.\XYWY_tests.py	/^	filename = '.\/xywy\/report\/' + now +'-result.html'$/;"	v
+find_element	.\xywy\test_case\page_obj\base.py	/^	def find_element(self, *loc):$/;"	m	class:Page
+find_elements	.\xywy\test_case\page_obj\base.py	/^	def find_elements(self, *loc):$/;"	m	class:Page
+fp	.\XYWY_tests.py	/^	fp = open(filename, 'wb')$/;"	v
+function	.\xywy\test_case\im_sta.py	/^from models import myunit, function$/;"	i
+insert_image	.\xywy\test_case\models\function.py	/^def insert_image(driver, file_name):$/;"	f
+login	.\xywy\test_case\im_sta.py	/^from page_obj.loginPage import login$/;"	i
+login	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^class login(Page):$/;"	c
+loginTest	.\xywy\test_case\im_sta.py	/^class loginTest(myunit.MyTest):$/;"	c
+login_button	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	def login_button(self):$/;"	m	class:login
+login_button_loc	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	login_button_loc = (By.CLASS_NAME, 'bc39')$/;"	v	class:login
+login_password	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	def login_password(self, password):$/;"	m	class:login
+login_password_loc	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	login_password_loc = (By.NAME, 'password')$/;"	v	class:login
+login_username	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	def login_username(self, username):$/;"	m	class:login
+login_username_loc	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	login_username_loc = (By.NAME, 'userName')$/;"	v	class:login
+myunit	.\xywy\test_case\im_sta.py	/^from models import myunit, function$/;"	i
+new_report	.\XYWY_tests.py	/^def new_report(test_report):$/;"	f
+now	.\XYWY_tests.py	/^	now = time.strftime("%Y-%m-%d %H_%M_%S")$/;"	v
+now_time	.\xywy\test_case\page_obj\im_ask.py	/^	now_time = int(time.time())$/;"	v
+on_page	.\xywy\test_case\page_obj\base.py	/^	def on_page(self):$/;"	m	class:Page
+open	.\xywy\test_case\page_obj\base.py	/^	def open(self):$/;"	m	class:Page
+os	.\XYWY_tests.py	/^import time, os$/;"	i
+os	.\xywy\test_case\models\function.py	/^import os$/;"	i
+other_page	.\xywy\test_case\page_obj\im_ask.py	/^	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids=68258667, pay_type=1):$/;"	m	class:Ask
+parse	.\xywy\test_case\page_obj\im_ask.py	/^from urllib import request, parse$/;"	i
+pattern	.\XYWY_tests.py	/^													pattern='*sta.py')$/;"	v
+persue	.\xywy\test_case\page_obj\im_ask.py	/^	def persue(self, qid, resource_id, user_id):$/;"	m	class:Ask
+random	.\xywy\test_case\im_sta.py	/^import unittest, random, sys$/;"	i
+request	.\xywy\test_case\page_obj\im_ask.py	/^from urllib import request, parse$/;"	i
+runner	.\XYWY_tests.py	/^	runner = HTMLTestRunner(stream=fp,$/;"	v
+script	.\xywy\test_case\page_obj\base.py	/^	def script(self):$/;"	m	class:Page
+send_mail	.\XYWY_tests.py	/^def send_mail(file_new):$/;"	f
+setUp	.\xywy\test_case\models\myunit.py	/^	def setUp(self):$/;"	m	class:MyTest
+sleep	.\xywy\test_case\im_sta.py	/^from time import sleep$/;"	i
+sleep	.\xywy\test_case\page_obj\im_ask.py	/^from time import sleep$/;"	i
+sleep	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^from time import sleep$/;"	i
+smtplib	.\XYWY_tests.py	/^import smtplib$/;"	i
+sougou_page	.\xywy\test_case\page_obj\im_ask.py	/^	def sougou_page():$/;"	m	class:Ask
+sys	.\xywy\test_case\im_sta.py	/^import unittest, random, sys$/;"	i
+tearDown	.\xywy\test_case\models\myunit.py	/^	def tearDown(self):$/;"	m	class:MyTest
+test_login1	.\xywy\test_case\im_sta.py	/^	def test_login1(self):$/;"	m	class:loginTest
+test_login2	.\xywy\test_case\im_sta.py	/^	def test_login2(self):$/;"	m	class:loginTest
+test_login3	.\xywy\test_case\im_sta.py	/^	def test_login3(self):$/;"	m	class:loginTest
+test_login4	.\xywy\test_case\im_sta.py	/^	def test_login4(self):$/;"	m	class:loginTest
+test_login5	.\xywy\test_case\im_sta.py	/^	def test_login5(self):$/;"	m	class:loginTest
+test_login6	.\xywy\test_case\im_sta.py	/^	def test_login6(self):$/;"	m	class:loginTest
+test_login7	.\xywy\test_case\im_sta.py	/^	def test_login7(self):$/;"	m	class:loginTest
+test_login8	.\xywy\test_case\im_sta.py	/^	def test_login8(self):$/;"	m	class:loginTest
+time	.\XYWY_tests.py	/^import time, os$/;"	i
+time	.\xywy\test_case\models\driver.py	/^import time$/;"	i
+time	.\xywy\test_case\page_obj\im_ask.py	/^import time$/;"	i
+title	.\XYWY_tests.py	/^							title = u'自动化测试报告',$/;"	v
+unittest	.\XYWY_tests.py	/^import unittest$/;"	i
+unittest	.\xywy\test_case\im_sta.py	/^import unittest, random, sys$/;"	i
+unittest	.\xywy\test_case\models\myunit.py	/^import unittest$/;"	i
+url	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	url = ''$/;"	v	class:login
+user_login	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	def user_login(self, username='', password=''):$/;"	m	class:login
+user_login_success	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	def user_login_success(self):$/;"	m	class:login
+user_login_success_loc	.\xywy\test_case\page_obj\im_doc_answer.py.py	/^	user_login_success_loc = (By.CLASS_NAME, "col04a")$/;"	v	class:login
+user_login_verify	.\xywy\test_case\im_sta.py	/^	def user_login_verify(self, username='', password=''):$/;"	m	class:loginTest
+webdriver	.\xywy\test_case\models\driver.py	/^from selenium import webdriver$/;"	i
+webdriver	.\xywy\test_case\models\function.py	/^from selenium import webdriver$/;"	i
+webdriver	.\xywy\test_case\models\myunit.py	/^from selenium import webdriver$/;"	i
+xywy_url	.\xywy\test_case\page_obj\base.py	/^	xywy_url = ""$/;"	v	class:Page
