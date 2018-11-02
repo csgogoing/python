@@ -10,7 +10,17 @@ class Page(object):
 
 	def __init__(self):
 		#初始化
-		self.driver = webdriver.Firefox()
+		retry = 1
+		while retry < 4:
+			try:
+				self.driver = webdriver.Firefox()
+			except:
+				print('调起浏览器失败，重试第%d次，共3次' %retry)
+				retry = retry + 1
+			else:
+				break
+		if retry == 4:
+			exit('无法调起浏览器，请联系管理员')
 		print('调起成功')
 		self.driver.implicitly_wait(5)
 		self.driver.maximize_window()

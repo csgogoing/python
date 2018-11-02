@@ -22,9 +22,9 @@ class Ask(object):
 			'qid': qid,
 			'resource_id': resource_id,
 			'user_id': user_id,
-			#'expert_id': '68258667',
-			'content': '{"type":"text","text":"测试显示%d"}'%(self.msg_id_origin),
-			'msg_id': '%s' %(self.msg_id_origin),
+			#'expert_id': '117333219',
+			'content': '{"type":"text","text":"患者追问内容%d"}'%(self.msg_id_origin),
+			'msg_id': '%s' %(int(time.time())),
 			'atime': '%d' %(int(time.time())),
 			'sign': '123'
 		}
@@ -39,15 +39,22 @@ class Ask(object):
 			print(e.read()).devode('utf-8')
 		return page
 
-	def baidu_page(self, q_type, user_id=456654, doctor_ids=68258667, pay_amount=300, firset_dep='内科', second_dep='呼吸内科'):
+	def baidu_page(self, q_type, user_id=456654, doctor_ids=117333219, pay_amount=300, firset_dep='内科', second_dep='呼吸内科'):
 		#百度来源提问
+		if q_type == 1:
+			type_name = '免费'
+		elif q_type == 2:
+			type_name = '悬赏'
+		elif q_type == 3:
+			type_name = '指定'
+		else:
+			print('提问类型错误')
 		url = 'http://test.d.xywy.com/socket/question'
 		self.now_time = int(time.time())
 		headers = {
 			'Connection': 'keep-alive',
 			'Content-Type': 'application/x-www-form-urlencoded'
 		}
-		print(user_id)
 		data = {
 			'qid': '%d'%(self.now_time),
 			'resource_id': 200002,
@@ -58,7 +65,7 @@ class Ask(object):
 			'patient_age_month': 0,
 			'patient_age_day': 0,
 			'patient_phone': 17888888888,
-			'content': '百度感冒怎么办%d' %(self.msg_id_origin),
+			'content': '一级科室：%s，二级科室：%s,百度%s问题-%d' %(firset_dep, second_dep, type_name, self.msg_id_origin),
 			'pic_urls': '',
 			'q_type': q_type,
 			'order_id': 'rtqa_%d' %(self.now_time),
@@ -79,9 +86,9 @@ class Ask(object):
 		except error.HTTPError as e:
 			print(e.code())
 			print(e.read()).devode('utf-8')
-		return page
+		return (page, self.now_time)
 
-	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids=68258667, pay_type=1):
+	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids=117333219, pay_type=1):
 		#其他来源提问
 		url = 'http://test.api.d.xywy.com/user/question/ask?safe_source_tag_wws=DJWE23_oresdf@ads'
 		self.now_time = int(time.time())
@@ -126,9 +133,9 @@ class Ask(object):
 if __name__ == '__main__':
 	#测试运行
 	A = Ask()
-	A.baidu_page(2, uid=333333)
-	#K = A.persue(13511, 'ywb', 117333175)
+	#A.baidu_page(2, user_id=456654)
+	#K = A.persue(1541137746	, 200002, 456654)
 	#print(K)
 	#if 'Success!' in K:
 	#	print(1)
-	#A.other_page('xiaomi')
+	A.other_page('xiaomi')

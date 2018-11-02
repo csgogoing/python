@@ -1,7 +1,7 @@
 #coding=utf-8
 from urllib import request, parse
-
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from base import Page
 from time import sleep
@@ -45,12 +45,12 @@ class login(Page):
 		self.driver.find_element_by_name('Login[password]').send_keys('123456')
 		self.driver.find_element_by_name('Login[verifyCode]').send_keys('testme')
 		self.driver.find_element_by_xpath('/html/body/div/div[2]/form/div[4]/div[2]/button').click()
-		sleep(2)
 		self.driver.close()
 
 	def get_id(self, user_id):
 		#进入我的账号问题列表页
-		print(user_id)
+		handles = self.driver.window_handles
+		self.driver.switch_to_window(handles[0])
 		js1 = 'window.open("http://test.admin.d.xywy.com/question/default/index?QuestionBaseSearch[keyword_type]=uid&QuestionBaseSearch[keyword]=%d")' %user_id
 		self.driver.execute_script(js1)
 		handles = self.driver.window_handles
@@ -66,9 +66,10 @@ class login(Page):
 		#点击第1个问题
 		handles = self.driver.window_handles
 		self.driver.switch_to_window(handles[0])
-		while True:
+		retry = 0
+		while retry<10:
 			self.Load_button()
-			self.driver.find_element_by_xpath('//*[@class="pr status-item"]/span[1]').click()
+			self.driver.find_element_by_xpath('//*[@class="message-status pr fYaHei clearfix"]/div[2]').click()
 			sleep(1)
 			My_questions = self.driver.find_elements_by_class_name('message-user-item')
 			for i in My_questions:
@@ -78,32 +79,50 @@ class login(Page):
 					self.driver.find_element_by_link_text('抢题').click()
 					print('抢题成功')
 					return
+			retry = retry + 1
+		print('问题库找不到提问的qid为%d的问题' %qid)
 
 
-	def answer_question(self, qid):
-		#点击处理中标签
-		self.driver.find_element_by_xpath('//*[@class="pr status-item pr on"]/span[1]')
+	def answer_question(self, qid, is_summary):
+		handles = self.driver.window_handles
+		self.driver.switch_to_window(handles[0])
+		#点击处理中
+		self.driver.find_element_by_xpath('//*[@class="message-status pr fYaHei clearfix"]/div[1]')
 		self.Load_button()
+		#点击处理中问题
+		My_questions = self.driver.find_elements_by_class_name('message-user-item')
+		for i in My_questions:
+			if int(i.get_attribute('data-qid')) == qid:
+				i.click()
+				self.Load_button()
+				break
 		#快速问答设置为An
 		An = self.driver.find_element_by_xpath('//*[@class="message-quick-list clearfix fYaHei"]/li[1]')
 		self.Load_button()
 		#点击快速回答
-		An.click()
-		sleep(0.5)
-		An.click()
-		scroll='window.scrollTo(0,500)'
-		self.driver.execute_script(scroll)
-		sleep(5)
-
+		for i in range(4):
+			An.click()
+			sleep(0.5)
+		if is_summary == 1:
+			print('写总结')
+			self.driver.find_element_by_xpath('//*[@class="pr tc f14 fYaHei message-select"]/span[2]').click()
+			sleep(1)
+			self.driver.find_element_by_id('zzs').send_keys('请描述患者症状，详细分析该症状是什么疾病，引发这种疾病或症状的原因是什么')
+			self.driver.find_element_by_id('jys').send_keys('针对问题分析，尽可能详细的给出用户各种意见建议，包含：就诊建议、挂号科室建议、检查建议、用药建议、日常注意事项及护理建议等')
+			self.driver.find_element_by_xpath('//*[@class="summary-send-btn f14 fYaHei"]').click()
+			sleep(1)
+		else:
+			print('不写总结')
 
 	def answer_ques_20(self, qid, times):
 		self.driver.find_element_by_name('message').clear()
 		self.driver.find_element_by_name('message').send_keys('医生回复%d' %times)
-		#self.driver.find_element_by_xpath('//*[@class="summary-send-btn f14 fYaHei"]').click()
+		self.driver.find_element_by_name('message').send_keys(Keys.ENTER)
 
 if __name__ == '__main__':
 	A = login()
 	A.login_doctor()
-	A.take_question(13572)
-	A.answer_question(13572)
-	A.answer_ques_20(13572, 2)
+	test_id = 13624
+	A.take_question(test_id)
+	A.answer_question(test_id, 1)
+	A.answer_ques_20(test_id, 2)
