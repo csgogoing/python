@@ -52,3 +52,6 @@ class Page(object):
 				break
 			else:
 				pass
+
+	def quit():
+		self.driver.quit()

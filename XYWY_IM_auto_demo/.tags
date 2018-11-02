@@ -5,49 +5,56 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 A	.\im_ask.py	/^	A = Ask()$/;"	v
-A	.\im_doc_answer.py	/^	A = login()$/;"	v	class:login
+A	.\im_doc_answer.py	/^	A = login()$/;"	v
+A	.\start.py	/^	A = Im_Test()$/;"	v	class:Im_Test
 ActionChains	.\im_doc_answer.py	/^from selenium.webdriver.common.action_chains import ActionChains$/;"	i
 Ask	.\im_ask.py	/^class Ask(object):$/;"	c
 Ask	.\start.py	/^from im_ask import Ask$/;"	i
 By	.\im_doc_answer.py	/^from selenium.webdriver.common.by import By$/;"	i
-K	.\im_ask.py	/^	K = A.persue(13511, 'ywb', 117333175)$/;"	v
+Im_Test	.\start.py	/^class Im_Test():$/;"	c
+Keys	.\im_doc_answer.py	/^from selenium.webdriver.common.keys import Keys$/;"	i
 Load_button	.\base.py	/^	def Load_button(self):$/;"	m	class:Page
 Page	.\base.py	/^class Page(object):$/;"	c
 Page	.\im_doc_answer.py	/^from base import Page$/;"	i
 Page	.\start.py	/^from base import Page$/;"	i
 __init__	.\base.py	/^	def __init__(self):$/;"	m	class:Page
-baidu_page	.\im_ask.py	/^	def baidu_page(self, q_type, uid=456654, doctor_ids=68258667, pay_amount=300, firset_dep='内科', second_dep='呼吸内科'):$/;"	m	class:Ask
+answer_num	.\im_doc_answer.py	/^	answer_num = 2$/;"	v	class:login
+answer_ques_20	.\im_doc_answer.py	/^	def answer_ques_20(self, qid, times):$/;"	m	class:login
+answer_question	.\im_doc_answer.py	/^	def answer_question(self, qid, is_summary):$/;"	m	class:login
+baidu_page	.\im_ask.py	/^	def baidu_page(self, q_type, user_id=456654, doctor_ids=117333219, pay_amount=300, firset_dep='内科', second_dep='呼吸内科'):$/;"	m	class:Ask
 browser	.\driver.py	/^def browser():$/;"	f
-doctor	.\start.py	/^	doctor = login()$/;"	v	class:loginTest
 dr	.\driver.py	/^	dr = browser()$/;"	v
 find_element	.\base.py	/^	def find_element(self, *loc):$/;"	m	class:Page
 find_elements	.\base.py	/^	def find_elements(self, *loc):$/;"	m	class:Page
+get_id	.\im_doc_answer.py	/^	def get_id(self, user_id):$/;"	m	class:login
 login	.\im_doc_answer.py	/^class login(Page):$/;"	c
 login	.\start.py	/^from im_doc_answer import login$/;"	i
-loginTest	.\start.py	/^class loginTest(Page):$/;"	c
 login_button_loc	.\im_doc_answer.py	/^	login_button_loc = (By.CLASS_NAME, 'bc39')$/;"	v	class:login
 login_doctor	.\im_doc_answer.py	/^	def login_doctor(self, id=117333219):$/;"	m	class:login
 login_password_loc	.\im_doc_answer.py	/^	login_password_loc = (By.NAME, 'password')$/;"	v	class:login
 login_username_loc	.\im_doc_answer.py	/^	login_username_loc = (By.NAME, 'userName')$/;"	v	class:login
-msg_id_origin	.\im_ask.py	/^	msg_id_origin = 0$/;"	v	class:Ask
-my_ask	.\start.py	/^	my_ask = Ask()$/;"	v	class:loginTest
+msg_id_origin	.\im_ask.py	/^	msg_id_origin = 1$/;"	v	class:Ask
+my_ask	.\start.py	/^	my_ask = Ask()$/;"	v	class:Im_Test
+my_doctor	.\start.py	/^	my_doctor = login()$/;"	v	class:Im_Test
 now_time	.\im_ask.py	/^	now_time = 0$/;"	v	class:Ask
 on_page	.\base.py	/^	def on_page(self):$/;"	m	class:Page
 open	.\base.py	/^	def open(self, url):$/;"	m	class:Page
-other_page	.\im_ask.py	/^	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids=68258667, pay_type=1):$/;"	m	class:Ask
+other_page	.\im_ask.py	/^	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids=117333219, pay_type=1):$/;"	m	class:Ask
 parse	.\im_ask.py	/^from urllib import request, parse$/;"	i
+parse	.\im_doc_answer.py	/^from urllib import request, parse$/;"	i
 persue	.\im_ask.py	/^	def persue(self, qid, resource_id, user_id):$/;"	m	class:Ask
 request	.\im_ask.py	/^from urllib import request, parse$/;"	i
+request	.\im_doc_answer.py	/^from urllib import request, parse$/;"	i
+run_test	.\start.py	/^	def run_test(self, source=200002, user_id=456654, q_type=2, pay_amount=300, times=20, is_summary=0):$/;"	m	class:Im_Test
 script	.\base.py	/^	def script(self, src):$/;"	m	class:Page
 sleep	.\im_ask.py	/^from time import sleep$/;"	i
 sleep	.\im_doc_answer.py	/^from time import sleep$/;"	i
 sleep	.\start.py	/^from time import sleep$/;"	i
 sougou_page	.\im_ask.py	/^	def sougou_page():$/;"	m	class:Ask
-test_baidu	.\start.py	/^	def test_baidu(self):$/;"	m	class:loginTest
+take_question	.\im_doc_answer.py	/^	def take_question(self, qid):$/;"	m	class:login
+test_id	.\im_doc_answer.py	/^	test_id = 13624$/;"	v
 time	.\driver.py	/^import time$/;"	i
 time	.\im_ask.py	/^import time$/;"	i
-url	.\im_doc_answer.py	/^	url = ''$/;"	v	class:login
-user_login_verify	.\start.py	/^	def user_login_verify(self, username='', password=''):$/;"	m	class:loginTest
 webdriver	.\base.py	/^from selenium import webdriver$/;"	i
 webdriver	.\driver.py	/^from selenium import webdriver$/;"	i
 xywy_url	.\base.py	/^	xywy_url = ""$/;"	v	class:Page

@@ -138,4 +138,4 @@ if __name__ == '__main__':
 	#print(K)
 	#if 'Success!' in K:
 	#	print(1)
-	A.other_page('xiaomi')
+	A.other_page('ywb')

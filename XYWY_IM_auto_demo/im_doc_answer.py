@@ -26,7 +26,12 @@ class login(Page):
 		sleep(2)
 		#进入IM问答页
 		js1 = 'window.open("http://test.dr.xywy.com/account/pc-login?id=436558&user_id=%d");' %id
-		self.script(js1)
+		try:
+			self.script(js1)
+		except:
+			self.script(js1)
+		else:
+			pass
 		sleep(1)
 		js2 = 'window.open("http://test.d.xywy.com/doctor-client/im");'
 		self.script(js2)
@@ -66,8 +71,7 @@ class login(Page):
 		#点击第1个问题
 		handles = self.driver.window_handles
 		self.driver.switch_to_window(handles[0])
-		retry = 0
-		while retry<10:
+		while True:
 			self.Load_button()
 			self.driver.find_element_by_xpath('//*[@class="message-status pr fYaHei clearfix"]/div[2]').click()
 			sleep(1)
@@ -79,7 +83,6 @@ class login(Page):
 					self.driver.find_element_by_link_text('抢题').click()
 					print('抢题成功')
 					return
-			retry = retry + 1
 		print('问题库找不到提问的qid为%d的问题' %qid)
 
 
@@ -114,7 +117,7 @@ class login(Page):
 		else:
 			print('不写总结')
 
-	def answer_ques_20(self, qid, times):
+	def answer_ques_20(self, times):
 		self.driver.find_element_by_name('message').clear()
 		self.driver.find_element_by_name('message').send_keys('医生回复%d' %times)
 		self.driver.find_element_by_name('message').send_keys(Keys.ENTER)

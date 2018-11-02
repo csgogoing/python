@@ -29,7 +29,7 @@ class Im_Test():
 				for i in range(times-1):
 					self.my_ask.persue(order_id, source, user_id)
 					sleep(1)
-					self.my_doctor.answer_ques_20(qid, i+2)
+					self.my_doctor.answer_ques_20(i+2)
 					sleep(1)
 			else:
 				print('times输入错误')
@@ -50,24 +50,29 @@ class Im_Test():
 			elif 1 < times < 21:
 				self.my_doctor.answer_question(qid, is_summary)
 				for i in range(times-1):
-					self.my_ask.persue(order_id, source, user_id)
+					self.my_ask.persue(qid, source, user_id)
 					sleep(1)
 					self.my_doctor.answer_ques_20(qid, i+2)
 					sleep(1)
 			else:
 				print('times输入错误')
 
+	def quit():
+		self.driver.quit()
 
 
 
 if __name__ == '__main__':
 	A = Im_Test()
+
 	#百度悬赏
 	#A.run_test(source=200002, q_type=2, times=20, is_summary=1)
 	#百度指定
 	#A.run_test(source=200002, q_type=3, times=20, is_summary=1)
-	#小米悬赏
-	#A.run_test(source=200002, q_type=2, times=20, is_summary=1)
+	#其他悬赏
+	A.run_test(source='xywyapp', q_type=2, times=20, is_summary=1)
+
+	A.quit()
 
 	#下一步，区分来源，获取用户输入
 	# "xywyapp"寻医问药APP
