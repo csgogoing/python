@@ -7,18 +7,20 @@
 7.CREATE DATABASE Êý¾Ý¿âÃû;
   CREATE DATABASE IF NOT EXISTS TEST DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 8.CREATE TABLE IF NOT EXISTS `lottery`(
-   `m_date` CHAR(255) NOT NULL,
+   `red_0` CHAR(5) NOT NULL,
    `red_1` CHAR(5) NOT NULL,
    `red_2` CHAR(5) NOT NULL,
    `red_3` CHAR(5) NOT NULL,
    `red_4` CHAR(5) NOT NULL,
    `red_5` CHAR(5) NOT NULL,
-   `red_6` CHAR(5) NOT NULL,
    `blue` CHAR(5) NOT NULL,
+   `m_date` CHAR(255) NOT NULL,
    PRIMARY KEY ( `m_date` )
    )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 9.
-
+INSERT INTO lottery(red_0,red_1,red_2,red_3,red_4,red_5,blue,m_date)
+                       VALUES
+                       ( value1, value2,...valueN );
 
 
 

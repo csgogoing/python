@@ -86,7 +86,12 @@ class Ask(object):
 		except error.HTTPError as e:
 			print(e.code())
 			print(e.read()).devode('utf-8')
-		return (page, self.now_time)
+		if 'Success!' in page:
+				print('提问成功')
+				return (True, self.now_time)
+			else:
+				print('提问失败, 请重试或手动尝试')
+				return(False, self.now_time)
 
 	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids=117333219, pay_type=1):
 		#其他来源提问
@@ -127,6 +132,12 @@ class Ask(object):
 			print(e.code())
 			print(e.read()).devode('utf-8')
 		return page
+		if 'Success!' in page:
+			print('提问成功')
+			return (True, self.now_time)
+		else:
+			print('提问失败, 请重试或手动尝试')
+			return(False, self.now_time)
 
 	def sougou_page():
 		pass
