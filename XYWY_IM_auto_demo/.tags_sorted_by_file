@@ -1,3 +1,19 @@
+BeautifulSoup	1.py	/^from bs4 import BeautifulSoup$/;"	i
+a_cookies	1.py	/^a_cookies=reqs.cookies.get_dict()$/;"	v
+cookies	1.py	/^cookies=req.cookies.get_dict()$/;"	v
+data	1.py	/^data={$/;"	v
+headers	1.py	/^headers={$/;"	v
+k	1.py	/^k = request_ele.text$/;"	v
+re	1.py	/^import re$/;"	i
+req	1.py	/^req=requests.get(url_login)$/;"	v
+reqs	1.py	/^reqs=requests.post(url_login,data=data,cookies=cookies)$/;"	v
+request_ele	1.py	/^request_ele=requests.get(url,cookies=a_cookies)$/;"	v
+requests	1.py	/^import requests$/;"	i
+soup	1.py	/^soup=BeautifulSoup(req.text,'lxml')  $/;"	v
+table_forms	1.py	/^table_forms=re.findall(r'<td>(\\d{5})<\/td>', k)$/;"	v
+url	1.py	/^url="http:\/\/test.admin.d.xywy.com\/question\/default\/index"$/;"	v
+url_login	1.py	/^url_login='http:\/\/test.admin.d.xywy.com\/admin\/user\/login'$/;"	v
+utf8_value	1.py	/^utf8_value=soup.select_one('form input[name=_csrf]').attrs['value']$/;"	v
 Load_button	base.py	/^	def Load_button(self):$/;"	m	class:Page
 Page	base.py	/^class Page(object):$/;"	c
 __init__	base.py	/^	def __init__(self):$/;"	m	class:Page
@@ -5,6 +21,7 @@ find_element	base.py	/^	def find_element(self, *loc):$/;"	m	class:Page
 find_elements	base.py	/^	def find_elements(self, *loc):$/;"	m	class:Page
 on_page	base.py	/^	def on_page(self):$/;"	m	class:Page
 open	base.py	/^	def open(self, url):$/;"	m	class:Page
+quit	base.py	/^	def quit():$/;"	m	class:Page
 script	base.py	/^	def script(self, src):$/;"	m	class:Page
 webdriver	base.py	/^from selenium import webdriver$/;"	i
 xywy_url	base.py	/^	xywy_url = ""$/;"	v	class:Page
@@ -30,7 +47,7 @@ By	im_doc_answer.py	/^from selenium.webdriver.common.by import By$/;"	i
 Keys	im_doc_answer.py	/^from selenium.webdriver.common.keys import Keys$/;"	i
 Page	im_doc_answer.py	/^from base import Page$/;"	i
 answer_num	im_doc_answer.py	/^	answer_num = 2$/;"	v	class:login
-answer_ques_20	im_doc_answer.py	/^	def answer_ques_20(self, qid, times):$/;"	m	class:login
+answer_ques_20	im_doc_answer.py	/^	def answer_ques_20(self, times):$/;"	m	class:login
 answer_question	im_doc_answer.py	/^	def answer_question(self, qid, is_summary):$/;"	m	class:login
 get_id	im_doc_answer.py	/^	def get_id(self, user_id):$/;"	m	class:login
 login	im_doc_answer.py	/^class login(Page):$/;"	c
@@ -43,13 +60,14 @@ request	im_doc_answer.py	/^from urllib import request, parse$/;"	i
 sleep	im_doc_answer.py	/^from time import sleep$/;"	i
 take_question	im_doc_answer.py	/^	def take_question(self, qid):$/;"	m	class:login
 test_id	im_doc_answer.py	/^	test_id = 13624$/;"	v
-A	start.py	/^	A = Im_Test()$/;"	v	class:Im_Test
+A	start.py	/^	A = Im_Test()$/;"	v
 Ask	start.py	/^from im_ask import Ask$/;"	i
 Im_Test	start.py	/^class Im_Test():$/;"	c
 Page	start.py	/^from base import Page$/;"	i
 login	start.py	/^from im_doc_answer import login$/;"	i
 my_ask	start.py	/^	my_ask = Ask()$/;"	v	class:Im_Test
 my_doctor	start.py	/^	my_doctor = login()$/;"	v	class:Im_Test
+quit	start.py	/^	def quit():$/;"	m	class:Im_Test
 run_test	start.py	/^	def run_test(self, source=200002, user_id=456654, q_type=2, pay_amount=300, times=20, is_summary=0):$/;"	m	class:Im_Test
 sleep	start.py	/^from time import sleep$/;"	i
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/

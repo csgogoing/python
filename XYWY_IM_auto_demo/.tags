@@ -6,10 +6,11 @@
 !_TAG_PROGRAM_VERSION	5.8	//
 A	.\im_ask.py	/^	A = Ask()$/;"	v
 A	.\im_doc_answer.py	/^	A = login()$/;"	v
-A	.\start.py	/^	A = Im_Test()$/;"	v	class:Im_Test
+A	.\start.py	/^	A = Im_Test()$/;"	v
 ActionChains	.\im_doc_answer.py	/^from selenium.webdriver.common.action_chains import ActionChains$/;"	i
 Ask	.\im_ask.py	/^class Ask(object):$/;"	c
 Ask	.\start.py	/^from im_ask import Ask$/;"	i
+BeautifulSoup	.\1.py	/^from bs4 import BeautifulSoup$/;"	i
 By	.\im_doc_answer.py	/^from selenium.webdriver.common.by import By$/;"	i
 Im_Test	.\start.py	/^class Im_Test():$/;"	c
 Keys	.\im_doc_answer.py	/^from selenium.webdriver.common.keys import Keys$/;"	i
@@ -18,15 +19,20 @@ Page	.\base.py	/^class Page(object):$/;"	c
 Page	.\im_doc_answer.py	/^from base import Page$/;"	i
 Page	.\start.py	/^from base import Page$/;"	i
 __init__	.\base.py	/^	def __init__(self):$/;"	m	class:Page
+a_cookies	.\1.py	/^a_cookies=reqs.cookies.get_dict()$/;"	v
 answer_num	.\im_doc_answer.py	/^	answer_num = 2$/;"	v	class:login
-answer_ques_20	.\im_doc_answer.py	/^	def answer_ques_20(self, qid, times):$/;"	m	class:login
+answer_ques_20	.\im_doc_answer.py	/^	def answer_ques_20(self, times):$/;"	m	class:login
 answer_question	.\im_doc_answer.py	/^	def answer_question(self, qid, is_summary):$/;"	m	class:login
 baidu_page	.\im_ask.py	/^	def baidu_page(self, q_type, user_id=456654, doctor_ids=117333219, pay_amount=300, firset_dep='内科', second_dep='呼吸内科'):$/;"	m	class:Ask
 browser	.\driver.py	/^def browser():$/;"	f
+cookies	.\1.py	/^cookies=req.cookies.get_dict()$/;"	v
+data	.\1.py	/^data={$/;"	v
 dr	.\driver.py	/^	dr = browser()$/;"	v
 find_element	.\base.py	/^	def find_element(self, *loc):$/;"	m	class:Page
 find_elements	.\base.py	/^	def find_elements(self, *loc):$/;"	m	class:Page
 get_id	.\im_doc_answer.py	/^	def get_id(self, user_id):$/;"	m	class:login
+headers	.\1.py	/^headers={$/;"	v
+k	.\1.py	/^k = request_ele.text$/;"	v
 login	.\im_doc_answer.py	/^class login(Page):$/;"	c
 login	.\start.py	/^from im_doc_answer import login$/;"	i
 login_button_loc	.\im_doc_answer.py	/^	login_button_loc = (By.CLASS_NAME, 'bc39')$/;"	v	class:login
@@ -43,18 +49,30 @@ other_page	.\im_ask.py	/^	def other_page(self, resource_id, uid=456654, q_type=2
 parse	.\im_ask.py	/^from urllib import request, parse$/;"	i
 parse	.\im_doc_answer.py	/^from urllib import request, parse$/;"	i
 persue	.\im_ask.py	/^	def persue(self, qid, resource_id, user_id):$/;"	m	class:Ask
+quit	.\base.py	/^	def quit():$/;"	m	class:Page
+quit	.\start.py	/^	def quit():$/;"	m	class:Im_Test
+re	.\1.py	/^import re$/;"	i
+req	.\1.py	/^req=requests.get(url_login)$/;"	v
+reqs	.\1.py	/^reqs=requests.post(url_login,data=data,cookies=cookies)$/;"	v
 request	.\im_ask.py	/^from urllib import request, parse$/;"	i
 request	.\im_doc_answer.py	/^from urllib import request, parse$/;"	i
+request_ele	.\1.py	/^request_ele=requests.get(url,cookies=a_cookies)$/;"	v
+requests	.\1.py	/^import requests$/;"	i
 run_test	.\start.py	/^	def run_test(self, source=200002, user_id=456654, q_type=2, pay_amount=300, times=20, is_summary=0):$/;"	m	class:Im_Test
 script	.\base.py	/^	def script(self, src):$/;"	m	class:Page
 sleep	.\im_ask.py	/^from time import sleep$/;"	i
 sleep	.\im_doc_answer.py	/^from time import sleep$/;"	i
 sleep	.\start.py	/^from time import sleep$/;"	i
 sougou_page	.\im_ask.py	/^	def sougou_page():$/;"	m	class:Ask
+soup	.\1.py	/^soup=BeautifulSoup(req.text,'lxml')  $/;"	v
+table_forms	.\1.py	/^table_forms=re.findall(r'<td>(\\d{5})<\/td>', k)$/;"	v
 take_question	.\im_doc_answer.py	/^	def take_question(self, qid):$/;"	m	class:login
 test_id	.\im_doc_answer.py	/^	test_id = 13624$/;"	v
 time	.\driver.py	/^import time$/;"	i
 time	.\im_ask.py	/^import time$/;"	i
+url	.\1.py	/^url="http:\/\/test.admin.d.xywy.com\/question\/default\/index"$/;"	v
+url_login	.\1.py	/^url_login='http:\/\/test.admin.d.xywy.com\/admin\/user\/login'$/;"	v
+utf8_value	.\1.py	/^utf8_value=soup.select_one('form input[name=_csrf]').attrs['value']$/;"	v
 webdriver	.\base.py	/^from selenium import webdriver$/;"	i
 webdriver	.\driver.py	/^from selenium import webdriver$/;"	i
 xywy_url	.\base.py	/^	xywy_url = ""$/;"	v	class:Page

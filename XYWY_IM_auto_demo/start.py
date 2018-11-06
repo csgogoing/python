@@ -32,10 +32,7 @@ class Im_Test():
 		
 		else:
 			result, order_id = self.my_ask.other_page(resource_id=source, q_type=q_type)
-			if 'Success!' in result:
-				print('提问成功')
-			else:
-				print('提问失败')
+			if result == False:
 				return
 			qid = int(self.my_doctor.get_id(user_id))
 			print(qid)

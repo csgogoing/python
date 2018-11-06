@@ -5,6 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from base import Page
 from time import sleep
+from bs4 import BeautifulSoup
+import requests
+import re
 
 class login(Page):
 	'''
@@ -41,29 +44,37 @@ class login(Page):
 		self.driver.close()
 		self.driver.switch_to_window(handles[1])
 		sleep(2)
-		#登陆IM后台
-		js_login = 'window.open("http://test.admin.d.xywy.com/question/default/index")'
-		self.driver.execute_script(js_login)
-		handles = self.driver.window_handles
-		self.driver.switch_to_window(handles[1])
-		self.driver.find_element_by_name('Login[username]').send_keys('admin')
-		self.driver.find_element_by_name('Login[password]').send_keys('123456')
-		self.driver.find_element_by_name('Login[verifyCode]').send_keys('testme')
-		self.driver.find_element_by_xpath('/html/body/div/div[2]/form/div[4]/div[2]/button').click()
-		self.driver.close()
 
-	def get_id(self, user_id):
-		#进入我的账号问题列表页
-		handles = self.driver.window_handles
-		self.driver.switch_to_window(handles[0])
-		js1 = 'window.open("http://test.admin.d.xywy.com/question/default/index?QuestionBaseSearch[keyword_type]=uid&QuestionBaseSearch[keyword]=%d")' %user_id
-		self.driver.execute_script(js1)
-		handles = self.driver.window_handles
-		self.driver.switch_to_window(handles[1])
+
+	def get_id(self, user_id, zd=None, did=None):
+		#获取加密参数与cookie
+		url_login='http://test.admin.d.xywy.com/admin/user/login'
+		#传入的user_id查找页
+		url="http://test.admin.d.xywy.com/question/default/index?QuestionBaseSearch[keyword_type]=uid&QuestionBaseSearch[keyword]=%d"%user_id
+		headers={
+		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
+		}
+		req=requests.get(url_login)
+		m_value = re.findall(r'f" value="(.*)">', req.text)
+		cookies=req.cookies.get_dict()
+		#登录im后台
+		data={
+		'_csrf':m_value,
+		'Login[username]':'admin',
+		'Login[password]':'123456',
+		'Login[verifyCode]':'testme'
+		}
+		req_login=requests.post(url_login,data=data,cookies=cookies)
+		a_cookies=req_login.cookies.get_dict()
+		request_qid=req_login.get(url,cookies=a_cookies)
 		#获取问题ID
-		qid = self.driver.find_element_by_xpath('/html/body/div[1]/div[1]/section[2]/div/div/div[1]/div[2]/table/tbody/tr[1]/td[1]').text
-		request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%s' %qid)
-		self.driver.close()
+		qid=re.findall(r'<td>(\d{5})</td>', request_qid)
+		#置问题状态
+		if did:
+			request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d&zd=1&%d' %qid,did)
+		else:
+			request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d' %qid)
+
 		return qid
 
 	def take_question(self, qid):
@@ -84,7 +95,6 @@ class login(Page):
 					print('抢题成功')
 					return
 		print('问题库找不到提问的qid为%d的问题' %qid)
-
 
 	def answer_question(self, qid, is_summary):
 		handles = self.driver.window_handles
@@ -124,8 +134,10 @@ class login(Page):
 
 if __name__ == '__main__':
 	A = login()
-	A.login_doctor()
-	test_id = 13624
-	A.take_question(test_id)
-	A.answer_question(test_id, 1)
-	A.answer_ques_20(test_id, 2)
+	# A.login_doctor()
+	# test_id = 13624
+	# A.take_question(test_id)
+	# A.answer_question(test_id, 1)
+	# A.answer_ques_20(test_id, 2)
+
+	A.get_id(456654)

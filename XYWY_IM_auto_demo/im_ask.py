@@ -87,11 +87,11 @@ class Ask(object):
 			print(e.code())
 			print(e.read()).devode('utf-8')
 		if 'Success!' in page:
-				print('提问成功')
-				return (True, self.now_time)
-			else:
-				print('提问失败, 请重试或手动尝试')
-				return(False, self.now_time)
+			print('提问成功')
+			return (True, self.now_time)
+		else:
+			print('提问失败, 请重试或手动尝试')
+			return(False, self.now_time)
 
 	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids=117333219, pay_type=1):
 		#其他来源提问
@@ -128,7 +128,7 @@ class Ask(object):
 		try:
 			page = request.urlopen(req).read()
 			page = page.decode('utf-8')
-		except error.HTTPError as e:
+		except error as e:
 			print(e.code())
 			print(e.read()).devode('utf-8')
 		return page
@@ -149,4 +149,4 @@ if __name__ == '__main__':
 	#print(K)
 	#if 'Success!' in K:
 	#	print(1)
-	A.other_page('ywb')
+	A.other_page('xywyapp',q_type=3)

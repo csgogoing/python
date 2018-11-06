@@ -10,21 +10,21 @@ headers={
 
 
 req=requests.get(url_login)
+m_value = re.findall(r'f" value="(.*)">', req.text)
+print(m_value)
 cookies=req.cookies.get_dict()
-soup=BeautifulSoup(req.text,'lxml')  
-utf8_value=soup.select_one('form input[name=_csrf]').attrs['value']
-
 data={
-'_csrf':utf8_value,
+'_csrf':m_value,
 'Login[username]':'admin',
 'Login[password]':'123456',
 'Login[verifyCode]':'testme'
 }
-reqs=requests.post(url_login,data=data,cookies=cookies)
-a_cookies=reqs.cookies.get_dict()
-print(a_cookies)
+req_login=requests.post(url_login,data=data,cookies=cookies)
+a_cookies=req_login.cookies.get_dict()
 
-request_ele=requests.get(url,cookies=a_cookies)
+
+
+request_qid=req_login.get(url,cookies=a_cookies)
 k = request_ele.text
 table_forms=re.findall(r'<td>(\d{5})</td>', k)
 print(table_forms)
