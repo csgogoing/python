@@ -33,6 +33,7 @@ class Im_Test():
 		else:
 			result, order_id = self.my_ask.other_page(resource_id=source, q_type=q_type)
 			if result == False:
+				
 				return
 			qid = int(self.my_doctor.get_id(user_id))
 			print(qid)
