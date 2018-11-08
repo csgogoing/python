@@ -1,0 +1,36 @@
+1541576969821	geckodriver	INFO	geckodriver 0.20.1
+1541576970084	geckodriver	INFO	Listening on 127.0.0.1:51841
+1541576971321	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofile.lEscU8A5GnQp"
+1541576972571	Marionette	DEBUG	Received observer notification profile-after-change
+1541576973740	Marionette	DEBUG	Received observer notification toplevel-window-ready
+1541576973767	Marionette	DEBUG	Received observer notification command-line-startup
+1541576973767	Marionette	DEBUG	Received observer notification nsPref:changed
+1541576973767	Marionette	DEBUG	Init aborted (running=false, enabled=true, finalUIStartup=false)
+1541576973819	Marionette	DEBUG	Received observer notification toplevel-window-ready
+1541576978955	Marionette	DEBUG	Received observer notification sessionstore-windows-restored
+1541576978955	Marionette	DEBUG	Waiting for delayed startup...
+1541576979520	Marionette	DEBUG	Setting recommended pref app.update.disabledForTesting to true
+1541576979521	Marionette	DEBUG	Setting recommended pref security.turn_off_all_security_so_that_viruses_can_take_over_this_computer to true
+1541576979522	Marionette	DEBUG	Setting recommended pref toolkit.cosmeticAnimations.enabled to false
+1541576979522	Marionette	DEBUG	Setting recommended pref datareporting.policy.dataSubmissionPolicyAccepted to false
+1541576979522	Marionette	DEBUG	Setting recommended pref dom.disable_beforeunload to true
+1541576979975	Marionette	INFO	Listening on port 51847
+1541576979975	Marionette	DEBUG	Remote service is active
+1541576980099	Marionette	DEBUG	Accepted connection 0 from 127.0.0.1:51869
+1541576980104	Marionette	TRACE	0 -> [0,1,"newSession",{"acceptInsecureCerts":true,"browserName":"firefox","capabilities":{"desiredCapabilities":{"acceptInsecureCerts":true,"browserName":"firefox"}}}]
+1541576980104	Marionette	TRACE	0 <- [1,1,{"error":"unknown command","message":"newSession","stacktrace":"WebDriverError@chrome://marionette/content/error.js:178: ... et@chrome://marionette/content/server.js:245:8\n_onJSONObjectReady/<@chrome://marionette/content/transport.js:490:9\n"},null]
+1541577004985	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+1541577007028	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1541577022264	Marionette	DEBUG	Closed connection 0
+[Parent 11120, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 9492, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 9592, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 8860, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1541577025359	Marionette	DEBUG	Received observer notification xpcom-will-shutdown
+1541577025359	Marionette	DEBUG	Resetting recommended pref app.update.disabledForTesting
+1541577025359	Marionette	DEBUG	Resetting recommended pref security.turn_off_all_security_so_that_viruses_can_take_over_this_computer
+1541577025359	Marionette	DEBUG	Resetting recommended pref toolkit.cosmeticAnimations.enabled
+1541577025360	Marionette	DEBUG	Resetting recommended pref datareporting.policy.dataSubmissionPolicyAccepted
+1541577025360	Marionette	DEBUG	Resetting recommended pref dom.disable_beforeunload
+1541577025360	Marionette	INFO	Stopped listening on port 51847
+1541577025360	Marionette	DEBUG	Remote service is inactive

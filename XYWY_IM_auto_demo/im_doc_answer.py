@@ -19,7 +19,7 @@ class login(Page):
 	login_password_loc = (By.NAME, 'password')
 	login_button_loc = (By.CLASS_NAME, 'bc39')
 
-	def login_doctor(self, id=117333219):
+	def login_doctor(self, did=117333219):
 		#登陆医生端
 		print('登陆医生端')
 		self.driver.get("http://test.dr.xywy.com/site/login")
@@ -28,7 +28,7 @@ class login(Page):
 		self.driver.find_element_by_xpath('//*[@id="loginForm"]/div[4]/button').click()
 		sleep(2)
 		#进入IM问答页
-		js1 = 'window.open("http://test.dr.xywy.com/account/pc-login?id=436558&user_id=%d");' %id
+		js1 = 'window.open("http://test.dr.xywy.com/account/pc-login?id=436558&user_id=%d");' %did
 		try:
 			self.script(js1)
 		except:
@@ -116,7 +116,9 @@ class login(Page):
 		for i in range(4):
 			An.click()
 			sleep(0.5)
-		if is_summary == 1:
+		if is_summary == 0:
+			print('不写总结')
+		else:
 			print('写总结')
 			self.driver.find_element_by_xpath('//*[@class="pr tc f14 fYaHei message-select"]/span[2]').click()
 			sleep(1)
@@ -124,8 +126,6 @@ class login(Page):
 			self.driver.find_element_by_id('jys').send_keys('针对问题分析，尽可能详细的给出用户各种意见建议，包含：就诊建议、挂号科室建议、检查建议、用药建议、日常注意事项及护理建议等')
 			self.driver.find_element_by_xpath('//*[@class="summary-send-btn f14 fYaHei"]').click()
 			sleep(1)
-		else:
-			print('不写总结')
 
 	def answer_ques_20(self, times):
 		self.driver.find_element_by_name('message').clear()

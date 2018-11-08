@@ -40,7 +40,7 @@ class Ask(object):
 		return page
 
 	def baidu_page(self, q_type, user_id=456654, doctor_ids=117333219, pay_amount=300, firset_dep='内科', second_dep='呼吸内科'):
-		#百度来源提问
+		#百度来源提问—
 		if q_type == 1:
 			type_name = '免费'
 		elif q_type == 2:
