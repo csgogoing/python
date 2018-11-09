@@ -7,8 +7,9 @@ class Ask(object):
 	'''
 	qtype:1 免费，2悬赏，3指定
 	'''
-	msg_id_origin = 1
-	now_time = 0
+	def __init__(self):
+		self.msg_id_origin = 1
+		self.now_time = 0
 
 	def persue(self, qid, resource_id, user_id):
 		#追问接口
@@ -34,7 +35,7 @@ class Ask(object):
 		try:
 			page = request.urlopen(req).read()
 			page = page.decode('utf-8')
-		except error.HTTPError as e:
+		except BaseException as e:
 			print(e.code())
 			print(e.read()).devode('utf-8')
 		return page
@@ -65,7 +66,7 @@ class Ask(object):
 			'patient_age_month': 0,
 			'patient_age_day': 0,
 			'patient_phone': 17888888888,
-			'content': '一级科室：%s，二级科室：%s,百度%s问题-%d' %(firset_dep, second_dep, type_name, self.msg_id_origin),
+			'content': '自动化一级科室：%s，二级科室：%s,百度%s问题-%d' %(firset_dep, second_dep, type_name, self.msg_id_origin),
 			'pic_urls': '',
 			'q_type': q_type,
 			'order_id': 'rtqa_%d' %(self.now_time),
@@ -75,6 +76,7 @@ class Ask(object):
 			'firset_dep': firset_dep,
 			'second_dep': second_dep
 		}
+		self.msg_id_origin = self.msg_id_origin + 1
 		if data['q_type'] == 3:
 			del data['pay_amount']
 			data['price'] = pay_amount
@@ -83,17 +85,17 @@ class Ask(object):
 		try:
 			page = request.urlopen(req).read()
 			page = page.decode('utf-8')
-		except error.HTTPError as e:
+		except BaseException as e:
 			print(e.code())
 			print(e.read()).devode('utf-8')
 		if 'Success!' in page:
-			print('提问成功')
+			print('百度问题提问成功')
 			return (True, self.now_time)
 		else:
 			print('提问失败, 请重试或手动尝试')
 			return(False, self.now_time)
 
-	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids=117333219, pay_type=1):
+	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids=117333219, pay_type=1, content=''):
 		#其他来源提问
 		url = 'http://test.api.d.xywy.com/user/question/ask?safe_source_tag_wws=DJWE23_oresdf@ads'
 		self.now_time = int(time.time())
@@ -101,7 +103,10 @@ class Ask(object):
 			'Connection': 'keep-alive',
 			'Content-Type': 'application/x-www-form-urlencoded'
 		}
-
+		if content == '':
+			my_content = '%s自动化感冒怎么办%d' %(resource_id, self.msg_id_origin)
+		else:
+			my_content = content
 		data = {
 			'qid': '%d'%(self.now_time),
 			'source': resource_id,
@@ -112,7 +117,7 @@ class Ask(object):
 			'patient_age_month': 0,
 			'patient_age_day': 0,
 			'patient_phone': 17888888888,
-			'content': '%s感冒怎么办%d' %(resource_id, self.msg_id_origin),
+			'content': my_content,
 			'pic_urls': '',
 			'q_type': q_type,
 			'order_id': 'rtqa_%d' %(self.now_time),
@@ -128,15 +133,14 @@ class Ask(object):
 		try:
 			page = request.urlopen(req).read()
 			page = page.decode('utf-8')
-		except error as e:
+		except BaseException as e:
 			print(e.code())
 			print(e.read()).devode('utf-8')
-		return page
 		if 'Success!' in page:
-			print('提问成功')
+			print('%s来源问题提问成功'%resource_id)
 			return (True, self.now_time)
 		else:
-			print('提问失败, 请重试或手动尝试')
+			print('%s问题提问失败, 请重试或手动尝试'%resource_id)
 			return(False, self.now_time)
 
 	def sougou_page():
