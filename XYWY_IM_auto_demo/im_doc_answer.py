@@ -64,11 +64,13 @@ class login(Page):
 		'Login[password]':'123456',
 		'Login[verifyCode]':'testme'
 		}
+		#登陆IM后台获取Cookie
 		req_login=requests.post(url_login,data=data,cookies=cookies)
 		a_cookies=req_login.cookies.get_dict()
-		request_qid=req_login.get(url,cookies=a_cookies)
 		#获取问题ID
-		qid=re.findall(r'<td>(\d{5})</td>', request_qid)
+		request_qid=requests.get(url,cookies=a_cookies)
+		qids=re.findall(r'<td>(\d{5})</td>', request_qid.text)
+		qid = int(qids[0])
 		#置问题状态
 		if did:
 			request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d&zd=1&%d' %qid,did)
@@ -87,13 +89,24 @@ class login(Page):
 			self.driver.find_element_by_xpath('//*[@class="message-status pr fYaHei clearfix"]/div[2]').click()
 			sleep(1)
 			My_questions = self.driver.find_elements_by_class_name('message-user-item')
-			for i in My_questions:
-				if int(i.get_attribute('data-qid')) == qid:
-					i.click()
-					self.Load_button()
-					self.driver.find_element_by_link_text('抢题').click()
-					print('抢题成功')
-					return
+			if len(My_questions) < 8:
+				for i in My_questions:
+					if int(i.get_attribute('data-qid')) == qid:
+						i.click()
+						self.Load_button()
+						self.driver.find_element_by_link_text('抢题').click()
+						print('抢题成功')
+						return
+			else:
+				scroolbar = self.driver.find_element_by_id('mCSB_2_dragger_vertical')
+				ActionChains(self.driver).drag_and_drop(scroolbar,My_questions[7]).perform()
+				for i in My_questions:
+					if int(i.get_attribute('data-qid')) == qid:
+						i.click()
+						self.Load_button()
+						self.driver.find_element_by_link_text('抢题').click()
+						print('抢题成功')
+						return
 		print('问题库找不到提问的qid为%d的问题' %qid)
 
 	def answer_question(self, qid, is_summary):

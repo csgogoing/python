@@ -15,13 +15,25 @@ class Page(object):
 			try:
 				self.driver = webdriver.Firefox()
 			except:
-				print('调起浏览器失败，重试第%d次，共3次' %retry)
+				print('第%d次调起firefox浏览器失败，正在重试，共尝试3次' %retry)
 				retry = retry + 1
+				if retry == 4:
+					print('尝试调起Chrome浏览器')
+					r_retry = 1
+					while r_retry < 4:
+						try:
+							self.driver = webdriver.Chrome()
+						except:
+							print('第%d次调起Chrome浏览器失败，正在重试，共尝试3次' %r_retry)
+							r_retry = r_retry + 1
+						else:
+							break
 			else:
 				break
-		if retry == 4:
+
+		if r_retry == 4:
 			exit('无法调起浏览器，请联系管理员')
-		print('调起成功')
+		print('调起浏览器成功')
 		self.driver.implicitly_wait(5)
 		self.driver.maximize_window()
 		self.timeout = 30

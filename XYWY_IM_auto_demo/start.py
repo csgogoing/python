@@ -6,17 +6,17 @@ import re
 
 class Im_Test():
 	def __init__(self, did=117333219):
-		my_doctor = login()
-		my_doctor.login_doctor(did)
-		my_ask = Ask()
+		self.my_doctor = login()
+		self.my_doctor.login_doctor(did)
+		self.my_ask = Ask()
 
 	def run_test(self, source=200002, q_type=2, pay_amount=300, times=20, firset_dep='内科',second_dep='呼吸内科', is_summary=0, did=117333219, user_id=456654, content=''):
 		if source==200002:
-			result, order_id = self.my_ask.baidu_page(q_type, user_id=user_id, doctor_ids=did, pay_amount=pay_amount, firset_dep=firset_dep, second_dep=second_dep)
+			result, order_id = self.my_ask.baidu_page(q_type, user_id=user_id, doctor_ids=did, pay_amount=pay_amount, firset_dep=firset_dep, second_dep=second_dep, content=content)
 			if result == False:
 				return
 			qid = int(self.my_doctor.get_id(user_id))
-			print(qid)
+			print('本次提问的qid为%d' %qid)
 			if q_type in (1,2):
 				self.my_doctor.take_question(qid)
 			if times <= 1:
@@ -263,7 +263,7 @@ if __name__ == '__main__':
 								is_summary = int(input('''
 				是否写总结：
 					0：不写总结
-					非0数字：写总结
+					1：写总结
 					非数字：退出
 请选择：'''))			
 							except:
@@ -311,20 +311,18 @@ if __name__ == '__main__':
 					5：互联网医院
 					6：英威诺
 					7：搜狗健康（暂时不支持）
-					其他：退出
+					其他：输入类型源码(如xywy)
 				二.提问类型：
 					1：免费
 					2：悬赏
 					3：指定
-					其他：退出
 				三.金额(数字，单位分，默认300)
 				四.问答轮次(数字，默认1)
 				五.一级科室(默认内科)
 				六.二级科室(默认呼吸内科)
 				六.是否写总结(默认不写总结)
 					0：不写总结
-					非0数字：写总结
-					非数字：退出
+					1：写总结
 				五.医生ID(数字，默认117333219)
 				七.患者ID(数字，默认456654)
 				八.问题内容(不可出现英文逗号)
@@ -350,29 +348,78 @@ if __name__ == '__main__':
 						#循环赋值
 						for i in range(len(pat)):
 							if i == 0:
-								t_source = pat[i]
+								if pat[i] == '':
+									pass
+								if pat[i] == '1':
+									t_source = 200002
+
+								elif pat[i] == '2':
+									t_source = "xywyapp"
+
+								elif pat[i] == '3':
+									t_source = "pc"
+
+								elif pat[i] == '4':
+									t_source = "xiaomi"
+
+								elif pat[i] == '5':
+									t_source = "hlwyy"
+
+								elif pat[i] == '6':
+									t_source = "ywb"
+
+								elif pat[i] == '7':
+									print('暂不支持搜狗')
+
+								else:
+									t_source = pat[i]
+
 							elif i == 1:
-								t_q_type = pat[i]
+								if pat[i] == '':
+									pass
+								else:
+									t_q_type = int(pat[i])
 							elif i == 2:
-								t_pay_amount = pat[i]
+								if pat[i] == '':
+									pass
+								else:
+									t_pay_amount = int(pat[i])
 							elif i == 3:
-								t_times = pat[i]
+								if pat[i] == '':
+									pass
+								else:
+									t_times = int(pat[i])
 							elif i == 4:
-								t_firset_dep = pat[i]
+								if pat[i] == '':
+									pass
+								else:
+									t_firset_dep = pat[i]
 							elif i == 5:
-								t_second_dep = pat[i]
+								if pat[i] == '':
+									pass
+								else:
+									t_second_dep = pat[i]
 							elif i == 6:
-								t_is_summary = pat[i]
+								if pat[i] == '':
+									pass
+								else:
+									t_is_summary = int(pat[i])
 							elif i == 7:
-								t_did == pat[i]
+								if pat[i] == '':
+									pass
+								else:
+									t_did = int(pat[i])
 							elif i == 8:
-								t_user_id == pat[i]
+								if pat[i] == '':
+									pass
+								else:
+									t_user_id = int(pat[i])
 							elif i == 9:
 								t_content = pat[i]
 							else:
 								break
-							test_4 =  Im_Test(t_did)
-							test_4.run_test(source=t_source,q_type=t_q_type,pay_amount=t_pay_amount,times=t_times,firset_dep=t_firset_dep,second_dep=t_second_dep,is_summary=t_is_summary,did=t_did,user_id=t_user_id,content=t_content)
+						test_4 = Im_Test(did=t_did)
+						test_4.run_test(source=t_source,q_type=t_q_type,pay_amount=t_pay_amount,times=t_times,firset_dep=t_firset_dep,second_dep=t_second_dep,is_summary=t_is_summary,did=t_did,user_id=t_user_id,content=t_content)
 
 				else:
 					exit('感谢使用')

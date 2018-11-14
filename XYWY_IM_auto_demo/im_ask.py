@@ -40,7 +40,7 @@ class Ask(object):
 			print(e.read()).devode('utf-8')
 		return page
 
-	def baidu_page(self, q_type, user_id=456654, doctor_ids=117333219, pay_amount=300, firset_dep='内科', second_dep='呼吸内科'):
+	def baidu_page(self, q_type, user_id=456654, doctor_ids=117333219, pay_amount=300, firset_dep='内科', second_dep='呼吸内科', content=''):
 		#百度来源提问—
 		if q_type == 1:
 			type_name = '免费'
@@ -56,6 +56,10 @@ class Ask(object):
 			'Connection': 'keep-alive',
 			'Content-Type': 'application/x-www-form-urlencoded'
 		}
+		if content == '':
+			my_content = '自动化一级科室：%s，二级科室：%s，百度%s问题-%d' %(firset_dep, second_dep, type_name, self.msg_id_origin)
+		else:
+			my_content = content
 		data = {
 			'qid': '%d'%(self.now_time),
 			'resource_id': 200002,
@@ -66,7 +70,7 @@ class Ask(object):
 			'patient_age_month': 0,
 			'patient_age_day': 0,
 			'patient_phone': 17888888888,
-			'content': '自动化一级科室：%s，二级科室：%s,百度%s问题-%d' %(firset_dep, second_dep, type_name, self.msg_id_origin),
+			'content': my_content,
 			'pic_urls': '',
 			'q_type': q_type,
 			'order_id': 'rtqa_%d' %(self.now_time),
@@ -153,4 +157,4 @@ if __name__ == '__main__':
 	#print(K)
 	#if 'Success!' in K:
 	#	print(1)
-	A.other_page('xywyapp',q_type=3)
+	A.other_page('xiaomi')
