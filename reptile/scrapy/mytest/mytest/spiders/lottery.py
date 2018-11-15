@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from ..items import MytestItem
 from bs4 import BeautifulSoup
+import re
 
 class LotterySpider(scrapy.Spider):
 	name = 'lottery'
@@ -14,11 +16,11 @@ class LotterySpider(scrapy.Spider):
 			yield scrapy.Request(url=url, callback=self.parse)
  
 	def parse(self, response):
+		print(response)
 		if  response is None:
 			return
-		soup = BeautifulSoup(response,'html.parser', from_encoding='utf8')
-		r_balls, b_ball, mdate = self._get_new_data(soup)
-		return r_balls, b_ball, mdate
+		soup = BeautifulSoup(response.text,'html.parser')
+		self._get_new_data(soup)
 		
 	def _get_new_data(self, soup):
 		#根据页面元素匹配获取数字
@@ -32,8 +34,8 @@ class LotterySpider(scrapy.Spider):
 		
 		b_ball = soup.find_all('em', class_="")
 		for data in b_ball:
-			item['blue_ball']=(data.get_text())
-			print(blue_ball)
+			item['blue']=(data.get_text())
+			print(item['blue'])
 		
 		mydate = soup.find_all('td', align='center')
 		for edate in mydate:
@@ -42,6 +44,6 @@ class LotterySpider(scrapy.Spider):
 			if match:
 				item['m_date']=(match.pop())
 		
-		print(item['blue_ball'])
+		print(item['blue'])
 
 		return item

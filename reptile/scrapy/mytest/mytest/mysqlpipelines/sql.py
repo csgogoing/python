@@ -2,12 +2,12 @@ import mysql.connector
 from mytest import settings
 
 MYSQL_HOSTS = settings.MYSQL_HOSTS = '127.0.0.1'
-MYSQL_USER = settings.MYSQL_USER = 'ROOT'
+MYSQL_USER = settings.MYSQL_USER = 'root'
 MYSQL_PASSWORD = settings.MYSQL_PASSWORD = 'test123'
 MYSQL_PORT = settings.MYSQL_PORT = '3306'
-MYSQL_DB = settings.MYSQL_DB = 'test'
+MYSQL_DB = settings.MYSQL_DB = 'mytest'
 
-cdx = mysql.connector.connect(user=MYSQL_USER, password=MYSQL_PASSWORD, host=MYSQL_HOSTS, database=MYSQL_DB)
+cnx = mysql.connector.connect(user=MYSQL_USER, password=MYSQL_PASSWORD, host=MYSQL_HOSTS, database=MYSQL_DB)
 cur = cnx.cursor(buffered=True)
 
 class Sql:

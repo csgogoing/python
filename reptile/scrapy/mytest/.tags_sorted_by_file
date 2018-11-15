@@ -1,0 +1,68 @@
+execute	entrypoint.py	/^from scrapy.cmdline import execute$/;"	i
+MytestItem	mytest\items.py	/^class MytestItem(scrapy.Item):$/;"	c
+blue	mytest\items.py	/^    blue = scrapy.Field()$/;"	v	class:MytestItem
+m_date	mytest\items.py	/^    m_date = scrapy.Field()$/;"	v	class:MytestItem
+red_0	mytest\items.py	/^    red_0 = scrapy.Field()$/;"	v	class:MytestItem
+red_1	mytest\items.py	/^    red_1 = scrapy.Field()$/;"	v	class:MytestItem
+red_2	mytest\items.py	/^    red_2 = scrapy.Field()$/;"	v	class:MytestItem
+red_3	mytest\items.py	/^    red_3 = scrapy.Field()$/;"	v	class:MytestItem
+red_4	mytest\items.py	/^    red_4 = scrapy.Field()$/;"	v	class:MytestItem
+red_5	mytest\items.py	/^    red_5 = scrapy.Field()$/;"	v	class:MytestItem
+scrapy	mytest\items.py	/^import scrapy$/;"	i
+MytestDownloaderMiddleware	mytest\middlewares.py	/^class MytestDownloaderMiddleware(object):$/;"	c
+MytestSpiderMiddleware	mytest\middlewares.py	/^class MytestSpiderMiddleware(object):$/;"	c
+from_crawler	mytest\middlewares.py	/^    def from_crawler(cls, crawler):$/;"	m	class:MytestDownloaderMiddleware
+from_crawler	mytest\middlewares.py	/^    def from_crawler(cls, crawler):$/;"	m	class:MytestSpiderMiddleware
+process_exception	mytest\middlewares.py	/^    def process_exception(self, request, exception, spider):$/;"	m	class:MytestDownloaderMiddleware
+process_request	mytest\middlewares.py	/^    def process_request(self, request, spider):$/;"	m	class:MytestDownloaderMiddleware
+process_response	mytest\middlewares.py	/^    def process_response(self, request, response, spider):$/;"	m	class:MytestDownloaderMiddleware
+process_spider_exception	mytest\middlewares.py	/^    def process_spider_exception(self, response, exception, spider):$/;"	m	class:MytestSpiderMiddleware
+process_spider_input	mytest\middlewares.py	/^    def process_spider_input(self, response, spider):$/;"	m	class:MytestSpiderMiddleware
+process_spider_output	mytest\middlewares.py	/^    def process_spider_output(self, response, result, spider):$/;"	m	class:MytestSpiderMiddleware
+process_start_requests	mytest\middlewares.py	/^    def process_start_requests(self, start_requests, spider):$/;"	m	class:MytestSpiderMiddleware
+signals	mytest\middlewares.py	/^from scrapy import signals$/;"	i
+spider_opened	mytest\middlewares.py	/^    def spider_opened(self, spider):$/;"	m	class:MytestDownloaderMiddleware
+spider_opened	mytest\middlewares.py	/^    def spider_opened(self, spider):$/;"	m	class:MytestSpiderMiddleware
+MytestItem	mytest\mysqlpipelines\pipelines.py	/^from mytest.items import MytestItem$/;"	i
+Sql	mytest\mysqlpipelines\pipelines.py	/^from .sql import Sql$/;"	i
+my_piplines	mytest\mysqlpipelines\pipelines.py	/^class my_piplines(object):$/;"	c
+process_item	mytest\mysqlpipelines\pipelines.py	/^	def process_item(self, item, spider):$/;"	m	class:my_piplines
+Sql	mytest\mysqlpipelines\sql.py	/^class Sql:$/;"	c
+cdx	mytest\mysqlpipelines\sql.py	/^cdx = mysql.connector.connect(user=MYSQL_USER, password=MYSQL_PASSWORD, host=MYSQL_HOSTS, database=MYSQL_DB)$/;"	v
+connector	mytest\mysqlpipelines\sql.py	/^import mysql.connector$/;"	i
+cur	mytest\mysqlpipelines\sql.py	/^cur = cnx.cursor(buffered=True)$/;"	v
+insert_lottery	mytest\mysqlpipelines\sql.py	/^	def insert_lottery(cls, red_0, red_1, red_2, red_3, red_4, red_5, blue, m_date):$/;"	m	class:Sql
+mysql	mytest\mysqlpipelines\sql.py	/^import mysql.connector$/;"	i
+select_date	mytest\mysqlpipelines\sql.py	/^	def select_date(cls, m_date):$/;"	m	class:Sql
+settings	mytest\mysqlpipelines\sql.py	/^from mytest import settings$/;"	i
+MytestPipeline	mytest\pipelines.py	/^class MytestPipeline(object):$/;"	c
+process_item	mytest\pipelines.py	/^    def process_item(self, item, spider):$/;"	m	class:MytestPipeline
+BOT_NAME	mytest\settings.py	/^BOT_NAME = 'mytest'$/;"	v
+HTTPCACHE_DIR	mytest\settings.py	/^HTTPCACHE_DIR = 'httpcache'$/;"	v
+HTTPCACHE_ENABLED	mytest\settings.py	/^HTTPCACHE_ENABLED = True$/;"	v
+HTTPCACHE_EXPIRATION_SECS	mytest\settings.py	/^HTTPCACHE_EXPIRATION_SECS = 0$/;"	v
+HTTPCACHE_IGNORE_HTTP_CODES	mytest\settings.py	/^HTTPCACHE_IGNORE_HTTP_CODES = []$/;"	v
+HTTPCACHE_STORAGE	mytest\settings.py	/^HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'$/;"	v
+ITEM_PIPELINES	mytest\settings.py	/^ITEM_PIPELINES = {$/;"	v
+MYSQL_DB	mytest\settings.py	/^MYSQL_DB = 'mytest'/;"	v
+MYSQL_HOSTS	mytest\settings.py	/^MYSQL_HOSTS = '127.0.0.1'$/;"	v
+MYSQL_PASSWORD	mytest\settings.py	/^MYSQL_PASSWORD = 'test123'$/;"	v
+MYSQL_PORT	mytest\settings.py	/^MYSQL_PORT = '3306'$/;"	v
+MYSQL_USER	mytest\settings.py	/^MYSQL_USER = 'root'$/;"	v
+NEWSPIDER_MODULE	mytest\settings.py	/^NEWSPIDER_MODULE = 'mytest.spiders'$/;"	v
+ROBOTSTXT_OBEY	mytest\settings.py	/^ROBOTSTXT_OBEY = True$/;"	v
+SPIDER_MODULES	mytest\settings.py	/^SPIDER_MODULES = ['mytest.spiders']$/;"	v
+BeautifulSoup	mytest\spiders\lottery.py	/^from bs4 import BeautifulSoup$/;"	i
+LotterySpider	mytest\spiders\lottery.py	/^class LotterySpider(scrapy.Spider):$/;"	c
+_get_new_data	mytest\spiders\lottery.py	/^	def _get_new_data(self, soup):$/;"	m	class:LotterySpider
+allowed_domains	mytest\spiders\lottery.py	/^	allowed_domains = ['kaijiang.zhcw.com']$/;"	v	class:LotterySpider
+name	mytest\spiders\lottery.py	/^	name = 'lottery'$/;"	v	class:LotterySpider
+parse	mytest\spiders\lottery.py	/^	def parse(self, response):$/;"	m	class:LotterySpider
+scrapy	mytest\spiders\lottery.py	/^import scrapy$/;"	i
+start_requests	mytest\spiders\lottery.py	/^	def start_requests(self):$/;"	m	class:LotterySpider
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.8	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
