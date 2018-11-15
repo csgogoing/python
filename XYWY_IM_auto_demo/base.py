@@ -1,5 +1,6 @@
 #coding=utf-8
 from selenium import webdriver
+import sys
 
 class Page(object):
 	'''
@@ -14,6 +15,9 @@ class Page(object):
 		while retry < 4:
 			try:
 				self.driver = webdriver.Firefox()
+				self.driver.implicitly_wait(5)
+				self.driver.maximize_window()
+				self.timeout = 30
 			except:
 				print('第%d次调起firefox浏览器失败，正在重试，共尝试3次' %retry)
 				retry = retry + 1
@@ -22,22 +26,19 @@ class Page(object):
 					r_retry = 1
 					while r_retry < 4:
 						try:
-							self.driver = webdriver.Chrome()
+							self.driver = webdriver.Chrome(executable_path='chromedriver.exe')
+							self.driver.implicitly_wait(5)
+							self.driver.maximize_window()
+							self.timeout = 30
 						except:
 							print('第%d次调起Chrome浏览器失败，正在重试，共尝试3次' %r_retry)
 							r_retry = r_retry + 1
 						else:
 							break
+					sys.exit('无法调起浏览器，请联系管理员')
+					print('调起浏览器成功')
 			else:
 				break
-
-		if r_retry == 4:
-			exit('无法调起浏览器，请联系管理员')
-		print('调起浏览器成功')
-		self.driver.implicitly_wait(5)
-		self.driver.maximize_window()
-		self.timeout = 30
-
 
 	def find_element(self, *loc):
 		return self.driver.find_element(*loc)

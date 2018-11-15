@@ -3,6 +3,7 @@ from base import Page
 from im_ask import Ask
 from im_doc_answer import login
 import re
+import sys
 
 class Im_Test():
 	def __init__(self, did=117333219):
@@ -15,7 +16,7 @@ class Im_Test():
 			result, order_id = self.my_ask.baidu_page(q_type, user_id=user_id, doctor_ids=did, pay_amount=pay_amount, firset_dep=firset_dep, second_dep=second_dep, content=content)
 			if result == False:
 				return
-			qid = int(self.my_doctor.get_id(user_id))
+			qid = int(self.my_ask.get_id(user_id))
 			print('本次提问的qid为%d' %qid)
 			if q_type in (1,2):
 				self.my_doctor.take_question(qid)
@@ -37,9 +38,9 @@ class Im_Test():
 			if result == False:
 				return
 			if q_type == 3:
-				qid = int(self.my_doctor.get_id(user_id, zd=1, did=did))
+				qid = int(self.my_ask.get_id(user_id, zd=1, did=did))
 			else:
-				qid = int(self.my_doctor.get_id(user_id))
+				qid = int(self.my_ask.get_id(user_id))
 			print(qid)
 			self.my_doctor.take_question(qid)
 			if times <= 1:
@@ -80,14 +81,14 @@ if __name__ == '__main__':
 	while True:
 		try:
 			choose = int(input('''
-			1：仅创建问题
-			2：创建问题+回答
-			3：创建问题+问答20轮次
-			4：创建问题+问答自定义
-			其他：退出
+		1：仅创建问题
+		2：创建问题+回答
+		3：创建问题+问答20轮次
+		4：创建问题+问答自定义
+		其他：退出
 请选择：'''))
 		except:
-			exit('感谢使用')
+			sys.exit('感谢使用')
 		else:
 			my_ask = Ask()
 			while True:
@@ -95,244 +96,251 @@ if __name__ == '__main__':
 				if choose == 1:
 					try:
 						m_source = int(input('''
-				问题类型：
-					1：百度
-					2：寻医问药APP
-					3：PC
-					4：小米
-					5：互联网医院
-					6：英威诺
-					7：搜狗健康（暂时不支持）
-					其他数字：返回
-					空格：退出
+			问题类型：
+				1：百度
+				2：寻医问药APP
+				3：PC
+				4：小米
+				5：互联网医院
+				6：英威诺
+				7：搜狗健康（暂时不支持）
+				其他数字：返回
+				空格：退出
 请选择：'''))		
 						if m_source not in range(1,8):
 							print('返回上一级菜单')
 							break
 					except:
-						exit('感谢使用')
+						sys.exit('感谢使用')
 					else:
 						try:
 							m_q_type = int(input('''
-				提问类型：
-					1：免费
-					2：悬赏
-					3：指定(医生ID：117333219)
-					其他数字：返回
-					空格：退出
+			提问类型：
+				1：免费
+				2：悬赏
+				3：指定(医生ID：117333219)
+				其他数字：返回
+				空格：退出
 请选择：'''))				
 							if m_q_type not in (1,2,3):
 								print('返回上一级菜单')
 								break
+							if m_q_type == 3:
+								doctor_id=117333219
+							else:
+								doctor_id=''
 						except:
-							exit('感谢使用')
+							sys.exit('感谢使用')
 						else:
 							if m_source == 1:
 								source = 200002
-								my_ask.baidu_page(m_q_type, user_id=456654, doctor_ids=117333219, pay_amount=300, firset_dep='内科', second_dep='呼吸内科')
+								my_ask.baidu_page(m_q_type, user_id=456654, doctor_ids=doctor_id, pay_amount=300, firset_dep='内科', second_dep='呼吸内科')
+								qid = my_ask.get_id(456654)
+								print('本次提问的qid为%d'%qid)
 
-							elif m_source == 2:
-								source = "xywyapp"
-								my_ask.other_page(source, uid=456654, q_type=m_q_type, doctor_ids=117333219, pay_type=1)
+							elif m_source in (2,3,4,5,6,7):
+								if m_source == 2:
+									source = "xywyapp"
 
-							elif m_source == 3:
-								source = "pc"
-								my_ask.other_page(source, uid=456654, q_type=m_q_type, doctor_ids=117333219, pay_type=1)
+								elif m_source == 3:
+									source = "pc"
 
-							elif m_source == 4:
-								source = "xiaomi"
-								my_ask.other_page(source, uid=456654, q_type=m_q_type, doctor_ids=117333219, pay_type=1)
+								elif m_source == 4:
+									source = "xiaomi"
 
-							elif m_source == 5:
-								source = "hlwyy"
-								my_ask.other_page(source, uid=456654, q_type=m_q_type, doctor_ids=117333219, pay_type=1)
+								elif m_source == 5:
+									source = "hlwyy"
 
-							elif m_source == 6:
-								source = "ywb"
-								my_ask.other_page(source, uid=456654, q_type=m_q_type, doctor_ids=117333219, pay_type=1)
+								elif m_source == 6:
+									source = "ywb"
 
-							elif m_source == 7:
-								print('暂不支持搜狗')
+								elif m_source == 7:
+									print('暂不支持搜狗,返回上一级菜单')
+									break
+
+								my_ask.other_page(source, uid=456654, q_type=m_q_type, doctor_ids=doctor_id, pay_type=1)
+								qid = my_ask.get_id(456654)
+								print('本次提问的qid为%d'%qid)
 
 							else:
+								print('返回上一级菜单')
 								break
+
 
 				#选择为2
 				elif choose ==2:
 					try:
 						m_source = int(input('''
-				问题类型：
-					1：百度
-					2：寻医问药APP
-					3：PC
-					4：小米
-					5：互联网医院
-					6：英威诺
-					7：搜狗健康（暂时不支持）
-					其他数字：返回
-					空格：退出
+			问题类型：
+				1：百度
+				2：寻医问药APP
+				3：PC
+				4：小米
+				5：互联网医院
+				6：英威诺
+				7：搜狗健康（暂时不支持）
+				其他数字：返回
+				空格：退出
 请选择：'''))		
 						if m_source not in range(1,8):
 							print('返回上一级菜单')
 							break
 					except:
-						exit('感谢使用')
+						sys.exit('感谢使用')
 					else:
 						try:
 							m_q_type = int(input('''
-				提问类型：
-					1：免费
-					2：悬赏
-					3：指定(医生ID：117333219)
-					其他数字：返回
-					空格：退出
+			提问类型：
+				1：免费
+				2：悬赏
+				3：指定(医生ID：117333219)
+				其他数字：返回
+				空格：退出
 请选择：'''))				
 							if m_q_type not in (1,2,3):
 								print('返回上一级菜单')
 								break
+							if m_q_type == 3:
+								doctor_id=117333219
+							else:
+								doctor_id=''
 						except:
-							exit('感谢使用')
+							sys.exit('感谢使用')
 						else:
 							test_2 =  Im_Test()
 							if m_source == 1:
 								source = 200002
-								test_2.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=1, is_summary=0)
 
 							elif m_source == 2:
 								source = "xywyapp"
-								test_2.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=1, is_summary=0)
 
 							elif m_source == 3:
 								source = "pc"
-								test_2.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=1, is_summary=0)
 
 							elif m_source == 4:
 								source = "xiaomi"
-								test_2.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=1, is_summary=0)
 
 							elif m_source == 5:
 								source = "hlwyy"
-								test_2.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=1, is_summary=0)
 
 							elif m_source == 6:
 								source = "ywb"
-								test_2.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=1, is_summary=0)
 
 							elif m_source == 7:
 								print('暂不支持搜狗')
 
 							else:
 								break
+							test_2.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=1, is_summary=0, did=doctor_id)
 
 				elif choose == 3:
 					try:
 						m_source = int(input('''
-				问题类型：
-					1：百度
-					2：寻医问药APP
-					3：PC
-					4：小米
-					5：互联网医院
-					6：英威诺
-					7：搜狗健康（暂时不支持）
-					其他数字：返回
-					空格：退出
+			问题类型：
+				1：百度
+				2：寻医问药APP
+				3：PC
+				4：小米
+				5：互联网医院
+				6：英威诺
+				7：搜狗健康（暂时不支持）
+				其他数字：返回
+				空格：退出
 请选择：'''))		
 						if m_source not in range(1,8):
 							print('返回上一级菜单')
 							break
 					except:
-						exit('感谢使用')
+						sys.exit('感谢使用')
 					else:
 						try:
 							m_q_type = int(input('''
-				提问类型：
-					1：免费
-					2：悬赏
-					3：指定(医生ID：117333219)
-					其他数字：返回
-					空格：退出
+			提问类型：
+				1：免费
+				2：悬赏
+				3：指定(医生ID：117333219)
+				其他数字：返回
+				空格：退出
 请选择：'''))				
 							if m_q_type not in (1,2,3):
 								print('返回上一级菜单')
 								break
+							if m_q_type == 3:
+								doctor_id=117333219
+							else:
+								doctor_id=''
 						except:
-							exit('感谢使用')
+							sys.exit('感谢使用')
 						else:
 							try:
 								is_summary = int(input('''
-				是否写总结：
-					0：不写总结
-					1：写总结
-					非数字：退出
+			是否写总结：
+				0：不写总结
+				1：写总结
+				非数字：退出
 请选择：'''))			
 							except:
-								exit('感谢使用')
+								sys.exit('感谢使用')
 							else:
 								test_3 =  Im_Test()
 								if m_source == 1:
 									source = 200002
-									test_3.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=20, is_summary=is_summary)
 
 								elif m_source == 2:
 									source = "xywyapp"
-									test_3.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=20, is_summary=is_summary)
 
 								elif m_source == 3:
 									source = "pc"
-									test_3.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=20, is_summary=is_summary)
 
 								elif m_source == 4:
 									source = "xiaomi"
-									test_3.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=20, is_summary=is_summary)
 
 								elif m_source == 5:
 									source = "hlwyy"
-									test_3.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=20, is_summary=is_summary)
 
 								elif m_source == 6:
 									source = "ywb"
-									test_3.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=20, is_summary=is_summary)
 
 								elif m_source == 7:
 									print('暂不支持搜狗')
 
 								else:
 									break
-
+								test_3.run_test(source=source, user_id=456654, q_type=m_q_type, pay_amount=300, times=20, is_summary=is_summary, did=doctor_id)
+								
 				elif choose == 4:
 					try:
 						m_source = input('''
-				一.问题类型：
-					1：百度
-					2：寻医问药APP
-					3：PC
-					4：小米
-					5：互联网医院
-					6：英威诺
-					7：搜狗健康（暂时不支持）
-					其他：输入类型源码(如xywy)
-				二.提问类型：
-					1：免费
-					2：悬赏
-					3：指定
-				三.金额(数字，单位分，默认300)
-				四.问答轮次(数字，默认1)
-				五.一级科室(默认内科)
-				六.二级科室(默认呼吸内科)
-				六.是否写总结(默认不写总结)
-					0：不写总结
-					1：写总结
-				五.医生ID(数字，默认117333219)
-				七.患者ID(数字，默认456654)
-				八.问题内容(不可出现英文逗号)
+			一.问题类型：
+				1：百度
+				2：寻医问药APP
+				3：PC
+				4：小米
+				5：互联网医院
+				6：英威诺
+				7：搜狗健康（暂时不支持）
+				其他：输入类型源码(如xywy)
+			二.提问类型：
+				1：免费
+				2：悬赏
+				3：指定
+			三.金额(数字，单位分，默认300)
+			四.问答轮次(数字，默认1)
+			五.一级科室(默认内科)
+			六.二级科室(默认呼吸内科)
+			六.是否写总结(默认不写总结)
+				0：不写总结
+				1：写总结
+			五.医生ID(数字，默认117333219)
+			七.患者ID(数字，默认456654)
+			八.问题内容(不可出现英文逗号)
 
-			请以‘英文逗号’分隔，输入所有内容，需按顺序输入，可以为空
-			如(1,2,,15)表示百度-悬赏-问答15轮次
+		请以‘英文逗号’分隔，输入所有内容，需按顺序输入，可以为空
+		如(1,2,,15)表示百度-悬赏-问答15轮次
 请输入：''')
 						pat = re.split(r'[,]',m_source)
 					except:
-						exit('感谢使用')
+						sys.exit('感谢使用')
 					else:
 						#初始化赋值
 						t_source = 200002
@@ -345,7 +353,7 @@ if __name__ == '__main__':
 						t_did = 117333219
 						t_user_id = 456654
 						t_content = ''
-						#循环赋值
+						#按顺序循环赋值自定义项
 						for i in range(len(pat)):
 							if i == 0:
 								if pat[i] == '':
@@ -418,8 +426,11 @@ if __name__ == '__main__':
 								t_content = pat[i]
 							else:
 								break
+							#兼容其它来源提问，需根据提问方式修改did是否为空
 						test_4 = Im_Test(did=t_did)
+						if t_source!=200002 & t_q_type==2:
+							t_did = ''
 						test_4.run_test(source=t_source,q_type=t_q_type,pay_amount=t_pay_amount,times=t_times,firset_dep=t_firset_dep,second_dep=t_second_dep,is_summary=t_is_summary,did=t_did,user_id=t_user_id,content=t_content)
 
 				else:
-					exit('感谢使用')
+					sys.exit('感谢使用')

@@ -1,13 +1,9 @@
 #coding=utf-8
-from urllib import request, parse
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from base import Page
 from time import sleep
-from bs4 import BeautifulSoup
-import requests
-import re
 
 class login(Page):
 	'''
@@ -21,7 +17,7 @@ class login(Page):
 
 	def login_doctor(self, did=117333219):
 		#登陆医生端
-		print('登陆医生端')
+		print('成功登陆医生端')
 		self.driver.get("http://test.dr.xywy.com/site/login")
 		self.driver.find_element_by_name('userlogin').send_keys('admin')
 		self.driver.find_element_by_name('password').send_keys('123456')
@@ -45,40 +41,6 @@ class login(Page):
 		self.driver.switch_to_window(handles[1])
 		sleep(2)
 
-
-	def get_id(self, user_id, zd=None, did=None):
-		#获取加密参数与cookie
-		url_login='http://test.admin.d.xywy.com/admin/user/login'
-		#传入的user_id查找页
-		url="http://test.admin.d.xywy.com/question/default/index?QuestionBaseSearch[keyword_type]=uid&QuestionBaseSearch[keyword]=%d"%user_id
-		headers={
-		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
-		}
-		req=requests.get(url_login)
-		m_value = re.findall(r'f" value="(.*)">', req.text)
-		cookies=req.cookies.get_dict()
-		#登录im后台
-		data={
-		'_csrf':m_value,
-		'Login[username]':'admin',
-		'Login[password]':'123456',
-		'Login[verifyCode]':'testme'
-		}
-		#登陆IM后台获取Cookie
-		req_login=requests.post(url_login,data=data,cookies=cookies)
-		a_cookies=req_login.cookies.get_dict()
-		#获取问题ID
-		request_qid=requests.get(url,cookies=a_cookies)
-		qids=re.findall(r'<td>(\d{5})</td>', request_qid.text)
-		qid = int(qids[0])
-		#置问题状态
-		if did:
-			request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d&zd=1&%d' %qid,did)
-		else:
-			request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d' %qid)
-
-		return qid
-
 	def take_question(self, qid):
 		#问题库抢题
 		#点击第1个问题
@@ -98,15 +60,9 @@ class login(Page):
 						print('抢题成功')
 						return
 			else:
-				scroolbar = self.driver.find_element_by_id('mCSB_2_dragger_vertical')
-				ActionChains(self.driver).drag_and_drop(scroolbar,My_questions[7]).perform()
-				for i in My_questions:
-					if int(i.get_attribute('data-qid')) == qid:
-						i.click()
-						self.Load_button()
-						self.driver.find_element_by_link_text('抢题').click()
-						print('抢题成功')
-						return
+				js3 = 'window.open("http://test.d.xywy.com/api-doctor/rob-question?qid=%d");' %qid
+				self.script(js3)
+				print('问题库问题过多，使用接口方式抢题')
 		print('问题库找不到提问的qid为%d的问题' %qid)
 
 	def answer_question(self, qid, is_summary):

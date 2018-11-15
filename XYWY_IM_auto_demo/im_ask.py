@@ -1,7 +1,10 @@
 #coding=utf-8
 import time
 from time import sleep
-from urllib import request, parse
+from urllib import request,parse
+import requests
+import re
+
 
 class Ask(object):
 	'''
@@ -10,6 +13,39 @@ class Ask(object):
 	def __init__(self):
 		self.msg_id_origin = 1
 		self.now_time = 0
+
+	def get_id(self, user_id, zd=None, did=None):
+		#获取加密参数与cookie
+		url_login='http://test.admin.d.xywy.com/admin/user/login'
+		#传入的user_id查找页
+		url="http://test.admin.d.xywy.com/question/default/index?QuestionBaseSearch[keyword_type]=uid&QuestionBaseSearch[keyword]=%d"%user_id
+		headers={
+		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
+		}
+		req=requests.get(url_login)
+		m_value = re.findall(r'f" value="(.*)">', req.text)
+		cookies=req.cookies.get_dict()
+		#登录im后台
+		data={
+		'_csrf':m_value,
+		'Login[username]':'admin',
+		'Login[password]':'123456',
+		'Login[verifyCode]':'testme'
+		}
+		#登陆IM后台获取Cookie
+		req_login=requests.post(url_login,data=data,cookies=cookies)
+		a_cookies=req_login.cookies.get_dict()
+		#获取问题ID
+		request_qid=requests.get(url,cookies=a_cookies)
+		qids=re.findall(r'<td>(\d{5})</td>', request_qid.text)
+		qid = int(qids[0])
+		#置问题状态
+		if did:
+			request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d&zd=1&%d' %qid,did)
+		else:
+			request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d' %qid)
+
+		return qid
 
 	def persue(self, qid, resource_id, user_id):
 		#追问接口
@@ -99,7 +135,7 @@ class Ask(object):
 			print('提问失败, 请重试或手动尝试')
 			return(False, self.now_time)
 
-	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids=117333219, pay_type=1, content=''):
+	def other_page(self, resource_id, uid=456654, q_type=2, doctor_ids='', pay_type=1, content=''):
 		#其他来源提问
 		url = 'http://test.api.d.xywy.com/user/question/ask?safe_source_tag_wws=DJWE23_oresdf@ads'
 		self.now_time = int(time.time())
@@ -149,6 +185,7 @@ class Ask(object):
 
 	def sougou_page():
 		pass
+
 if __name__ == '__main__':
 	#测试运行
 	A = Ask()
