@@ -21,6 +21,7 @@ MYSQL_USER	.\mytest\settings.py	/^MYSQL_USER = 'root'$/;"	v
 MytestDownloaderMiddleware	.\mytest\middlewares.py	/^class MytestDownloaderMiddleware(object):$/;"	c
 MytestItem	.\mytest\items.py	/^class MytestItem(scrapy.Item):$/;"	c
 MytestItem	.\mytest\mysqlpipelines\pipelines.py	/^from mytest.items import MytestItem$/;"	i
+MytestItem	.\mytest\spiders\lottery.py	/^from ..items import MytestItem$/;"	i
 MytestPipeline	.\mytest\pipelines.py	/^class MytestPipeline(object):$/;"	c
 MytestSpiderMiddleware	.\mytest\middlewares.py	/^class MytestSpiderMiddleware(object):$/;"	c
 NEWSPIDER_MODULE	.\mytest\settings.py	/^NEWSPIDER_MODULE = 'mytest.spiders'$/;"	v
@@ -31,9 +32,9 @@ Sql	.\mytest\mysqlpipelines\sql.py	/^class Sql:$/;"	c
 _get_new_data	.\mytest\spiders\lottery.py	/^	def _get_new_data(self, soup):$/;"	m	class:LotterySpider
 allowed_domains	.\mytest\spiders\lottery.py	/^	allowed_domains = ['kaijiang.zhcw.com']$/;"	v	class:LotterySpider
 blue	.\mytest\items.py	/^    blue = scrapy.Field()$/;"	v	class:MytestItem
-cdx	.\mytest\mysqlpipelines\sql.py	/^cdx = mysql.connector.connect(user=MYSQL_USER, password=MYSQL_PASSWORD, host=MYSQL_HOSTS, database=MYSQL_DB)$/;"	v
+cnx	.\mytest\mysqlpipelines\sql.py	/^cnx = mysql.connector.connect(user=MYSQL_USER, password=MYSQL_PASSWORD, host=MYSQL_HOSTS, database=MYSQL_DB)$/;"	v
 connector	.\mytest\mysqlpipelines\sql.py	/^import mysql.connector$/;"	i
-cur	.\mytest\mysqlpipelines\sql.py	/^cur = cnx.cursor(buffered=True)$/;"	v
+cur	.\mytest\mysqlpipelines\sql.py	/^cur = cnx.cursor()$/;"	v
 execute	.\entrypoint.py	/^from scrapy.cmdline import execute$/;"	i
 from_crawler	.\mytest\middlewares.py	/^    def from_crawler(cls, crawler):$/;"	m	class:MytestDownloaderMiddleware
 from_crawler	.\mytest\middlewares.py	/^    def from_crawler(cls, crawler):$/;"	m	class:MytestSpiderMiddleware
@@ -52,6 +53,7 @@ process_spider_exception	.\mytest\middlewares.py	/^    def process_spider_except
 process_spider_input	.\mytest\middlewares.py	/^    def process_spider_input(self, response, spider):$/;"	m	class:MytestSpiderMiddleware
 process_spider_output	.\mytest\middlewares.py	/^    def process_spider_output(self, response, result, spider):$/;"	m	class:MytestSpiderMiddleware
 process_start_requests	.\mytest\middlewares.py	/^    def process_start_requests(self, start_requests, spider):$/;"	m	class:MytestSpiderMiddleware
+re	.\mytest\spiders\lottery.py	/^import re$/;"	i
 red_0	.\mytest\items.py	/^    red_0 = scrapy.Field()$/;"	v	class:MytestItem
 red_1	.\mytest\items.py	/^    red_1 = scrapy.Field()$/;"	v	class:MytestItem
 red_2	.\mytest\items.py	/^    red_2 = scrapy.Field()$/;"	v	class:MytestItem

@@ -65,7 +65,6 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'mytest.pipelines.MytestPipeline': 400,
     'mytest.mysqlpipelines.pipelines.my_piplines': 1
 }
 

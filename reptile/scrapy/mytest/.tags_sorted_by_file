@@ -28,9 +28,9 @@ Sql	mytest\mysqlpipelines\pipelines.py	/^from .sql import Sql$/;"	i
 my_piplines	mytest\mysqlpipelines\pipelines.py	/^class my_piplines(object):$/;"	c
 process_item	mytest\mysqlpipelines\pipelines.py	/^	def process_item(self, item, spider):$/;"	m	class:my_piplines
 Sql	mytest\mysqlpipelines\sql.py	/^class Sql:$/;"	c
-cdx	mytest\mysqlpipelines\sql.py	/^cdx = mysql.connector.connect(user=MYSQL_USER, password=MYSQL_PASSWORD, host=MYSQL_HOSTS, database=MYSQL_DB)$/;"	v
+cnx	mytest\mysqlpipelines\sql.py	/^cnx = mysql.connector.connect(user=MYSQL_USER, password=MYSQL_PASSWORD, host=MYSQL_HOSTS, database=MYSQL_DB)$/;"	v
 connector	mytest\mysqlpipelines\sql.py	/^import mysql.connector$/;"	i
-cur	mytest\mysqlpipelines\sql.py	/^cur = cnx.cursor(buffered=True)$/;"	v
+cur	mytest\mysqlpipelines\sql.py	/^cur = cnx.cursor()$/;"	v
 insert_lottery	mytest\mysqlpipelines\sql.py	/^	def insert_lottery(cls, red_0, red_1, red_2, red_3, red_4, red_5, blue, m_date):$/;"	m	class:Sql
 mysql	mytest\mysqlpipelines\sql.py	/^import mysql.connector$/;"	i
 select_date	mytest\mysqlpipelines\sql.py	/^	def select_date(cls, m_date):$/;"	m	class:Sql
@@ -54,10 +54,12 @@ ROBOTSTXT_OBEY	mytest\settings.py	/^ROBOTSTXT_OBEY = True$/;"	v
 SPIDER_MODULES	mytest\settings.py	/^SPIDER_MODULES = ['mytest.spiders']$/;"	v
 BeautifulSoup	mytest\spiders\lottery.py	/^from bs4 import BeautifulSoup$/;"	i
 LotterySpider	mytest\spiders\lottery.py	/^class LotterySpider(scrapy.Spider):$/;"	c
+MytestItem	mytest\spiders\lottery.py	/^from ..items import MytestItem$/;"	i
 _get_new_data	mytest\spiders\lottery.py	/^	def _get_new_data(self, soup):$/;"	m	class:LotterySpider
 allowed_domains	mytest\spiders\lottery.py	/^	allowed_domains = ['kaijiang.zhcw.com']$/;"	v	class:LotterySpider
 name	mytest\spiders\lottery.py	/^	name = 'lottery'$/;"	v	class:LotterySpider
 parse	mytest\spiders\lottery.py	/^	def parse(self, response):$/;"	m	class:LotterySpider
+re	mytest\spiders\lottery.py	/^import re$/;"	i
 scrapy	mytest\spiders\lottery.py	/^import scrapy$/;"	i
 start_requests	mytest\spiders\lottery.py	/^	def start_requests(self):$/;"	m	class:LotterySpider
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
