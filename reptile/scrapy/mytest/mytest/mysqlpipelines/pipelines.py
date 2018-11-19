@@ -4,8 +4,6 @@ from mytest.items import MytestItem
 class my_piplines(object):
 	"""docstring for my_piplines"""
 	def process_item(self, item, spider):
-		print(item)
-		print(items)
 		if isinstance(item, MytestItem):
 			m_date = item['m_date']
 			ret = Sql.select_date(m_date)

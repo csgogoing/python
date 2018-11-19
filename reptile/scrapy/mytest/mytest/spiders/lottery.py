@@ -11,7 +11,9 @@ class LotterySpider(scrapy.Spider):
 
 	def start_requests(self):
 	#主爬虫
-		for i in range(1,2):
+		url0 = 'http://kaijiang.zhcw.com/zhcw/html/ssq/list.html'
+		yield scrapy.Request(url=url0, callback=self.parse)
+		for i in range(2,119):
 			url = 'http://kaijiang.zhcw.com/zhcw/html/ssq/list_%d.html' % i
 			yield scrapy.Request(url=url, callback=self.parse)
  
@@ -21,7 +23,7 @@ class LotterySpider(scrapy.Spider):
 		soup = BeautifulSoup(response.text,'html.parser')
 		items = self._get_new_data(soup)
 		return items
-		
+
 	def _get_new_data(self, soup):
 		#根据页面元素匹配获取数字
 		item = MytestItem()
@@ -38,5 +40,5 @@ class LotterySpider(scrapy.Spider):
 				item['blue']=b_ball.pop(0)
 				item['m_date']=mydate.pop(0)
 				items.append(item)
-
-		return item
+				item = MytestItem()
+		return items
