@@ -51,7 +51,7 @@ class Page(object):
 	def find_elements(self, *loc):
 		return self.driver.find_elements(*loc)
 
-	def open(self, url):
+	def open_url(self, url):
 		#打开网站
 		self.driver.get(url)
 

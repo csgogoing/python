@@ -4,21 +4,21 @@ from time import sleep
 from urllib import request,parse
 import requests
 import re
-
+import sys
 
 class Ask(object):
 	'''
+	提问等接口相关类
 	qtype:1 免费，2悬赏，3指定
 	'''
 	def __init__(self):
 		self.msg_id_origin = 1
 		self.now_time = 0
 
-	def get_id(self, user_id, zd=None, did=None):
+	def im_login(self):
 		#获取加密参数与cookie
 		url_login='http://test.admin.d.xywy.com/admin/user/login'
 		#传入的user_id查找页
-		url="http://test.admin.d.xywy.com/question/default/index?QuestionBaseSearch[keyword_type]=uid&QuestionBaseSearch[keyword]=%d"%user_id
 		headers={
 		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
 		}
@@ -33,23 +33,67 @@ class Ask(object):
 		'Login[verifyCode]':'testme'
 		}
 		#登陆IM后台获取Cookie
-		req_login=requests.post(url_login,data=data,cookies=cookies)
-		a_cookies=req_login.cookies.get_dict()
-		#获取问题ID
-		request_qid=requests.get(url,cookies=a_cookies)
-		qids=re.findall(r'<td>(\d{5})</td>', request_qid.text)
 		try:
-			qid = int(qids[0])
+			req_login=requests.post(url_login,data=data,cookies=cookies)
 		except:
-			print('创建问题失败')
-			return None
-		#置问题状态
-		if did:
-			request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d&zd=1&did=%d' %(qid,did))
-		else:
-			request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d' %qid)
+			return
+		self.im_cookies=req_login.cookies.get_dict()
 
-		return qid
+	def get_id(self, user_id=None, order_id=None, zd=None, did=None):
+		self.im_login()
+		if user_id:
+			url="http://test.admin.d.xywy.com/question/default/index?QuestionBaseSearch[keyword_type]=uid&QuestionBaseSearch[keyword]=%d"%user_id
+		elif order_id:
+			url="http://test.admin.d.xywy.com/question/default/index?QuestionBaseSearch[keyword_type]=cqid&QuestionBaseSearch[keyword]=%d"%order_id
+		else:
+			print('获取问题ID参数无效')
+			return None
+		#获取问题ID
+		count = 0
+		while count<6:
+			try:
+				request_qid=requests.get(url,cookies=self.im_cookies)
+			except:
+				sys.exit('请检查环境绑定及网络')
+			qids=re.findall(r'<td>(\d{5})</td>', request_qid.text)
+			try:
+				qid = int(qids[0])
+				#置问题状态
+				if did:
+					request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d&zd=1&did=%d' %(qid,did))
+				else:
+					request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d' %qid)
+				return qid
+			except:
+				sleep(1)
+				count = count+1
+		print('获取问题ID失败')
+		return None
+
+	def pay_question(self, pay_qid):
+		self.im_login()
+		url="http://test.admin.d.xywy.com/question/default/index?QuestionBaseSearch[keyword_type]=id&QuestionBaseSearch[keyword]=%d"%pay_qid
+		#判断是否为指定问题
+		try:
+			request_qid=requests.get(url,cookies=self.im_cookies)
+		except:
+			sys.exit('请检查环境绑定及网络')
+		html = etree.HTML(request_qid.text)
+		table=html.xpath('//tbody/tr/td/a/text()')
+		docid = int(table[1])
+		try:
+			if docid == 0:
+				result = request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d' %pay_qid).read()
+			else:
+				result = request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d&zd=1&did=%d' %(pay_qid,docid)).read()
+		except:
+			return(False)
+		else:
+			page = result.decode('utf-8')
+		if 'Success!' in page:
+			return(True)
+		else:
+			return(False)
 
 	def persue(self, qid, resource_id, user_id):
 		#追问接口
@@ -97,17 +141,19 @@ class Ask(object):
 		req = request.Request(url, headers=headers, data=data)
 		try:
 			page = request.urlopen(req).read()
-			page = page.decode('utf-8')
 		except:
 			print('请检查环境绑定及网络连接')
 			return(False)
+		else:
+			page = page.decode('utf-8')
+		#返回成功/失败的结果
 		if 'Success!' in page:
 			return(True)
 		else:
 			return(False)
 
 	def baidu_page(self, q_type, user_id=456654, doctor_ids=117333219, pay_amount=300, firset_dep='内科', second_dep='呼吸内科', content=''):
-		#百度来源提问—
+		#百度来源提问
 		if q_type == 1:
 			type_name = '免费'
 		elif q_type == 2:
@@ -131,7 +177,7 @@ class Ask(object):
 			'qid': '%d'%(self.now_time),
 			'resource_id': 200002,
 			'user_id': user_id,
-			'patient_name': '汪测试',
+			'patient_name': '汪测百度',
 			'patient_sex': 1,
 			'patient_age': 20,
 			'patient_age_month': 0,
@@ -182,7 +228,7 @@ class Ask(object):
 			'qid': '%d'%(self.now_time),
 			'source': resource_id,
 			'uid': user_id,
-			'patient_name': '张三',
+			'patient_name': '汪测其他',
 			'patient_sex': 1,
 			'patient_age': 20,
 			'patient_age_month': 0,
@@ -242,7 +288,7 @@ class Ask(object):
 			'partner_key': 'xunyiwenyao',
 			'source_key' : 'sgjk',
 			'user_id' : user_id,
-			'patient_name': '汪测试',
+			'patient_name': '汪测搜狗',
 			'patient_sex': 1,
 			'patient_age': 20,
 			'content': my_content,
@@ -280,8 +326,9 @@ class Ask(object):
 if __name__ == '__main__':
 	#测试运行
 	A = Ask()
+	A.get_id(117333512)
 	#A.baidu_page(2, user_id=456654)
-	K = A.persue(14366, 'xywyapp', 456654)
+	#K = A.persue(14366, 'xywyapp', 456654)
 	#print(K)
 	#if 'Success!' in K:
 	#	print(1)

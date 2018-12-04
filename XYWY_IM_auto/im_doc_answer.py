@@ -7,7 +7,7 @@ from time import sleep
 
 class login(Page):
 	'''
-	登陆类，定义当前页面登陆元素定位输入、登陆方式
+	医生端i、抢题、回答
 	'''
 	answer_num = 2
 
@@ -64,6 +64,7 @@ class login(Page):
 				js3 = 'window.open("http://test.d.xywy.com/api-doctor/rob-question?qid=%d");' %qid
 				self.script(js3)
 				print('问题库问题过多，使用接口方式抢题')
+				return
 		print('问题库找不到提问的qid为%d的问题' %qid)
 
 	def answer_question(self, qid, is_summary):
