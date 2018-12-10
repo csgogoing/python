@@ -1,8 +1,10 @@
 #coding=utf-8
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from base import Page
+import time
+from time import sleep
+from urllib import request,parse
+import requests
+import re
+import sys
 from time import sleep
 
 class login(Page):
@@ -16,56 +18,35 @@ class login(Page):
 	login_button_loc = (By.CLASS_NAME, 'bc39')
 
 	def login_doctor(self, did=117333219):
-		#登陆医生端
-		self.driver.get("http://test.dr.xywy.com/site/login")
-		self.driver.find_element_by_name('userlogin').send_keys('admin')
-		self.driver.find_element_by_name('password').send_keys('123456')
-		self.driver.find_element_by_xpath('//*[@id="loginForm"]/div[4]/button').click()
-		sleep(2)
-		#进入IM问答页
-		js1 = 'window.open("http://test.dr.xywy.com/account/pc-login?id=436558&user_id=%d");' %did
-		try:
-			self.script(js1)
-		except:
-			self.script(js1)
-		else:
-			pass
-		sleep(1)
-		js2 = 'window.open("http://test.d.xywy.com/doctor-client/im");'
-		self.script(js2)
-		handles = self.driver.window_handles
-		self.driver.close()
-		self.driver.switch_to_window(handles[2])
-		self.driver.close()
-		self.driver.switch_to_window(handles[1])
-		sleep(2)
+		#医平台登录
+		url_login = 'http://test.dr.xywy.com/site/login'
+		#传入的user_id查找页
+		self.headers = {
+		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
+		}
+		req=requests.get(url_login)
+		m_value = re.findall(r'f" value="(.*)">', req.text)
+		self.dr_cookies = req.cookies.get_dict()
+		#帐号密码
+		data = {
+		'_csrf':m_value,
+		'userlogin':'admin',
+		'password':'123456',
+		}
+		#注册_csrf
+		req_login = requests.get(url_login, headers=self.headers, data=data, cookies=self.dr_cookies)
+		#登录医生主页
+		dr_doc = requests.get(url_doc, headers=self.headers, cookies=self.dr_cookies)
+		self.dr_doc_cookies = dr_doc.cookies.get_dict()
+		#登录IM平台并获取cookie
+		doc_im = requests.get(url_im, headers=self.headers, cookies=self.dr_doc_cookies)
+		self.doc_im_cookies = dr_doc.cookies.get_dict()
 
 	def take_question(self, qid):
 		#问题库抢题
-		#点击第1个问题
-		if type(qid) != int:
-			return
-		handles = self.driver.window_handles
-		self.driver.switch_to_window(handles[0])
-		while True:
-			self.Load_button()
-			self.driver.find_element_by_xpath('//*[@class="message-status pr fYaHei clearfix"]/div[2]').click()
-			sleep(1)
-			My_questions = self.driver.find_elements_by_class_name('message-user-item')
-			if len(My_questions) < 8:
-				for i in My_questions:
-					if int(i.get_attribute('data-qid')) == qid:
-						i.click()
-						self.Load_button()
-						self.driver.find_element_by_link_text('抢题').click()
-						print('抢题成功')
-						return
-			else:
-				js3 = 'window.open("http://test.d.xywy.com/api-doctor/rob-question?qid=%d");' %qid
-				self.script(js3)
-				print('问题库问题过多，使用接口方式抢题')
-				return
-		print('问题库找不到提问的qid为%d的问题' %qid)
+		rob_qid = requests.get(url_rob, headers=self.headers, cookies=self.doc_im_cookies)
+		print(rob_qid.text)
+
 
 	def answer_question(self, qid, is_summary):
 		handles = self.driver.window_handles
