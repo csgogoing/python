@@ -107,7 +107,7 @@ class Ask(object):
 				'qid': qid,
 				'resource_id': resource_id,
 				'user_id': user_id,
-				#'expert_id': '117333219',
+				'expert_id': '68258667',
 				'content': '{"type":"text","text":"患者追问内容%d"}'%(self.msg_id_origin),
 				'msg_id': '%s' %(int(time.time())),
 				'atime': '%d' %(int(time.time())),
@@ -326,9 +326,9 @@ class Ask(object):
 if __name__ == '__main__':
 	#测试运行
 	A = Ask()
-	A.get_id(117333512)
+	#A.get_id(117333512)
 	#A.baidu_page(2, user_id=456654)
-	#K = A.persue(14366, 'xywyapp', 456654)
+	K = A.persue(15336, 200002, 123)
 	#print(K)
 	#if 'Success!' in K:
 	#	print(1)
