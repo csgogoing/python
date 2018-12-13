@@ -1,7 +1,9 @@
 from time import sleep
 from base import Page
 from im_ask import Ask
+#from im_doc_answer_browser import login_browser
 from im_doc_answer import login
+from im_doc_answer import answer_question
 import re
 import sys
 import random
@@ -9,8 +11,9 @@ import random
 class Im_Test():
 	#主类
 	def __init__(self, did=117333219):
-		self.my_doctor = login()
-		self.my_doctor.login_doctor(did)
+		#self.my_doctor = login_browser()
+		#self.my_doctor.login_doctor(did)
+		self.my_doctor = login(did)
 		self.my_ask = Ask()
 
 	def run_test(self, source=200002, q_type=2, pay_amount=300, times=20, firset_dep='内科',second_dep='呼吸内科', is_summary=0, did=117333219, user_id=456654, content=''):
@@ -19,7 +22,7 @@ class Im_Test():
 			result, order_id = self.my_ask.baidu_page(q_type, user_id=user_id, doctor_ids=did, pay_amount=pay_amount, firset_dep=firset_dep, second_dep=second_dep, content=content)
 			if result == False:
 				return
-			qid = self.my_ask.get_id(order_id=order_id)
+			uid, qid = self.my_ask.get_id(order_id=order_id)
 			#处理提问失败情况
 			if qid == None:
 				return
@@ -35,7 +38,7 @@ class Im_Test():
 				for i in range(times-1):
 					self.my_ask.persue(order_id, source, user_id)
 					sleep(1)
-					self.my_doctor.answer_ques_20(i+2)
+					self.my_doctor.reply(i+2)
 					sleep(1)
 			else:
 				print('times输入错误')
@@ -96,6 +99,7 @@ class Im_Test():
 					sleep(1)
 			else:
 				print('times输入错误')
+		print("-------------------------测试通过-------------------------")
 
 	def quit():
 		self.driver.quit()

@@ -50,12 +50,15 @@ class Ask(object):
 			return None
 		#获取问题ID
 		count = 0
-		while count<6:
+		while count<10:
+			#重复获取QID10次
 			try:
 				request_qid=requests.get(url,cookies=self.im_cookies)
 			except:
 				sys.exit('请检查环境绑定及网络')
-			qids=re.findall(r'<td>(\d{5})</td>', request_qid.text)
+			#qids=re.findall(r'data-key="(\d{5})"', request_qid.text)
+			qids=re.findall(r'<td>(.*)</td>', request_qid.text)
+			print(qids)
 			try:
 				qid = int(qids[0])
 				#置问题状态
@@ -107,7 +110,7 @@ class Ask(object):
 				'qid': qid,
 				'resource_id': resource_id,
 				'user_id': user_id,
-				'expert_id': '68258667',
+				#'expert_id': '68258667',
 				'content': '{"type":"text","text":"患者追问内容%d"}'%(self.msg_id_origin),
 				'msg_id': '%s' %(int(time.time())),
 				'atime': '%d' %(int(time.time())),
@@ -326,9 +329,9 @@ class Ask(object):
 if __name__ == '__main__':
 	#测试运行
 	A = Ask()
-	#A.get_id(117333512)
+	A.get_id(user_id=117333610)
 	#A.baidu_page(2, user_id=456654)
-	K = A.persue(15336, 200002, 123)
+	#K = A.persue(15336, 200002, 123)
 	#print(K)
 	#if 'Success!' in K:
 	#	print(1)
