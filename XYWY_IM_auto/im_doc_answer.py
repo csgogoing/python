@@ -51,7 +51,9 @@ class login():
 		print(rob_qid.text)
 		return True
 
-	def answer_question(self, qid, is_summary):
+	def answer_question(self, qid, uid, is_summary):
+		self.qid = qid
+		self.uid = uid
 		self.ws = websocket.create_connection("ws://10.20.4.22:8078/websocket")
 		self.ws.send('{"userid": "%d", "act": "CONNECT"}'%self.did)
 		print("Receiving...")
@@ -60,7 +62,7 @@ class login():
 			print(result)
 			if json.loads(result)['act'] == "CONNECT_ACK":
 				for i in range(4):
-					self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "回复内容1","qid": "15422"},"act": "PUB"}'%(self.did,self.user_id,int(round(time.time() * 1000))))
+					self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "回复内容1","qid": %d},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),self.qid))
 					sleep(0.5)
 			print('完成')
 			if is_summary == 0:
@@ -78,12 +80,12 @@ class login():
 			result = self.ws.recv()
 			print(result)
 			if json.loads(result)['act'] == "PUB":
-				self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "回复内容%d","qid": "15422"},"act": "PUB"}'%(self.did,self.user_id,int(round(time.time() * 1000)),times))
+				self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "回复内容%d","qid": "%d"},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),times,self.qid))
 				print('医生第%d次回复'%times)
 				return
 
 if __name__ == '__main__':
 	A = login(117333219)
-	A.take_question(15433)
-	#B = answer_question(15422,0)
-	#B.reply(3)
+	A.take_question(15495)
+	A.answer_question(15495,117333623,0)
+	#A.reply(3)

@@ -2,6 +2,7 @@
 import time
 from time import sleep
 from urllib import request,parse
+from lxml import etree
 import requests
 import re
 import sys
@@ -50,28 +51,29 @@ class Ask(object):
 			return None
 		#获取问题ID
 		count = 0
-		while count<10:
+		while count<5:
 			#重复获取QID10次
 			try:
 				request_qid=requests.get(url,cookies=self.im_cookies)
 			except:
 				sys.exit('请检查环境绑定及网络')
-			#qids=re.findall(r'data-key="(\d{5})"', request_qid.text)
-			qids=re.findall(r'<td>(.*)</td>', request_qid.text)
-			print(qids)
+
+			elements = etree.HTML(request_qid.text)
+			qids = elements.xpath('//tbody/tr[1]/td[1]/text()')[0]
 			try:
-				qid = int(qids[0])
+				qid = int(qids)
+				uid = int(elements.xpath('//tbody/tr[1]/td[3]/a/text()')[0])
 				#置问题状态
 				if did:
 					request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d&zd=1&did=%d' %(qid,did))
 				else:
 					request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d' %qid)
-				return qid
+				return qid,uid
 			except:
 				sleep(1)
 				count = count+1
 		print('获取问题ID失败')
-		return None
+		return None,None
 
 	def pay_question(self, pay_qid):
 		self.im_login()
@@ -329,7 +331,7 @@ class Ask(object):
 if __name__ == '__main__':
 	#测试运行
 	A = Ask()
-	A.get_id(user_id=117333610)
+	A.get_id(user_id=117333618)
 	#A.baidu_page(2, user_id=456654)
 	#K = A.persue(15336, 200002, 123)
 	#print(K)

@@ -3,7 +3,6 @@ from base import Page
 from im_ask import Ask
 #from im_doc_answer_browser import login_browser
 from im_doc_answer import login
-from im_doc_answer import answer_question
 import re
 import sys
 import random
@@ -11,30 +10,30 @@ import random
 class Im_Test():
 	#主类
 	def __init__(self, did=117333219):
+		self.did = did
 		#self.my_doctor = login_browser()
 		#self.my_doctor.login_doctor(did)
 		self.my_doctor = login(did)
 		self.my_ask = Ask()
 
-	def run_test(self, source=200002, q_type=2, pay_amount=300, times=20, firset_dep='内科',second_dep='呼吸内科', is_summary=0, did=117333219, user_id=456654, content=''):
+	def run_test(self, source=200002, q_type=2, pay_amount=300, times=20, firset_dep='内科',second_dep='呼吸内科', is_summary=0, user_id=456654, content='', did=117333219):
 		if source==200002:
 			#百度来源提问
-			result, order_id = self.my_ask.baidu_page(q_type, user_id=user_id, doctor_ids=did, pay_amount=pay_amount, firset_dep=firset_dep, second_dep=second_dep, content=content)
+			result, order_id = self.my_ask.baidu_page(q_type, user_id=user_id, doctor_ids=self.did, pay_amount=pay_amount, firset_dep=firset_dep, second_dep=second_dep, content=content)
 			if result == False:
 				return
-			uid, qid = self.my_ask.get_id(order_id=order_id)
+			qid, uid = self.my_ask.get_id(order_id=order_id)
 			#处理提问失败情况
 			if qid == None:
 				return
 			else:
-				qid = int(qid)
 				print('本次提问的qid为%d' %qid)
 			if q_type in (1,2):
 				self.my_doctor.take_question(qid)
 			if times <= 1:
-				self.my_doctor.answer_question(qid, is_summary)
+				self.my_doctor.answer_question(qid, uid, is_summary)
 			elif 1 < times < 21:
-				self.my_doctor.answer_question(qid, is_summary)
+				self.my_doctor.answer_question(qid, uid, is_summary)
 				for i in range(times-1):
 					self.my_ask.persue(order_id, source, user_id)
 					sleep(1)
@@ -95,7 +94,7 @@ class Im_Test():
 				for i in range(times-1):
 					self.my_ask.persue(qid, source, user_id)
 					sleep(1)
-					self.my_doctor.answer_ques_20(i+2)
+					self.my_doctor.reply(i+2)
 					sleep(1)
 			else:
 				print('times输入错误')
@@ -555,7 +554,7 @@ if __name__ == '__main__':
 						if t_source!=200002 & t_q_type==2:
 							t_did = ''
 						#兼容其它来源提问，需根据提问方式修改did是否为空
-						test_4.run_test(source=t_source,q_type=t_q_type,pay_amount=t_pay_amount,times=t_times,firset_dep=t_firset_dep,second_dep=t_second_dep,is_summary=t_is_summary,did=t_did,user_id=t_user_id,content=t_content)
+						test_4.run_test(source=t_source,q_type=t_q_type,pay_amount=t_pay_amount,times=t_times,firset_dep=t_firset_dep,second_dep=t_second_dep,is_summary=t_is_summary,user_id=t_user_id,content=t_content)
 
 				else:
 					sys.exit('感谢使用')
