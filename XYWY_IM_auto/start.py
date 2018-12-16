@@ -47,7 +47,7 @@ class Im_Test():
 			result, order_id = self.my_ask.sougou_page(q_type, user_id=user_id, doctor_ids=did, pay_amount=pay_amount, content=content)
 			if result == False:
 				return
-			qid = self.my_ask.get_id(order_id=order_id)
+			qid, uid = self.my_ask.get_id(order_id=order_id)
 			#处理提问失败情况
 			if qid == None:
 				return
@@ -57,13 +57,13 @@ class Im_Test():
 			if q_type in (1,2):
 				self.my_doctor.take_question(qid)
 			if times <= 1:
-				self.my_doctor.answer_question(qid, is_summary)
+				self.my_doctor.answer_question(qid, uid, is_summary)
 			elif 1 < times < 21:
-				self.my_doctor.answer_question(qid, is_summary)
+				self.my_doctor.answer_question(qid, uid, is_summary)
 				for i in range(times-1):
 					self.my_ask.persue(order_id, source, user_id)
 					sleep(1)
-					self.my_doctor.answer_ques_20(i+2)
+					self.my_doctor.reply(i+2)
 					sleep(1)
 			else:
 				print('times输入错误')
@@ -76,9 +76,9 @@ class Im_Test():
 			sleep(1)
 			#更改问题状态，根据问题是否为指定请求不同接口
 			if q_type == 3:
-				qid = self.my_ask.get_id(user_id=user_id, zd=1, did=did)
+				qid, uid = self.my_ask.get_id(user_id=user_id, zd=1, did=did)
 			else:
-				qid = self.my_ask.get_id(user_id=user_id)
+				qid, uid = self.my_ask.get_id(user_id=user_id)
 				self.my_doctor.take_question(qid)
 			#处理提问失败情况
 			if qid == None:
@@ -88,11 +88,11 @@ class Im_Test():
 				print('本次提问的qid为%d' %qid)
 			#根据用户输入的提问次数执行自动化
 			if times <= 1:
-				self.my_doctor.answer_question(qid, is_summary)
+				self.my_doctor.answer_question(qid, uid, is_summary)
 			elif 1 < times < 21:
-				self.my_doctor.answer_question(qid, is_summary)
+				self.my_doctor.answer_question(qid, uid, is_summary)
 				for i in range(times-1):
-					self.my_ask.persue(qid, source, user_id)
+					self.my_ask.persue(order_id, source, user_id)
 					sleep(1)
 					self.my_doctor.reply(i+2)
 					sleep(1)
@@ -223,7 +223,7 @@ if __name__ == '__main__':
 								break
 
 				#选择为2
-				elif choose ==2:
+				elif choose == 2:
 					try:
 						m_source = int(input('''
 			问题类型：
