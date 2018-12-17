@@ -90,7 +90,7 @@ class Im_Test():
 			sleep(1)
 			#更改问题状态，根据问题是否为指定请求不同接口
 			if q_type == 3:
-				qid, uid = self.my_ask.get_id(user_id=user_id, zd=1, did=did)
+				qid, uid = self.my_ask.get_id(user_id=user_id, zd=1, did=self.did)
 			else:
 				qid, uid = self.my_ask.get_id(user_id=user_id)
 				result = self.my_doctor.take_question(qid)
@@ -119,9 +119,6 @@ class Im_Test():
 			else:
 				print('times输入错误')
 		print("-------------------------测试通过-------------------------")
-
-	def quit():
-		self.driver.quit()
 
 
 
@@ -456,107 +453,109 @@ if __name__ == '__main__':
 							print('qid:%d支付失败'%m_qid)
 
 				elif choose == 6:
-					try:
-						execl_path=os.getcwd()+r'/data.xls'
-						book=xlrd.open_workbook(execl_path)
-						sheet=book.sheet_by_index(0)
-						nrows=sheet.nrows
-						ncols=sheet.ncols
-						row_data=[]
-						for row in range(1,nrows):
-						#获取每行数据
-							pat=sheet.row_values(row)
-							#初始化赋值
-							t_source = 200002
-							t_q_type = 2
-							t_pay_amount = 300
-							t_times = 20
-							t_firset_dep = '内科'
-							t_second_dep = '呼吸内科'
-							t_is_summary = 0
-							t_did = 117333219
-							t_user_id = random.randint(9999,999999)
-							t_content = ''
-							if pat[0] == '':
-								print('请向excel中输入数据')
-								break
-							#按顺序循环赋值自定义项
-							for i in range(len(pat)):
-								if i == 0:
-									if pat[i] == '':
-										pass
-									if int(pat[i]) == 1:
-										t_source = 200002
-									elif int(pat[i]) == 2:
-										t_source = "xywyapp"
-									elif int(pat[i]) == 3:
-										t_source = "pc"
-									elif int(pat[i]) == 4:
-										t_source = "xiaomi"
-									elif int(pat[i]) == 5:
-										t_source = "hlwyy"
-									elif int(pat[i]) == 6:
-										t_source = "ywb"
-									elif int(pat[i]) == 7:
-										t_source = "sgjk"
-									else:
-										if type() == float:
-											t_source = int(pat[i])
-										else:
-											t_source = pat[i]
-
-								elif i == 1:
-									if pat[i] == '':
-										pass
-									else:
-										t_q_type = int(pat[i])
-								elif i == 2:
-									if pat[i] == '':
-										pass
-									else:
-										t_pay_amount = int(pat[i])
-								elif i == 3:
-									if pat[i] == '':
-										pass
-									else:
-										t_times = int(pat[i])
-								elif i == 4:
-									if pat[i] == '':
-										pass
-									else:
-										t_firset_dep = pat[i]
-								elif i == 5:
-									if pat[i] == '':
-										pass
-									else:
-										t_second_dep = pat[i]
-								elif i == 6:
-									if pat[i] == '':
-										pass
-									else:
-										t_is_summary = int(pat[i])
-								elif i == 7:
-									if pat[i] == '':
-										pass
-									else:
-										t_did = int(pat[i])
-								elif i == 8:
-									if pat[i] == '':
-										pass
-									else:
-										t_user_id = int(pat[i])
-								elif i == 9:
-									t_content = pat[i]
+					#try:
+					execl_path=os.getcwd()+r'/data.xls'
+					book=xlrd.open_workbook(execl_path)
+					sheet=book.sheet_by_index(0)
+					nrows=sheet.nrows
+					ncols=sheet.ncols
+					row_data=[]
+					for row in range(1,nrows):
+					#获取每行数据
+						pat=sheet.row_values(row)
+						#初始化赋值
+						t_source = 200002
+						t_q_type = 2
+						t_pay_amount = 300
+						t_times = 20
+						t_firset_dep = '内科'
+						t_second_dep = '呼吸内科'
+						t_is_summary = 0
+						t_did = 117333219
+						t_user_id = random.randint(9999,999999)
+						t_content = ''
+						if pat[0] == '':
+							print('请向excel中输入数据')
+							break
+						#按顺序循环赋值自定义项
+						for i in range(len(pat)):
+							if i == 0:
+								if pat[i] == '':
+									pass
+								if int(pat[i]) == 1:
+									t_source = 200002
+								elif int(pat[i]) == 2:
+									t_source = "xywyapp"
+								elif int(pat[i]) == 3:
+									t_source = "pc"
+								elif int(pat[i]) == 4:
+									t_source = "xiaomi"
+								elif int(pat[i]) == 5:
+									t_source = "hlwyy"
+								elif int(pat[i]) == 6:
+									t_source = "ywb"
+								elif int(pat[i]) == 7:
+									t_source = "sgjk"
 								else:
-									break
-							test_4 = Im_Test(did=t_did)
-							if t_source!=200002 & t_q_type==2:
-								t_did = ''
-							#兼容其它来源提问，需根据提问方式修改did是否为空
-							test_4.run_test(source=t_source,q_type=t_q_type,pay_amount=t_pay_amount,times=t_times,firset_dep=t_firset_dep,second_dep=t_second_dep,is_summary=t_is_summary,user_id=t_user_id,content=t_content)
-					except Exception as e:
-						print(e)
-						sys.exit('出现错误')
+									if type() == float:
+										t_source = int(pat[i])
+									else:
+										t_source = pat[i]
+
+							elif i == 1:
+								if pat[i] == '':
+									pass
+								else:
+									t_q_type = int(pat[i])
+							elif i == 2:
+								if pat[i] == '':
+									pass
+								else:
+									t_pay_amount = int(pat[i])
+							elif i == 3:
+								if pat[i] == '':
+									pass
+								else:
+									t_times = int(pat[i])
+							elif i == 4:
+								if pat[i] == '':
+									pass
+								else:
+									t_firset_dep = pat[i]
+							elif i == 5:
+								if pat[i] == '':
+									pass
+								else:
+									t_second_dep = pat[i]
+							elif i == 6:
+								if pat[i] == '':
+									pass
+								else:
+									t_is_summary = int(pat[i])
+							elif i == 7:
+								if pat[i] == '':
+									pass
+								else:
+									t_did = int(pat[i])
+							elif i == 8:
+								if pat[i] == '':
+									pass
+								else:
+									t_user_id = int(pat[i])
+							elif i == 9:
+								t_content = pat[i]
+							else:
+								break
+						test_4 = Im_Test(did=t_did)
+						if t_source!=200002 & t_q_type==2:
+							t_did = ''
+						#兼容其它来源提问，需根据提问方式修改did是否为空
+						test_4.run_test(source=t_source,q_type=t_q_type,pay_amount=t_pay_amount,times=t_times,firset_dep=t_firset_dep,second_dep=t_second_dep,is_summary=t_is_summary,user_id=t_user_id,content=t_content)
+					# except Exception as e:
+					# 	print(e)
+					# 	sys.exit('出现错误')
+					# else:
+					break
 
 				else:
 					sys.exit('感谢使用')

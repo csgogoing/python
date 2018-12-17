@@ -7,6 +7,7 @@ import re
 import sys
 import websocket
 import json
+import threading
 
 class login():
 	'''
@@ -55,14 +56,25 @@ class login():
 			print('抢题失败')
 			return False
 
+	def recv(self):
+		try:
+			while self.ws.connected:
+				result = self.ws.recv()
+				print('外面%s'%result)
+				if json.loads(result)['act'] == "PING":
+					self.ws.send('{"act":"PONG"}')
+		except Exception as e:
+			print('websocket错误：%s'%e)
+
 	def answer_question(self, qid, uid, is_summary):
 		self.qid = qid
 		self.uid = uid
 		self.ws = websocket.create_connection("ws://10.20.4.22:8078/websocket")
+		#self.trecv = threading.Thread(target=self.recv)
+		#self.trecv.start()
 		self.ws.send('{"userid": "%d", "act": "CONNECT"}'%self.did)
 		while True:
 			result = self.ws.recv()
-			print(result)
 			if json.loads(result)['act'] == "CONNECT_ACK":
 				for i in range(4):
 					self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "回复内容1","qid": %d},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),self.qid))
@@ -80,9 +92,6 @@ class login():
 				count = 0
 				while count < 4:
 					result = self.ws.recv()
-					print(result)
-					if json.loads(result)['act'] == "PING":
-						self.ws.send('{"act":"PONG"}')
 					if json.loads(result)['act'] == "PUB_ACK":
 						count+=1
 				sleep(5)
@@ -105,10 +114,10 @@ class login():
 		while True:
 			result = self.ws.recv()
 			print(result)
-			if json.loads(result)['act'] == "PUB":
-				self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "医生回复内容%d","qid": "%d"},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),times,self.qid))
-				print('医生第%d次回复'%times)
-				return
+			#if json.loads(result)['act'] == "PUB":
+			self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "医生回复内容%d","qid": "%d"},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),times,self.qid))
+			print('医生第%d次回复'%times)
+			return
 
 	def wsclose(self):
 		self.ws.close()
@@ -116,5 +125,5 @@ class login():
 if __name__ == '__main__':
 	A = login(117333219)
 	#print(A.take_question(15541))
-	print(A.answer_question(15579,117333645,1))
+	print(A.answer_question(15600,117333637,1))
 	#A.reply(3)
