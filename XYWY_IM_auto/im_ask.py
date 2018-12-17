@@ -50,28 +50,29 @@ class Ask(object):
 			print('获取问题ID参数无效')
 			return None
 		#获取问题ID
-		count = 0
-		while count<5:
-			#重复获取QID10次
+		while True:
 			try:
 				request_qid=requests.get(url,cookies=self.im_cookies)
 			except:
 				sys.exit('请检查环境绑定及网络')
-
 			elements = etree.HTML(request_qid.text)
-			qids = elements.xpath('//tbody/tr[1]/td[1]/text()')[0]
 			try:
+				qids = elements.xpath('//tbody/tr[1]/td[1]/text()')[0]
 				qid = int(qids)
-				uid = int(elements.xpath('//tbody/tr[1]/td[3]/a/text()')[0])
 				#置问题状态
 				if did:
 					request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d&zd=1&did=%d' %(qid,did))
 				else:
 					request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d' %qid)
-				return qid,uid
+				status = elements.xpath('//tbody/tr[1]/td[17]/text()')[0]
+				if status == '问题库' or status == '医生认领':
+					uid = int(elements.xpath('//tbody/tr[1]/td[3]/a/text()')[0])
+					return qid,uid
+				else:
+					sleep(2)
+					continue
 			except:
 				sleep(1)
-				count = count+1
 		print('获取问题ID失败')
 		return None,None
 
@@ -331,7 +332,7 @@ class Ask(object):
 if __name__ == '__main__':
 	#测试运行
 	A = Ask()
-	A.get_id(user_id=117333618)
+	print(A.get_id(user_id=99391))
 	#A.baidu_page(2, user_id=456654)
 	#K = A.persue(15336, 200002, 123)
 	#print(K)

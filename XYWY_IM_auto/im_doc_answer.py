@@ -27,9 +27,9 @@ class login():
 		self.dr_cookies = req.cookies.get_dict()
 		#帐号密码
 		data = {
-		'_csrf':m_value,
-		'userlogin':'admin',
-		'password':'123456',
+		"_csrf":m_value,
+		"userlogin":"admin",
+		"password":"123456",
 		}
 		#注册_csrf
 		req_login = requests.get(url_login, headers=self.headers, data=data, cookies=self.dr_cookies)
@@ -48,15 +48,18 @@ class login():
 		#问题库抢题
 		url_rob = 'http://test.d.xywy.com/api-doctor/rob-question?qid=%d'%qid
 		rob_qid = requests.get(url_rob, headers=self.headers, cookies=self.doc_im_cookies)
-		print(rob_qid.text)
-		return True
+		code = json.loads(rob_qid.text)["code"]
+		if code == 10000:
+			return True
+		else:
+			print('抢题失败')
+			return False
 
 	def answer_question(self, qid, uid, is_summary):
 		self.qid = qid
 		self.uid = uid
 		self.ws = websocket.create_connection("ws://10.20.4.22:8078/websocket")
 		self.ws.send('{"userid": "%d", "act": "CONNECT"}'%self.did)
-		print("Receiving...")
 		while True:
 			result = self.ws.recv()
 			print(result)
@@ -64,28 +67,54 @@ class login():
 				for i in range(4):
 					self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "回复内容1","qid": %d},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),self.qid))
 					sleep(0.5)
-			print('完成')
 			if is_summary == 0:
 				print('不写总结')
+				return
 			else:
-				print('写总结')
-				pass
-			return
+				url_summary = 'http://test.d.xywy.com/api-doctor/summary'
+				data = {
+				"qid": "%d"%self.qid,
+				"symptoms": "问题分析问题分析问题分析问题分析问题分析问题分析",
+				"advice": "指导建议指导建议指导建议指导建议指导建议指导建议"
+				}
+				count = 0
+				while count < 4:
+					result = self.ws.recv()
+					print(result)
+					if json.loads(result)['act'] == "PING":
+						self.ws.send('{"act":"PONG"}')
+					if json.loads(result)['act'] == "PUB_ACK":
+						count+=1
+				sleep(5)
+				while True:
+					req_summary = requests.post(url_summary, headers=self.headers, data=data, cookies=self.doc_im_cookies)
+					code = json.loads(req_summary.text)["code"]
+					if code == 10000:
+						print('写总结')
+						return True
+					elif code == 30000:
+						sleep(2)
+						continue
+					else:
+						print('写总结失败')
+						return False
 
 	def reply(self, times=0):
-		print('执行')
 		#self.ws = websocket.create_connection("ws://10.20.4.22:8078/websocket")
 		#self.ws.send('{"userid": "68258667", "act": "CONNECT"}')
 		while True:
 			result = self.ws.recv()
 			print(result)
 			if json.loads(result)['act'] == "PUB":
-				self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "回复内容%d","qid": "%d"},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),times,self.qid))
+				self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "医生回复内容%d","qid": "%d"},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),times,self.qid))
 				print('医生第%d次回复'%times)
 				return
 
+	def wsclose(self):
+		self.ws.close()
+
 if __name__ == '__main__':
 	A = login(117333219)
-	A.take_question(15495)
-	A.answer_question(15495,117333623,0)
+	#print(A.take_question(15541))
+	print(A.answer_question(15579,117333645,1))
 	#A.reply(3)
