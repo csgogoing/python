@@ -23,7 +23,14 @@ class login():
 		self.headers = {
 		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
 		}
-		req=requests.get(url_login)
+		try:
+			req=requests.get(url_login)
+			if req.status_code != 200:
+				raise Exception
+		except:
+			print('请检查VPN及HOST')
+			sleep(2)
+			sys.exit()
 		m_value = re.findall(r'f" value="(.*)">', req.text)
 		self.dr_cookies = req.cookies.get_dict()
 		#帐号密码
@@ -81,7 +88,7 @@ class login():
 					sleep(0.5)
 			if is_summary == 0:
 				print('不写总结')
-				return
+				return True
 			else:
 				url_summary = 'http://test.d.xywy.com/api-doctor/summary'
 				data = {
@@ -112,12 +119,14 @@ class login():
 		#self.ws = websocket.create_connection("ws://10.20.4.22:8078/websocket")
 		#self.ws.send('{"userid": "68258667", "act": "CONNECT"}')
 		while True:
-			result = self.ws.recv()
-			print(result)
-			#if json.loads(result)['act'] == "PUB":
-			self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "医生回复内容%d","qid": "%d"},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),times,self.qid))
-			print('医生第%d次回复'%times)
-			return
+			try:
+				result = self.ws.recv()
+				#if json.loads(result)['act'] == "PUB":
+				self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "医生回复内容%d","qid": "%d"},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),times,self.qid))
+				print('第%d轮交流完成'%times)
+				return
+			except:
+				raise Exception('医生回复失败')
 
 	def wsclose(self):
 		self.ws.close()

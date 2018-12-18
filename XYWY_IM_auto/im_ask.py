@@ -6,6 +6,7 @@ from lxml import etree
 import requests
 import re
 import sys
+import json
 
 class Ask(object):
 	'''
@@ -52,9 +53,14 @@ class Ask(object):
 		#获取问题ID
 		while True:
 			try:
-				request_qid=requests.get(url,cookies=self.im_cookies)
+				request_qid = requests.get(url,cookies=self.im_cookies)
+				if request_qid.status_code != 200:
+					print(request_qid.status_code)
+					raise Exception
 			except:
-				sys.exit('请检查环境绑定及网络')
+				print('请检查')
+				sleep(2)
+				sys.exit()
 			elements = etree.HTML(request_qid.text)
 			try:
 				qids = elements.xpath('//tbody/tr[1]/td[1]/text()')[0]
@@ -93,15 +99,15 @@ class Ask(object):
 			else:
 				result = request.urlopen('http://test.admin.d.xywy.com/site/question-order-pay-status?qid=%d&zd=1&did=%d' %(pay_qid,docid)).read()
 		except:
-			return(False)
+			return False
 		else:
 			page = result.decode('utf-8')
 		if 'Success!' in page:
-			return(True)
+			return True
 		else:
-			return(False)
+			return False
 
-	def persue(self, qid, resource_id, user_id):
+	def persue(self, qid, resource_id, user_id, did=None):
 		#追问接口
 		headers = {
 				'Connection': 'keep-alive',
@@ -116,8 +122,9 @@ class Ask(object):
 				#'expert_id': '68258667',
 				'content': '{"type":"text","text":"患者追问内容%d"}'%(self.msg_id_origin),
 				'msg_id': '%s' %(int(time.time())),
-				'atime': '%d' %(int(time.time())),
+				'atime': '%s' %(int(time.time())),
 			}
+
 		elif resource_id == 'sgjk':
 			url = 'http://test.api.d.xywy.com/sogou/question/content-problem-create?safe_source_tag_wws=DJWE23_oresdf@ads'
 			data = {
@@ -128,7 +135,7 @@ class Ask(object):
 				#'expert_id': '117333219',
 				'content': '[{"type":"text","text":"患者追问内容%d"}]'%(self.msg_id_origin),
 				'msg_id': '%s' %(int(time.time())),
-				'atime': '%d' %(int(time.time())),
+				'atime': '%s' %(int(time.time())),
 			}
 		else:
 			url = 'http://test.api.d.xywy.com/user/question/add?safe_source_tag_wws=DJWE23_oresdf@ads'
@@ -139,24 +146,26 @@ class Ask(object):
 				#'expert_id': '117333219',
 				'content': '{"type":"text","text":"患者追问内容%d"}'%(self.msg_id_origin),
 				'msg_id': '%s' %(int(time.time())),
-				'atime': '%d' %(int(time.time())),
+				'atime': '%s' %(int(time.time())),
 			}
-		
+
 		self.msg_id_origin = self.msg_id_origin + 1
 		data = parse.urlencode(data).encode('utf-8')
-		req = request.Request(url, headers=headers, data=data)
 		try:
+			req = request.Request(url, headers=headers, data=data)
 			page = request.urlopen(req).read()
 		except:
-			print('请检查环境绑定及网络连接')
-			return(False)
+			print('提问失败，请检查VPN及HOST')
+			sleep(2)
+			sys.exit()
 		else:
 			page = page.decode('utf-8')
 		#返回成功/失败的结果
 		if 'Success!' in page:
-			return(True)
+			return True
 		else:
-			return(False)
+			return False
+
 
 	def baidu_page(self, q_type, user_id=456654, doctor_ids=117333219, pay_amount=300, firset_dep='内科', second_dep='呼吸内科', content=''):
 		#百度来源提问
@@ -184,10 +193,10 @@ class Ask(object):
 			'resource_id': 200002,
 			'user_id': user_id,
 			'patient_name': '汪测百度',
-			'patient_sex': 1,
-			'patient_age': 20,
-			'patient_age_month': 0,
-			'patient_age_day': 0,
+			'patient_sex': 2,
+			'patient_age': 100,
+			'patient_age_month': 12,
+			'patient_age_day': 100,
 			'patient_phone': 17888888888,
 			'content': my_content,
 			'pic_urls': '',
@@ -203,19 +212,18 @@ class Ask(object):
 		if data['q_type'] == 3:
 			del data['pay_amount']
 			data['price'] = pay_amount
-		data = parse.urlencode(data).encode('utf-8')
-		req = request.Request(url, headers=headers, data=data)
 		try:
-			page = request.urlopen(req).read()
-			page = page.decode('utf-8')
+			req=requests.post(url, headers=headers, data=data)
+			if req.status_code != 200:
+				print(req.status_code)
+				raise Exception
 		except:
-			print('请检查环境绑定及网络连接')
-			return(False, None)
-		if 'Success!' in page:
-			print('百度问题提问成功')
+			print('提问失败，请检查VPN及HOST')
+			sleep(2)
+			sys.exit()
+		if json.loads(req.text)["errmsg"] == "Success!":
 			return(True, self.now_time)
 		else:
-			print('百度提问失败, 请重试或手动尝试')
 			return(False, self.now_time)
 
 	def other_page(self, resource_id, user_id=456654, q_type=2, pay_amount=300, doctor_ids='', pay_type=1, content=''):
@@ -235,10 +243,10 @@ class Ask(object):
 			'source': resource_id,
 			'uid': user_id,
 			'patient_name': '汪测其他',
-			'patient_sex': 1,
-			'patient_age': 20,
-			'patient_age_month': 0,
-			'patient_age_day': 0,
+			'patient_sex': 2,
+			'patient_age': 100,
+			'patient_age_month': 12,
+			'patient_age_day': 100,
 			'patient_phone': 17888888888,
 			'content': my_content,
 			'pic_urls': '',
@@ -251,22 +259,21 @@ class Ask(object):
 			'intent': 'intent',
 			'hospital': 0
 		}
-		data = parse.urlencode(data).encode('utf-8')
-		req = request.Request(url, headers=headers, data=data)
 		try:
-			page = request.urlopen(req).read()
-			page = page.decode('utf-8')
+			req=requests.post(url, headers=headers, data=data)
+			if req.status_code != 200:
+				print(req.status_code)
+				raise Exception
 		except:
-			print('请检查环境绑定及网络连接')
-			return(False, None)
-		if 'Success!' in page:
-			print('%s来源问题提问成功'%resource_id)
+			print('提问失败，请检查VPN及HOST')
+			sleep(2)
+			sys.exit()
+		if json.loads(req.text)["msg"] == "Success!":
 			return(True, self.now_time)
 		else:
-			print('%s提问失败, 请重试或手动尝试'%resource_id)
 			return(False, self.now_time)
 
-	def sougou_page(self, q_type, user_id=456654, doctor_ids=117333219, pay_amount=300, content=''):
+	def sougou_page(self, q_type, user_id=456654, doctor_ids='', pay_amount=300, content=''):
 		#搜狗来源提问
 		if q_type == 1:
 			type_name = '免费'
@@ -295,8 +302,8 @@ class Ask(object):
 			'source_key' : 'sgjk',
 			'user_id' : user_id,
 			'patient_name': '汪测搜狗',
-			'patient_sex': 1,
-			'patient_age': 20,
+			'patient_sex': 2,
+			'patient_age': 100,
 			'content': my_content,
 			'a_time': '%d' %(self.now_time),
 			'order_id': 'rtqa_%d' %(self.now_time),
@@ -314,27 +321,26 @@ class Ask(object):
 			del data['doctor_ids']
 			del data['pay_type']
 			del data['pay_amount']
-		data = parse.urlencode(data).encode('utf-8')
-		req = request.Request(url, headers=headers, data=data)
 		try:
-			page = request.urlopen(req).read()
-			page = page.decode('utf-8')
+			req=requests.post(url, headers=headers, data=data)
+			if req.status_code != 200:
+				print(req.status_code)
+				raise Exception
 		except:
-			print('请检查环境绑定及网络连接')
-			return(False, None)
-		if 'Success!' in page:
-			print('搜狗问题提问成功')
+			print('提问失败，请检查VPN及HOST')
+			sleep(2)
+			sys.exit()
+		if json.loads(req.text)["msg"] == "Success!":
 			return(True, self.now_time)
 		else:
-			print('搜狗提问失败, 请重试或手动尝试')
 			return(False, self.now_time)
 
 if __name__ == '__main__':
 	#测试运行
 	A = Ask()
-	print(A.get_id(user_id=99391))
-	#A.baidu_page(2, user_id=456654)
-	#K = A.persue(15336, 200002, 123)
+	#print(A.get_id(user_id=117333645))
+	#print(A.baidu_page(2, user_id=456654))
+	K = print(A.persue(15660, 'xywyapp', 666667))
 	#print(K)
 	#if 'Success!' in K:
 	#	print(1)
