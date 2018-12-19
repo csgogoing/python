@@ -199,7 +199,7 @@ class Ask(object):
 			'patient_age_day': 100,
 			'patient_phone': 17888888888,
 			'content': my_content,
-			'pic_urls': '',
+			'pic_urls': '["http://xs3.op.xywy.com/api.iu1.xywy.com/yishengku/20180627/0c37027af91f90c7a8626094f659969242472.jpg"]',
 			'q_type': q_type,
 			'order_id': 'rtqa_%d' %(self.now_time),
 			'doctor_ids': doctor_ids,
@@ -249,11 +249,11 @@ class Ask(object):
 			'patient_age_day': 100,
 			'patient_phone': 17888888888,
 			'content': my_content,
-			'pic_urls': '',
+			'pic_urls': '["http://xs3.op.xywy.com/api.iu1.xywy.com/yishengku/20180627/0c37027af91f90c7a8626094f659969242472.jpg"]',
 			'q_type': q_type,
 			'order_id': 'rtqa_%d' %(self.now_time),
 			'doctor_ids': doctor_ids,
-			'pay_type': 1,
+			'pay_type': pay_type,
 			'pay_amount': pay_amount,
 			'title': 'title',
 			'intent': 'intent',
@@ -293,9 +293,9 @@ class Ask(object):
 			'Content-Type': 'application/x-www-form-urlencoded'
 		}
 		if content == '':
-			my_content = '[{"type":"text","text":"自动化搜狗%s问题-%d"}]'%(type_name, self.msg_id_origin)
+			my_content = '[{"type":"text","text":"自动化搜狗%s问题-%d"},{"type":"image","file":"http://xs3.op.xywy.com/api.iu1.xywy.com/yishengku/20180627/0c37027af91f90c7a8626094f659969242472.jpg"}]'%(type_name, self.msg_id_origin)
 		else:
-			my_content = '[{"type":"text","text":"%s"}]'%content
+			my_content = '[{"type":"text","text":"%s"},{"type":"image","file":"http://xs3.op.xywy.com/api.iu1.xywy.com/yishengku/20180627/0c37027af91f90c7a8626094f659969242472.jpg"}]'%content
 		data = {
 			'question_id': '%d'%(self.now_time),
 			'partner_key': 'xunyiwenyao',
@@ -338,9 +338,9 @@ class Ask(object):
 if __name__ == '__main__':
 	#测试运行
 	A = Ask()
-	#print(A.get_id(user_id=117333645))
-	#print(A.baidu_page(2, user_id=456654))
-	K = print(A.persue(15660, 'xywyapp', 666667))
+	print(A.get_id(user_id=117333661))
+	#print(A.baidu_page(2, user_id=117333661))
+	#K = print(A.persue(15660, 'ywb', 666667))
 	#print(K)
 	#if 'Success!' in K:
 	#	print(1)
