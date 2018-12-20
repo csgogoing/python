@@ -52,6 +52,27 @@ class login():
 		doc_im = requests.get(url_doc_im, headers=self.headers, cookies=self.dr_doc_cookies)
 		self.doc_im_cookies = dr_doc.cookies.get_dict()
 
+	def question_pool(self, check_qid):
+		qids = []
+		url_q_pool = 'http://test.d.xywy.com/api-doctor/quesion-pool?page=1'
+		q_pool = requests.get(url_q_pool, headers=self.headers, cookies=self.doc_im_cookies)
+		num = json.loads(q_pool.text)['data']['total']
+		if num//15 == 0:
+			for i in json.loads(q_pool.text)['data']['list']:
+				qids.append(i['qid'])
+		else:
+			for i in json.loads(q_pool.text)['data']['list']:
+				qids.append(i['qid'])
+			for j in range(1, num//15+1):
+				url_q_pool = 'http://test.d.xywy.com/api-doctor/quesion-pool?page=%d'%(j+1)
+				q_pool = requests.get(url_q_pool, headers=self.headers, cookies=self.doc_im_cookies)
+				for i in json.loads(q_pool.text)['data']['list']:
+					qids.append(i['qid'])
+		if str(check_qid) in qids:
+			return True
+		else:
+			return False
+
 	def take_question(self, qid):
 		#问题库抢题
 		url_rob = 'http://test.d.xywy.com/api-doctor/rob-question?qid=%d'%qid
@@ -67,7 +88,6 @@ class login():
 		try:
 			while self.ws.connected:
 				result = self.ws.recv()
-				print('外面%s'%result)
 				if json.loads(result)['act'] == "PING":
 					self.ws.send('{"act":"PONG"}')
 		except Exception as e:
@@ -77,8 +97,6 @@ class login():
 		self.qid = qid
 		self.uid = uid
 		self.ws = websocket.create_connection("ws://10.20.4.22:8078/websocket")
-		#self.trecv = threading.Thread(target=self.recv)
-		#self.trecv.start()
 		self.ws.send('{"userid": "%d", "act": "CONNECT"}'%self.did)
 		while True:
 			result = self.ws.recv()
@@ -118,21 +136,23 @@ class login():
 	def reply(self, times=0):
 		#self.ws = websocket.create_connection("ws://10.20.4.22:8078/websocket")
 		#self.ws.send('{"userid": "68258667", "act": "CONNECT"}')
+		#try:
+		self.ws.send('{"userid": "%d", "act": "CONNECT"}'%self.did)
 		while True:
-			try:
-				result = self.ws.recv()
-				#if json.loads(result)['act'] == "PUB":
+			result = self.ws.recv()
+			if json.loads(result)['act'] == "CONNECT_ACK":
 				self.ws.send('{"from": "%d","to": "%d","id": "%d","body": {"content": "医生回复内容%d","qid": "%d"},"act": "PUB"}'%(self.did,self.uid,int(round(time.time() * 1000)),times,self.qid))
 				print('第%d轮交流完成'%times)
 				return
-			except:
-				raise Exception('医生回复失败')
+			#except:
+			#	raise Exception('医生回复失败')
 
 	def wsclose(self):
-		self.ws.close()
+		self.trecv.wait()
 
 if __name__ == '__main__':
-	A = login(117333219)
+	A = login(117333443)
 	#print(A.take_question(15541))
-	print(A.answer_question(15600,117333637,1))
+	#print(A.answer_question(15600,117333637,1))
 	#A.reply(3)
+	print(A.question_pool(15814))

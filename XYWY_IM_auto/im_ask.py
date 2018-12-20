@@ -106,6 +106,8 @@ class Ask(object):
 			return True
 		else:
 			return False
+	def check(self, qid, times, is_summary):
+		url = 'http://test.admin.d.xywy.com/question/default/view?id=%s' %qid
 
 	def persue(self, qid, resource_id, user_id, did=None):
 		#追问接口

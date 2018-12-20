@@ -1,5 +1,5 @@
 from time import sleep
-from base import Page
+#from base import Page
 from im_ask import Ask
 #from im_doc_answer_browser import login_browser
 from im_doc_answer import login
@@ -39,12 +39,16 @@ class Im_Test():
 				return qid
 			elif 0 < times < 21:
 				if q_type in (1,2):
+					#查看问题库是否存在该题
+					is_pool = self.my_doctor.question_pool(qid)
+					if is_pool == False:
+						raise Exception('此医生无法看到该问题，qid=%d'%qid)
 					result = self.my_doctor.take_question(qid)
 					if result == False:
-						raise Exception('抢题失败')
+						raise Exception('抢题失败，qid=%d'%qid)
 				result = self.my_doctor.answer_question(qid, uid, is_summary)
 				if result == False:
-					raise Exception('写总结失败')
+					raise Exception('写总结失败，qid=%d'%qid)
 				for i in range(times-1):
 					#根据用户输入的提问次数执行自动化
 					self.my_ask.persue(order_id, source, uid, self.did)
@@ -70,12 +74,16 @@ class Im_Test():
 				return qid
 			elif 0 < times < 21:
 				if q_type in (1,2):
+					#查看问题库是否存在该题
+					is_pool = self.my_doctor.question_pool(qid)
+					if is_pool == False:
+						raise Exception('此医生无法看到该问题，qid=%d'%qid)
 					result = self.my_doctor.take_question(qid)
 					if result == False:
-						raise Exception('抢题失败')
+						raise Exception('抢题失败，qid=%d'%qid)
 				result = self.my_doctor.answer_question(qid, uid, is_summary)
 				if result == False:
-					raise Exception('写总结失败')
+					raise Exception('写总结失败，qid=%d'%qid)
 				for i in range(times-1):
 					#根据用户输入的提问次数执行自动化
 					self.my_ask.persue(order_id, source, uid, self.did)
@@ -103,12 +111,16 @@ class Im_Test():
 				return qid
 			elif 0 < times < 21:
 				if q_type in (1,2):
+					#查看问题库是否存在该题
+					is_pool = self.my_doctor.question_pool(qid)
+					if is_pool == False:
+						raise Exception('此医生无法看到该问题，qid=%d'%qid)
 					result = self.my_doctor.take_question(qid)
 					if result == False:
-						raise Exception('抢题失败')
+						raise Exception('抢题失败，qid=%d'%qid)
 				result = self.my_doctor.answer_question(qid, uid, is_summary)
 				if result == False:
-					raise Exception('写总结失败')
+					raise Exception('写总结失败，qid=%d'%qid)
 				for i in range(times-1):
 					#根据用户输入的提问次数执行自动化
 					self.my_ask.persue(qid, source, uid, self.did)
@@ -139,12 +151,16 @@ class Im_Test():
 				return qid
 			elif 0 < times < 21:
 				if q_type in (1,2):
+					#查看问题库是否存在该题
+					is_pool = self.my_doctor.question_pool(qid)
+					if is_pool == False:
+						raise Exception('此医生无法看到该问题，qid=%d'%qid)
 					result = self.my_doctor.take_question(qid)
 					if result == False:
-						raise Exception('抢题失败')
+						raise Exception('抢题失败，qid=%d'%qid)
 				result = self.my_doctor.answer_question(qid, uid, is_summary)
 				if result == False:
-					raise Exception('写总结失败')
+					raise Exception('写总结失败，qid=%d'%qid)
 				for i in range(times-1):
 					#根据用户输入的提问次数执行自动化
 					self.my_ask.persue(qid, source, uid, self.did)
@@ -172,7 +188,7 @@ if __name__ == '__main__':
 		try:
 			choose = int(input('''
 		1：快速创建问题
-		2：问答自定义(请编辑data.xls文件)
+		2：问答自定义(请编辑data.xls文件，并关闭测试医生IM窗口)
 		3: 继续追问已有问题
 		4：更改问题状态为已支付
 		其他：退出
@@ -350,8 +366,6 @@ if __name__ == '__main__':
 							try:
 								pat=sheet.row_values(row)
 								#初始化赋值
-								t_source = 200002
-								t_q_type = 2
 								t_pay_amount = 300
 								t_pay_type = 1
 								t_times = 20
@@ -368,32 +382,48 @@ if __name__ == '__main__':
 								for i in range(len(pat)):
 									if i == 0:
 										if pat[i] == '':
-											pass
-										if int(pat[i]) == 1:
+											raise Exception('请输入问题来源')
+										elif type(pat[i]) != float:
+											t_source = pat[i]
+											name_source = t_source
+										elif int(pat[i]) == 1:
 											t_source = 200002
+											name_source = '百度'
 										elif int(pat[i]) == 2:
 											t_source = "xywyapp"
+											name_source = '寻医问药APP'
 										elif int(pat[i]) == 3:
 											t_source = "pc"
+											name_source = 'PC'
 										elif int(pat[i]) == 4:
 											t_source = "xiaomi"
+											name_source = '快应用'
 										elif int(pat[i]) == 5:
 											t_source = "hlwyy"
+											name_source = '互联网医院'
 										elif int(pat[i]) == 6:
 											t_source = "ywb"
+											name_source = '英威诺'
 										elif int(pat[i]) == 7:
 											t_source = "sgjk"
+											name_source = '搜狗'
 										else:
-											if type() == float:
-												t_source = int(pat[i])
-											else:
-												t_source = pat[i]
+											t_source = int(pat[i])
+											name_source = t_source
 
 									elif i == 1:
 										if pat[i] == '':
-											pass
+											raise Exception('请输入提问类型')
 										else:
 											t_q_type = int(pat[i])
+											if t_q_type == 1:
+												name_type = '免费'
+											elif t_q_type == 2:
+												name_type = '悬赏'
+											elif t_q_type == 3:
+												name_type = '指定'
+											else:
+												raise Exception('提问类型错误')
 									elif i == 2:
 										if pat[i] == '':
 											pass
@@ -440,13 +470,14 @@ if __name__ == '__main__':
 								qid = test_auto.run_test(source=t_source,q_type=t_q_type,pay_amount=t_pay_amount,pay_type=t_pay_type,times=t_times,firset_dep=t_firset_dep,second_dep=t_second_dep,is_summary=t_is_summary,user_id=t_user_id,content=t_content, doc_id=t_did)
 							except Exception as e:
 								print(e)
-								wrt.conclude(row,0,result=e)
+								print("-------------------------未通过-------------------------")
+								wrt.conclude(row,name_source,name_type,0,result=e)
 							else:
-								wrt.conclude(row,qid)
+								wrt.conclude(row,name_source,name_type,qid)
 					except Exception as e:
-						print(e)
+						print('请检查当前目录下存在data.xls文件，并关闭data.xls')
 						sleep(2)
-						sys.exit('')
+						sys.exit()
 					else:
 						break
 
