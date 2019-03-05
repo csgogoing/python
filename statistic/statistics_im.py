@@ -17,7 +17,7 @@ class Statistics_Im(object):
 		self.cur = datetime.datetime.now()
 		self.pass_day = self.cur.timetuple().tm_yday
 		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day)-1
-		print(self.row+1)
+		print('当前写入第%s行'%self.row+1)
 		self.headers={
 		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
 		}
@@ -313,19 +313,19 @@ class Statistics_Im(object):
 			self.get_num_paid(3, 56, request_reward_baidu_paid)
 
 			request_reward_hxbx_unpaid = requests.get(url, params=reward_hxbx_unpaid, headers=self.headers, cookies=self.cookies).text
-			self.get_num_unpaid(3, 62, request_reward_hxbx_unpaid)
+			self.get_num_unpaid(3, 61, request_reward_hxbx_unpaid)
 			request_reward_hxbx_paid = requests.get(url, params=reward_hxbx_paid, headers=self.headers, cookies=self.cookies).text
-			self.get_num_paid(3, 62, request_reward_hxbx_paid)
+			self.get_num_paid(3, 61, request_reward_hxbx_paid)
 
 			request_reward_sougou_unpaid = requests.get(url, params=reward_sougou_unpaid, headers=self.headers, cookies=self.cookies).text
-			self.get_num_unpaid(3, 68, request_reward_sougou_unpaid)
+			self.get_num_unpaid(3, 66, request_reward_sougou_unpaid)
 			request_reward_sougou_paid = requests.get(url, params=reward_sougou_paid, headers=self.headers, cookies=self.cookies).text
-			self.get_num_paid(3, 68, request_reward_sougou_paid)
+			self.get_num_paid(3, 66, request_reward_sougou_paid)
 
 			request_reward_kuaiyingyong_unpaid = requests.get(url, params=reward_kuaiyingyong_unpaid, headers=self.headers, cookies=self.cookies).text
-			self.get_num_unpaid(3, 74, request_reward_kuaiyingyong_unpaid)
+			self.get_num_unpaid(3, 71, request_reward_kuaiyingyong_unpaid)
 			request_reward_kuaiyingyong_paid = requests.get(url, params=reward_kuaiyingyong_paid, headers=self.headers, cookies=self.cookies).text
-			self.get_num_paid(3, 74, request_reward_kuaiyingyong_paid)
+			self.get_num_paid(3, 71, request_reward_kuaiyingyong_paid)
 
 		except Exception as e:
 			print(e)
