@@ -1,166 +1,329 @@
 #coding=utf-8
 import time
-from time import sleep
-from urllib import request,parse
-from lxml import etree
 import requests
 import re
 import sys
 import json
-import tesserocr
-from PIL import Image
+import datetime
+from requests.auth import HTTPBasicAuth
+from time import sleep
+from lxml import etree
 
-class Ask(object):
+class Statistics_Dianhua(object):
 	'''
-	提问等接口相关类
-	qtype:1 免费，2悬赏，3指定
 	'''
-	def __init__(self):
-		self.msg_id_origin = 1
-		self.now_time = 0
+	def __init__(self, wb, date_time):
+		self.wb = wb
+		self.cur = date_time
+		#self.cur = datetime.datetime.now()
+		self.pass_day = self.cur.timetuple().tm_yday
+		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day)-1
+		print(self.row+1)
+		self.headers={
+		"User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
+		}
 
-	def im_login(self):
+	def dianhua_login(self):
 		#获取加密参数与cookie
-		url = 'http://admin.d.xywy.com'
-		url_login='http://admin.d.xywy.com/admin/user/login'
-		#传入的user_id查找页
-		headers={
-		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
-		}
-		req=requests.get(url_login)
-		sleep(2)
-		cookies=req.cookies.get_dict()
-		m_value = re.findall(r'f" value="(.*)">', req.text)
-		pic = re.findall(r'verifycode-image" src="(.*)" alt="', req.text)
-		url_pic = url + pic[0]
-		print(url_pic)
-		#请求验证码图,保存
-		req_pic=requests.get(url_pic)
-		with open('1.png', 'wb') as f:
-			f.write(req_pic.content)
-		#识别验证码
-		image=Image.open('1.png')
-		verifyCode = tesserocr.image_to_text(image).strip('\n\r\t')  
-		print('verfy:%s'%verifyCode)
-		#写入密钥
-		cookie=req_pic.cookies.get_dict()
-		#cookies['PHPSESSID']=cookie['PHPSESSID']
-		cookies['PHPSESSID']='a5fjoq805qsfpmpbnmk8h5qrm6'
-		print(cookies)
-		#登录im后台
-		data={
-		'_csrf':m_value,
-		'Login[username]':'fuyanqiu',
-		'Login[password]':'123456',
-		'Login[verifyCode]':'neuoja'
-		}
-		#登陆IM后台获取Cookie
 		try:
-			req_login=requests.post(url_login,data=data,cookies=cookies)
-		except:
-			return
-		self.im_cookies=req_login.cookies.get_dict()
-		with open('cookies', 'wb') as f:
-			f.write(self.im_cookies)
+			with open('dhys_cookies') as f:
+				cookies_origin = f.read()
+		except FileNotFoundError:
+			print('请在当前目录下保存dhys_cookies文件与相应cookies内容')
+		else:
+			cookie_item = re.split(r'; |=', cookies_origin)
+			self.cookies = {}
+			for i in range(len(cookie_item)):
+				if i%2 == 0:
+					self.cookies[cookie_item[i]] = cookie_item[i+1]
+	def get_data(self):
+		#测试类
+		self.dianhua_login()
+		self.url = 'http://dhys.z.xywy.com/order.php'
 
-	def get_id(self, did):
-		sum = 0
-		page_1 = 1
-		page_2 = 1
-		self.im_login()
-		url = "http://admin.d.xywy.com/question/default/index"
-		data_1_1 = {
-			'QuestionBaseSearch[depa_pid]' : '',
-			'QuestionBaseSearch[depa_sid]' : '',
-			'QuestionBaseSearch[type]' : '',
-			'QuestionBaseSearch[bgDate]' : '2018-11-22',
-			'QuestionBaseSearch[edDate]' : '2018-12-21',
-			'QuestionBaseSearch[keyword_type]' : 'did',
-			'QuestionBaseSearch[keyword]' : '%s'%did,
-			'QuestionBaseSearch[status]' : 1,
-			'QuestionBaseSearch[source]' : '',
-			'page' : page_1,
-			'per-page' : 10
+		dianhua_3g = {
+			'type':'order_list',
+			'hidden_test':'1',
+			'state':'0',	
+			'pay_state':'0',
+			'call_start':'',
+			'call_start': '',
+			'expert_name':'',
+			'operator_id':'0',
+			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'created_at_end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'done_at_start':'',
+			'done_at_end':'',
+			'search': '1',
+			'trade_type':'0',
+			'is_balance':'0',
+			'order_type': '0',
+			'balance_start':'',
+			'balance_end':'',
+			'order_num': '',
+			'is_dhysfz':'全部'.encode('gb2312'),
+			'source':'2',
+			'platform_source_pay':'0',
+			'hidden_test_check': 'on',	
+			'search':'搜  索'.encode('gb2312')
 			}
-		data_1_2 = {
-			'QuestionBaseSearch[depa_pid]' : '',
-			'QuestionBaseSearch[depa_sid]' : '',
-			'QuestionBaseSearch[type]' : '',
-			'QuestionBaseSearch[bgDate]' : '2018-12-22',
-			'QuestionBaseSearch[edDate]' : '2018-12-29',
-			'QuestionBaseSearch[keyword_type]' : 'did',
-			'QuestionBaseSearch[keyword]' : '%s'%did,
-			'QuestionBaseSearch[status]' : 1,
-			'QuestionBaseSearch[source]' : '',
-			'page' : page_1,
-			'per-page' : 10
+
+		dianhua_xywyapp = {
+			'type':'order_list',
+			'hidden_test':'1',
+			'state':'0',	
+			'pay_state':'0',
+			'call_start':'',
+			'call_start': '',
+			'expert_name':'',
+			'operator_id':'0',
+			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'created_at_end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'done_at_start':'',
+			'done_at_end':'',
+			'search': '1',
+			'trade_type':'0',
+			'is_balance':'0',
+			'order_type': '0',
+			'balance_start':'',
+			'balance_end':'',
+			'order_num': '',
+			'is_dhysfz':'全部'.encode('gb2312'),
+			'source':'3',
+			'platform_source_pay':'0',
+			'hidden_test_check': 'on',	
+			'search':'搜  索'.encode('gb2312')
 			}
-		data_2_1 = {
-			'QuestionBaseSearch[depa_pid]' : '',
-			'QuestionBaseSearch[depa_sid]' : '',
-			'QuestionBaseSearch[type]' : '',
-			'QuestionBaseSearch[bgDate]' : '2018-11-22',
-			'QuestionBaseSearch[edDate]' : '2018-12-21',
-			'QuestionBaseSearch[keyword_type]' : 'did',
-			'QuestionBaseSearch[keyword]' : '%s'%did,
-			'QuestionBaseSearch[status]' : 2,
-			'QuestionBaseSearch[source]' : '',
-			'page' : page_1,
-			'per-page' : 10
+
+		dianhua_askapp = {
+			'type':'order_list',
+			'hidden_test':'1',
+			'state':'0',	
+			'pay_state':'0',
+			'call_start':'',
+			'call_start': '',
+			'expert_name':'',
+			'operator_id':'0',
+			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'created_at_end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'done_at_start':'',
+			'done_at_end':'',
+			'search': '1',
+			'trade_type':'0',
+			'is_balance':'0',
+			'order_type': '0',
+			'balance_start':'',
+			'balance_end':'',
+			'order_num': '',
+			'is_dhysfz':'全部'.encode('gb2312'),
+			'source':'8',
+			'platform_source_pay':'0',
+			'hidden_test_check': 'on',	
+			'search':'搜  索'.encode('gb2312')
 			}
-		data_2_2 = {
-			'QuestionBaseSearch[depa_pid]' : '',
-			'QuestionBaseSearch[depa_sid]' : '',
-			'QuestionBaseSearch[type]' : '',
-			'QuestionBaseSearch[bgDate]' : '2018-12-22',
-			'QuestionBaseSearch[edDate]' : '2018-12-29',
-			'QuestionBaseSearch[keyword_type]' : 'did',
-			'QuestionBaseSearch[keyword]' : '%s'%did,
-			'QuestionBaseSearch[status]' : 2,
-			'QuestionBaseSearch[source]' : '',
-			'page' : page_1,
-			'per-page' : 10
+
+		dianhua_3g = {
+			'type':'order_list',
+			'hidden_test':'1',
+			'state':'0',	
+			'pay_state':'0',
+			'call_start':'',
+			'call_start': '',
+			'expert_name':'',
+			'operator_id':'0',
+			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'created_at_end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'done_at_start':'',
+			'done_at_end':'',
+			'search': '1',
+			'trade_type':'0',
+			'is_balance':'0',
+			'order_type': '0',
+			'balance_start':'',
+			'balance_end':'',
+			'order_num': '',
+			'is_dhysfz':'全部'.encode('gb2312'),
+			'source':'0',
+			'platform_source_pay':'2',
+			'hidden_test_check': 'on',	
+			'search':'搜  索'.encode('gb2312')
 			}
-		#while True:
+
+		dianhua_3g = {
+			'type':'order_list',
+			'hidden_test':'1',
+			'state':'0',	
+			'pay_state':'0',
+			'call_start':'',
+			'call_start': '',
+			'expert_name':'',
+			'operator_id':'0',
+			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'created_at_end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'done_at_start':'',
+			'done_at_end':'',
+			'search': '1',
+			'trade_type':'0',
+			'is_balance':'0',
+			'order_type': '0',
+			'balance_start':'',
+			'balance_end':'',
+			'order_num': '',
+			'is_dhysfz':'全部'.encode('gb2312'),
+			'source':'0',
+			'platform_source_pay':'2',
+			'hidden_test_check': 'on',	
+			'search':'搜  索'.encode('gb2312')
+			}
+
+		dianhua_3g = {
+			'type':'order_list',
+			'hidden_test':'1',
+			'state':'0',	
+			'pay_state':'0',
+			'call_start':'',
+			'call_start': '',
+			'expert_name':'',
+			'operator_id':'0',
+			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'created_at_end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'done_at_start':'',
+			'done_at_end':'',
+			'search': '1',
+			'trade_type':'0',
+			'is_balance':'0',
+			'order_type': '0',
+			'balance_start':'',
+			'balance_end':'',
+			'order_num': '',
+			'is_dhysfz':'全部'.encode('gb2312'),
+			'source':'0',
+			'platform_source_pay':'2',
+			'hidden_test_check': 'on',	
+			'search':'搜  索'.encode('gb2312')
+			}
+
+		dianhua_3g = {
+			'type':'order_list',
+			'hidden_test':'1',
+			'state':'0',	
+			'pay_state':'0',
+			'call_start':'',
+			'call_start': '',
+			'expert_name':'',
+			'operator_id':'0',
+			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'created_at_end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'done_at_start':'',
+			'done_at_end':'',
+			'search': '1',
+			'trade_type':'0',
+			'is_balance':'0',
+			'order_type': '0',
+			'balance_start':'',
+			'balance_end':'',
+			'order_num': '',
+			'is_dhysfz':'全部'.encode('gb2312'),
+			'source':'0',
+			'platform_source_pay':'2',
+			'hidden_test_check': 'on',	
+			'search':'搜  索'.encode('gb2312')
+			}
+
+		dianhua_3g = {
+			'type':'order_list',
+			'hidden_test':'1',
+			'state':'0',	
+			'pay_state':'0',
+			'call_start':'',
+			'call_start': '',
+			'expert_name':'',
+			'operator_id':'0',
+			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'created_at_end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'done_at_start':'',
+			'done_at_end':'',
+			'search': '1',
+			'trade_type':'0',
+			'is_balance':'0',
+			'order_type': '0',
+			'balance_start':'',
+			'balance_end':'',
+			'order_num': '',
+			'is_dhysfz':'全部'.encode('gb2312'),
+			'source':'0',
+			'platform_source_pay':'2',
+			'hidden_test_check': 'on',	
+			'search':'搜  索'.encode('gb2312')
+			}
+
+		dianhua_3g = {
+			'type':'order_list',
+			'hidden_test':'1',
+			'state':'0',	
+			'pay_state':'0',
+			'call_start':'',
+			'call_start': '',
+			'expert_name':'',
+			'operator_id':'0',
+			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'created_at_end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'done_at_start':'',
+			'done_at_end':'',
+			'search': '1',
+			'trade_type':'0',
+			'is_balance':'0',
+			'order_type': '0',
+			'balance_start':'',
+			'balance_end':'',
+			'order_num': '',
+			'is_dhysfz':'全部'.encode('gb2312'),
+			'source':'0',
+			'platform_source_pay':'2',
+			'hidden_test_check': 'on',	
+			'search':'搜  索'.encode('gb2312')
+			}
+		self.get_num(6, 17, params=dianhua_3g)
+		#self.get_num_paid(3, 14, data=reward_pc_paid)
+
+
+
+	def get_num(self, sheet, column, params):
 		while True:
-			try:
-				request_1 = requests.get(url, params=data_1, cookies=self.im_cookies)
-				elements = etree.HTML(request_1.text)
-				result = re.findall(r'未开', request_1.text)
-				sum = sum + len(result)
-				print(1)
-				qids = elements.xpath('//tbody/tr[10]/td[1]/text()')[0]
-				print(2)
-				qid = int(qids)
-			except:
+			req = requests.post(self.url, params=params, headers=self.headers, cookies=self.cookies)
+			if req.status_code==200:
 				break
 			else:
-				page_1+=1
-				data_1['page']=page_1
-		while True:
-			try:
-				request_2 = requests.get(url, params=data_2, cookies=self.im_cookies)
-				elements = etree.HTML(request_2.text)
-				result = re.findall(r'未开', request_2.text)
-				sum = sum + len(result)
-				qids = elements.xpath('//tbody/tr[10]/td[1]/text()')[0]
-				qid = int(qids)
-			except:
-				break
-			else:
-				page_2+=1
-				data_2['page']=page_2
+				sleep(2)		
+		req_text = req.content.decode('GBK')
+		self.ws = self.wb.get_sheet(sheet)
+		total_num = re.findall(r'总计: (.*)条', req_text)
+		pay_num = re.findall(r'已付款订单量：(\d*) &nbsp', req_text)
+		pay_amount = re.findall(r'已付款总金额：(\d+\.\d+)', req_text)
+		if total_num==[]:
+			#print('空')
+			self.ws.write(self.row, column, 0)
+		else:
+			#print(total_num[0])
+			self.ws.write(self.row, column, total_num[0])
 
-		print('该医生38天内未总结问题数为%s'%sum)
+		if pay_num==[]:
+			#print('空')
+			self.ws.write(self.row, column+1, 0)
+		else:
+			#print(total_num[0])
+			self.ws.write(self.row, column+1, pay_num[0])
+
+		if pay_amount==[]:
+			#print('空')
+			self.ws.write(self.row, column+3, 0)
+		else:
+			#print(pay_amount[0])
+			self.ws.write(self.row, column+3, pay_amount[0])
 
 if __name__ == '__main__':
 	#测试运行
-	A = Ask()
-	A.get_id(117965200)
-	#print(A.get_id(user_id=117333661))
-	#print(A.baidu_page(2, user_id=117333661))
-	#K = print(A.persue(15660, 'ywb', 666667))
-	#print(K)
-	#if 'Success!' in K:
-	#	print(1)
-	#A.other_page('xiaomi')
+	A = Statistics_Dianhua()
+	#A.tiezi_login()
+	A.test()
+	#A.get_data()
