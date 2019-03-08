@@ -37,6 +37,48 @@ class Statistics_Tiezi(object):
 		}
 		self.req.post(self.url_login, headers=self.headers, data=data, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk'))
 
+
+	def get_num_unpaid(self, sheet, column, data):
+		while True:
+			req = self.req.post(self.url, data=data, headers=self.headers, auth=self.auth)
+			if req.status_code==200:
+				break
+			else:
+				sleep(2)
+		req_text = req.content.decode('GBK')
+		self.ws = self.wb.get_sheet(sheet)
+		q_num = re.findall(r'总计: (.*) 条', req_text)
+		if q_num==[]:
+			#print('空')
+			self.ws.write(self.row, column, 0)
+		else:
+			#print('非空')
+			self.ws.write(self.row, column, q_num[0])
+
+	def get_num_paid(self, sheet, column, data):
+		while True:
+			req = self.req.post(self.url, data=data, headers=self.headers, auth=self.auth)
+			if req.status_code==200:
+				break
+			else:
+				sleep(2)
+		req_text = req.content.decode('GBK')
+		self.ws = self.wb.get_sheet(sheet)
+		shifu = re.findall(r'总悬赏金额：(.*)元', req_text)[0]
+		q_num = re.findall(r'总计: (.*) 条', req_text)
+		if shifu == '':
+			#print('空')
+			self.ws.write(self.row, column+3, 0)
+		else:
+			#print(shifu)
+			self.ws.write(self.row, column+3, shifu)
+		if q_num==[]:
+			#print('空')
+			self.ws.write(self.row, column+1, 0)
+		else:
+			#print(q_num[0])
+			self.ws.write(self.row, column+1, q_num[0])
+
 	def test(self):
 		#测试类
 		self.tiezi_login()
@@ -596,47 +638,6 @@ class Statistics_Tiezi(object):
 			print('帖子指定统计完成')
 
 
-
-	def get_num_unpaid(self, sheet, column, data):
-		while True:
-			req = self.req.post(self.url, data=data, headers=self.headers, auth=self.auth)
-			if req.status_code==200:
-				break
-			else:
-				sleep(2)
-		req_text = req.content.decode('GBK')
-		self.ws = self.wb.get_sheet(sheet)
-		q_num = re.findall(r'总计: (.*) 条', req_text)
-		if q_num==[]:
-			#print('空')
-			self.ws.write(self.row, column, 0)
-		else:
-			#print('非空')
-			self.ws.write(self.row, column, q_num[0])
-
-	def get_num_paid(self, sheet, column, data):
-		while True:
-			req = self.req.post(self.url, data=data, headers=self.headers, auth=self.auth)
-			if req.status_code==200:
-				break
-			else:
-				sleep(2)
-		req_text = req.content.decode('GBK')
-		self.ws = self.wb.get_sheet(sheet)
-		shifu = re.findall(r'总悬赏金额：(.*)元', req_text)[0]
-		q_num = re.findall(r'总计: (.*) 条', req_text)
-		if shifu == '':
-			#print('空')
-			self.ws.write(self.row, column+3, 0)
-		else:
-			#print(shifu)
-			self.ws.write(self.row, column+3, shifu)
-		if q_num==[]:
-			#print('空')
-			self.ws.write(self.row, column+1, 0)
-		else:
-			#print(q_num[0])
-			self.ws.write(self.row, column+1, q_num[0])
 
 if __name__ == '__main__':
 	#测试运行

@@ -38,6 +38,35 @@ class Statistics_Jiating(object):
 		}
 		self.req.post(self.url_login, headers=self.headers, data=data, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk'))
 
+	def get_num(self, sheet, column, data):
+		while True:
+			req = self.req.post(self.url, data=data, headers=self.headers, auth=self.auth)
+			if req.status_code==200:
+				break
+			else:
+				sleep(2)
+		req_text = req.content.decode('GBK')
+		self.ws = self.wb.get_sheet(sheet)
+		total_num = re.findall(r'总计: (.*)条', req_text)
+		pay_num = re.findall(r'已付款订单量：(\d*) &nbsp', req_text)
+		pay_amount = re.findall(r'已付款总金额：(\d+\.\d+)', req_text)
+		if total_num==[]:
+			#print('空')
+			self.ws.write(self.row, column, 0)
+		else:
+			#print(total_num[0])
+			self.ws.write(self.row, column, total_num[0])
+
+		#print(pay_num[0])
+		self.ws.write(self.row, column+1, pay_num[0])
+
+		if pay_amount==[]:
+			#print('空')
+			self.ws.write(self.row, column+4, 0)
+		else:
+			#print(pay_amount[0])
+			self.ws.write(self.row, column+4, pay_amount[0])
+			
 	def get_data(self):
 		#测试类
 		self.jiating_login()
@@ -67,34 +96,6 @@ class Statistics_Jiating(object):
 		self.get_num(7, 2, data=reward_jtys)
 
 
-	def get_num(self, sheet, column, data):
-		while True:
-			req = self.req.post(self.url, data=data, headers=self.headers, auth=self.auth)
-			if req.status_code==200:
-				break
-			else:
-				sleep(2)
-		req_text = req.content.decode('GBK')
-		self.ws = self.wb.get_sheet(sheet)
-		total_num = re.findall(r'总计: (.*)条', req_text)
-		pay_num = re.findall(r'已付款订单量：(\d*) &nbsp', req_text)
-		pay_amount = re.findall(r'已付款总金额：(\d+\.\d+)', req_text)
-		if total_num==[]:
-			#print('空')
-			self.ws.write(self.row, column, 0)
-		else:
-			#print(total_num[0])
-			self.ws.write(self.row, column, total_num[0])
-
-		#print(pay_num[0])
-		self.ws.write(self.row, column+1, pay_num[0])
-
-		if pay_amount==[]:
-			#print('空')
-			self.ws.write(self.row, column+4, 0)
-		else:
-			#print(pay_amount[0])
-			self.ws.write(self.row, column+4, pay_amount[0])
 
 
 if __name__ == '__main__':

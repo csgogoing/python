@@ -38,11 +38,11 @@ class Write_Excel():
 	def statistics(self):
 		for date_time in self.datetime_need:
 			print('开始统计%s-%s-%s的数据'%(date_time.year,date_time.month,date_time.day))
-			Statistics_Im(self.wb, date_time).get_data()
+			#Statistics_Im(self.wb, date_time).get_data()
 			#Statistics_Tiezi(we.wb, date_time).get_data()
 			#Statistics_Dianhua(we.wb, date_time).get_data()
-			Statistics_Jiating(we.wb, date_time).get_data()
-			#Statistics_Yuyue(we.wb, date_time).get_data()
+			#Statistics_Jiating(we.wb, date_time).get_data()
+			Statistics_Yuyue(we.wb, date_time).get_data()
 
 
 if __name__ == '__main__':

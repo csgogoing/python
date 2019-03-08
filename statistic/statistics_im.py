@@ -37,6 +37,52 @@ class Statistics_Im(object):
 				if i%2 == 0:
 					self.cookies[cookie_item[i]] = cookie_item[i+1]
 
+	def get_num_unpaid(self, sheet, column, params):
+		while True:
+			req = requests.get(self.url, params=params, headers=self.headers, cookies=self.cookies)
+			if req.status_code==200:
+				break
+			else:
+				sleep(2)
+		self.ws = self.wb.get_sheet(sheet)
+		q_num = re.findall(r'共<b>(.*)</b>条数据.</div>', req.text)
+		if q_num==[]:
+			self.ws.write(self.row, column, 0)
+		else:
+			self.ws.write(self.row, column, q_num[0])
+
+	def get_num_paid(self, sheet, column, params):
+		while True:
+			req = requests.get(self.url, params=params, headers=self.headers, cookies=self.cookies)
+			if req.status_code==200:
+				break
+			else:
+				sleep(2)
+		self.ws = self.wb.get_sheet(sheet)
+		shifu = re.findall(r'实付金额：(.*)元</span>', req.text)[0]
+		q_num = re.findall(r'共<b>(.*)</b>条数据.</div>', req.text)
+		self.ws.write(self.row, column+3, shifu)
+		if q_num==[]:
+			self.ws.write(self.row, column+1, 0)
+		else:
+			self.ws.write(self.row, column+1, q_num[0])
+
+	def get_num_paid_l(self, sheet, column, params):
+		while True:
+			req = requests.get(self.url, params=params, headers=self.headers, cookies=self.cookies)
+			if req.status_code==200:
+				break
+			else:
+				sleep(2)
+		self.ws = self.wb.get_sheet(sheet)
+		shifu = re.findall(r'实付金额：(.*)元</span>', req.text)[0]
+		q_num = re.findall(r'共<b>(.*)</b>条数据.</div>', req.text)
+		self.ws.write(self.row, column+2, shifu)
+		if q_num==[]:
+			self.ws.write(self.row, column+1, 0)
+		else:
+			self.ws.write(self.row, column+1, q_num[0])
+
 
 	def get_data(self):
 		self.im_login()
@@ -66,8 +112,8 @@ class Statistics_Im(object):
 			}
 		try:
 
-			self.get_num_unpaid(1, 11, reward_baidu_unpaid)
-			self.get_num_unpaid(1, 17, reward_xywyapp_unpaid)
+			self.get_num_unpaid(1, 10, reward_baidu_unpaid)
+			self.get_num_unpaid(1, 16, reward_xywyapp_unpaid)
 			
 		except Exception as e:
 			print(e)
@@ -614,51 +660,6 @@ class Statistics_Im(object):
 			print('IM指定统计完成')
 
 
-	def get_num_unpaid(self, sheet, column, params):
-		while True:
-			req = requests.get(self.url, params=params, headers=self.headers, cookies=self.cookies)
-			if req.status_code==200:
-				break
-			else:
-				sleep(2)
-		self.ws = self.wb.get_sheet(sheet)
-		q_num = re.findall(r'共<b>(.*)</b>条数据.</div>', req.text)
-		if q_num==[]:
-			self.ws.write(self.row, column, 0)
-		else:
-			self.ws.write(self.row, column, q_num[0])
-
-	def get_num_paid(self, sheet, column, params):
-		while True:
-			req = requests.get(self.url, params=params, headers=self.headers, cookies=self.cookies)
-			if req.status_code==200:
-				break
-			else:
-				sleep(2)
-		self.ws = self.wb.get_sheet(sheet)
-		shifu = re.findall(r'实付金额：(.*)元</span>', req.text)[0]
-		q_num = re.findall(r'共<b>(.*)</b>条数据.</div>', req.text)
-		self.ws.write(self.row, column+3, shifu)
-		if q_num==[]:
-			self.ws.write(self.row, column+1, 0)
-		else:
-			self.ws.write(self.row, column+1, q_num[0])
-
-	def get_num_paid_l(self, sheet, column, params):
-		while True:
-			req = requests.get(self.url, params=params, headers=self.headers, cookies=self.cookies)
-			if req.status_code==200:
-				break
-			else:
-				sleep(2)
-		self.ws = self.wb.get_sheet(sheet)
-		shifu = re.findall(r'实付金额：(.*)元</span>', req.text)[0]
-		q_num = re.findall(r'共<b>(.*)</b>条数据.</div>', req.text)
-		self.ws.write(self.row, column+2, shifu)
-		if q_num==[]:
-			self.ws.write(self.row, column+1, 0)
-		else:
-			self.ws.write(self.row, column+1, q_num[0])
 
 if __name__ == '__main__':
 	#测试运行
