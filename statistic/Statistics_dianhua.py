@@ -25,21 +25,23 @@ class Statistics_Dianhua(object):
 
 	def dianhua_login(self):
 		#获取加密参数与cookie
-		try:
-			with open('dhys_cookies') as f:
-				cookies_origin = f.read()
-		except FileNotFoundError:
-			print('请在当前目录下保存dhys_cookies文件与相应cookies内容')
-		else:
-			cookie_item = re.split(r'; |=', cookies_origin)
-			self.cookies = {}
-			for i in range(len(cookie_item)):
-				if i%2 == 0:
-					self.cookies[cookie_item[i]] = cookie_item[i+1]
+		self.url_login = 'http://dhys.z.xywy.com/login.php'
+		self.req = requests.Session()
+		self.req.cookies['clubsid']=r'tJNHHHaKM4sttZ26XUD7lOnGmZEcH8RnlqeieFRCstR%252FbkxdQQlz19ZbCd%252Fz5s6EKguC3MzXdx4Kc989%252Fk7%252F7s5N46Gv9i7jfc3hoTn1UesrukWkXQngl%252FzHKqe0eGXTl4OdwXaDQ%252F9mW8yfsDBARvBu8dKX53J%252F'
+		self.req.cookies['member_login_captcha']=r'460a5d21e549b15e8632df2aab8404fc'
+		self.req.cookies['PHPSESSID']=r'a5i8mfsvn9pjd7dli4bs354056'
+		data = {
+		'backurl':'',
+		'username':'dujun',
+		'passwd':'m=$=Bn(qoFYb',
+		'img_code':'smqqs',
+		'submit':'登陆'.encode('gb2312')
+		}
+		self.req.post(self.url_login, headers=self.headers, data=data)
 
 	def get_num(self, sheet, column, params):
 		while True:
-			req = requests.post(self.url, params=params, headers=self.headers, cookies=self.cookies)
+			req = self.req.post(self.url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -292,15 +294,20 @@ class Statistics_Dianhua(object):
 			'search':'搜  索'.encode('gb2312')
 			}
 
-
-		self.get_num(6, 17, params=dianhua_3g)
-		self.get_num(6, 25, params=dianhua_xywyapp)
-		self.get_num(6, 33, params=dianhua_askapp)
-		self.get_num(6, 41, params=dianhua_wx)
-		self.get_num(6, 49, params=dianhua_baidu_xzh)
-		self.get_num(6, 57, params=dianhua_sougou)
-		self.get_num(6, 65, params=dianhua_pc)
-		self.get_num(6, 73, params=dianhua_jrtt)
+		try:
+			self.get_num(6, 17, params=dianhua_3g)
+			self.get_num(6, 25, params=dianhua_xywyapp)
+			self.get_num(6, 33, params=dianhua_askapp)
+			self.get_num(6, 41, params=dianhua_wx)
+			self.get_num(6, 49, params=dianhua_baidu_xzh)
+			self.get_num(6, 57, params=dianhua_sougou)
+			self.get_num(6, 65, params=dianhua_pc)
+			self.get_num(6, 73, params=dianhua_jrtt)
+		except Exception as e:
+			print(e)
+			print('电话医生统计失败')
+		else:
+			print('电话医生统计完成')
 
 
 if __name__ == '__main__':

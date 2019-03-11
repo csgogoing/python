@@ -2,7 +2,7 @@ from statistics_im import Statistics_Im
 from statistics_tiezi import Statistics_Tiezi
 from statistics_dianhua import Statistics_Dianhua
 from statistics_jiating import Statistics_Jiating
-#from statistics_yuyue import Statistics_Yuyue
+from statistics_yuyue import Statistics_Yuyue
 from xlutils.copy import copy
 import re
 import sys
@@ -38,10 +38,10 @@ class Write_Excel():
 	def statistics(self):
 		for date_time in self.datetime_need:
 			print('开始统计%s-%s-%s的数据'%(date_time.year,date_time.month,date_time.day))
-			#Statistics_Im(self.wb, date_time).get_data()
+			Statistics_Im(self.wb, date_time).get_data()
 			#Statistics_Tiezi(we.wb, date_time).get_data()
-			#Statistics_Dianhua(we.wb, date_time).get_data()
-			#Statistics_Jiating(we.wb, date_time).get_data()
+			Statistics_Dianhua(we.wb, date_time).get_data()
+			Statistics_Jiating(we.wb, date_time).get_data()
 			Statistics_Yuyue(we.wb, date_time).get_data()
 
 
@@ -49,9 +49,3 @@ if __name__ == '__main__':
 	we = Write_Excel()
 	we.statistics()
 	we.save()
-	# except Exception as e:
-	# 	print('请检查当前目录下存在前一日的xls文件，并关闭此文件')
-	# 	sleep(2)
-	# 	sys.exit()
-	# else:
-	# 	pass

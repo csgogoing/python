@@ -93,8 +93,13 @@ class Statistics_Jiating(object):
 			'search':'搜索'.encode('gb2312')
 			}
 
-		self.get_num(7, 2, data=reward_jtys)
-
+		try:
+			self.get_num(7, 2, data=reward_jtys)
+		except Exception as e:
+			print(e)
+			print('家庭医生统计失败')
+		else:
+			print('家庭医生统计完成')
 
 
 

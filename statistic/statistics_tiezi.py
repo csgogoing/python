@@ -30,7 +30,7 @@ class Statistics_Tiezi(object):
 		self.req.get(self.url_login, headers=self.headers, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk'))
 		self.req.cookies['clubsid']=r'f6rSPMffrC%252Ble7VLt20eDcqB2F%252F77K7NzylLzC8pWGQYhDIHJKX%252FguL%252FwmAmLrySLs2FaHGRg1LPDgveGoYX83V2WjyXS5%252FiK3vqAYhyaoyrI5aLImsWjXsjE1hTDo05g%252B1lwiOCql2sIpxOqDB2iazOUFDmOHgZ'
 		data = {
-		'backself.url':'',
+		'backurl':'',
 		'username':'dujun',
 		'passwd':'zCbCyIZDd0o4',
 		'submit':'登陆'.encode('gb2312')

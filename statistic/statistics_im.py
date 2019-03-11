@@ -25,21 +25,40 @@ class Statistics_Im(object):
 
 	def im_login(self):
 		#获取加密参数与cookie
+		# try:
+		# 	with open('im_cookies') as f:
+		# 		cookies_origin = f.read()
+		# except FileNotFoundError:
+		# 	print('请在当前目录下保存im_cookies文件与相应cookies内容')
+		# else:
+		# 	cookie_item = re.split(r'; |=', cookies_origin)
+		# 	self.cookies = {}
+		# 	for i in range(len(cookie_item)):
+		# 		if i%2 == 0:
+		# 			self.cookies[cookie_item[i]] = cookie_item[i+1]
+				#获取加密参数与cookie
+		self.url_login = 'http://admin.d.xywy.com/admin/user/login'
+		self.req = requests.Session()
+		self.req.cookies['_csrf']=r'7869301893ff8393ee576f9b6c9bc514281e3c97a85b62ef781e1a52260eca2ea%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22kXLPW14kTobTVnm-afCz055h5qzmiqqs%22%3B%7D'
+		self.req.cookies['PHPSESSID']=r'ms0l2tu9h4ptqnde47vhosgvu2'
+		self.req.cookies['_identity']=r'0c1e5eba030192c62326099615c43ff4cf5e632dea0b7499e9aa7c7918d99ad1a%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A47%3A%22%5B14%2C%2251UEIILfTj07Vd4XaDk6ftfhM3yYb5pT%22%2C2592000%5D%22%3B%7D'
+		data = {
+		'_csrf':r'd3ZZUXpxb0YcLhUBLUBbLSMZOwUsHwJrFhAaK0pEWi5CByM8EwAeNQ==',
+		'Login[username]':'fuyanqiu',
+		'Login[password]':'123456',
+		'Login[verifyCode]':'wefe',
+		'Login[rememberMe]':'0',
+		'Login[rememberMe]':'1',
+		'login-button':''
+		}
 		try:
-			with open('im_cookies') as f:
-				cookies_origin = f.read()
-		except FileNotFoundError:
-			print('请在当前目录下保存im_cookies文件与相应cookies内容')
-		else:
-			cookie_item = re.split(r'; |=', cookies_origin)
-			self.cookies = {}
-			for i in range(len(cookie_item)):
-				if i%2 == 0:
-					self.cookies[cookie_item[i]] = cookie_item[i+1]
+			self.req.post(self.url_login, headers=self.headers, data=data)
+		except Exception as e:
+			print('请检查网络是否通畅')
 
 	def get_num_unpaid(self, sheet, column, params):
 		while True:
-			req = requests.get(self.url, params=params, headers=self.headers, cookies=self.cookies)
+			req = self.req.get(self.url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -53,7 +72,7 @@ class Statistics_Im(object):
 
 	def get_num_paid(self, sheet, column, params):
 		while True:
-			req = requests.get(self.url, params=params, headers=self.headers, cookies=self.cookies)
+			req = self.req.get(self.url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -69,7 +88,7 @@ class Statistics_Im(object):
 
 	def get_num_paid_l(self, sheet, column, params):
 		while True:
-			req = requests.get(self.url, params=params, headers=self.headers, cookies=self.cookies)
+			req = self.req.get(self.url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -396,7 +415,7 @@ class Statistics_Im(object):
 		#指定
 		#寻医问药app
 		assign_xywyapp_unpaid = {
-			'QuestionOrderSearch[order_type]':'2',
+			'QuestionOrderSearch[order_type]':'3',
 			'QuestionOrderSearch[pay_source]':'2',
 			'QuestionOrderSearch[pay_status]':'3',
 			'QuestionOrderSearch[pay_type]':'',
