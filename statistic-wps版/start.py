@@ -1,3 +1,4 @@
+#coding=utf-8
 from statistics_im import Statistics_Im
 from statistics_tiezi import Statistics_Tiezi
 from statistics_dianhua import Statistics_Dianhua
@@ -24,7 +25,7 @@ class Write_Excel():
 		for i in range(day):
 			cur = cur-datetime.timedelta(days=1)
 			self.datetime_need.append(cur)
-			excel_path = os.getcwd()+'\\%d年统计数据_基础服务&后台组-%d月%d日改.xlsx'%(cur.year, cur.month, cur.day)
+			excel_path = os.getcwd()+'\\%d年统计数据_基础服务&后台组-%d月%d日.xlsx'%(cur.year, cur.month, cur.day)
 			if os.path.exists(excel_path):
 				self.wpsApp = win32com.client.Dispatch("ket.Application")
 				self.wpsApp.Visible = 1
@@ -36,7 +37,7 @@ class Write_Excel():
 					sys.exit('当前目录下未找到7日内的统计表格')
  
 	def save(self):
-		save_path = os.getcwd()+'\\%d年统计数据_基础服务&后台组-%d月%d日改.xls'%(datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day)
+		save_path = os.getcwd()+'\\%d年统计数据_基础服务&后台组-%d月%d日.xlsx'%(datetime.datetime.now().year, datetime.datetime.now().month, datetime.datetime.now().day)
 		if os.path.exists(save_path):
 			os.remove(save_path)
 		self.xlBook.SaveAs(save_path)
@@ -47,7 +48,8 @@ class Write_Excel():
 	def statistics(self):
 		for date_time in self.datetime_need:
 			print('开始统计%s-%s-%s的数据'%(date_time.year,date_time.month,date_time.day))
-			# Statistics_Im(self.xlBook, date_time).get_data()
+			# wps版本column从1开始
+			#Statistics_Im(self.xlBook, date_time).get_data()
 			Statistics_Tiezi(self.xlBook, date_time).get_data()
 			# Statistics_Dianhua(self.xlBook, date_time).get_data()
 			# Statistics_Jiating(self.xlBook, date_time).get_data()
@@ -55,6 +57,7 @@ class Write_Excel():
 
 			#Statistics_Tiezi(self.xlBook, date_time).test()
 
+			# excel版本column从0开始
 			#Statistics_Im(self.wb, date_time).get_data()
 			#Statistics_Tiezi(we.wb, date_time).get_data()
 			#Statistics_Dianhua(we.wb, date_time).get_data()
