@@ -38,7 +38,7 @@ class Statistics_Jiating(object):
 		'submit':'登陆'.encode('gb2312')
 		}
 		self.req.post(self.url_login, headers=self.headers, data=data, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk'))
-		login_req = self.req.get('http://cadmin.xywy.com/main.php', headers=self.headers, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk')).content.decode('GBK')
+		login_req = self.req.get('http://cadmin.xywy.com/main.php', headers=self.headers, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk')).content.decode('gb2312', errors='ignore')
 		if '欢迎进入' in login_req:
 			return True
 		else:
@@ -51,7 +51,7 @@ class Statistics_Jiating(object):
 				break
 			else:
 				sleep(2)
-		req_text = req.content.decode('GBK')
+		req_text = req.content.decode('gb2312', errors='ignore')
 		#self.ws = self.wb.get_sheet(sheet)
 		total_num = re.findall(r'总计: (.*)条', req_text)
 		pay_num = re.findall(r'已付款订单量：(\d*) &nbsp', req_text)

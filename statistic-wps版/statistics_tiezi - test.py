@@ -8,15 +8,16 @@ import datetime
 from requests.auth import HTTPBasicAuth
 from time import sleep
 from lxml import etree
+import zlib
 
 class Statistics_Tiezi(object):
 	'''
 	'''
-	def __init__(self, wb, date_time):
+	def __init__(self):
 		# , wb, date_time
-		self.wb = wb
-		self.cur = date_time
-		#self.cur = datetime.datetime.now()
+		#self.wb = wb
+		#self.cur = date_time
+		self.cur = datetime.datetime.now()-datetime.timedelta(days=1)
 		self.pass_day = self.cur.timetuple().tm_yday
 		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day)
 		print(self.row)
@@ -40,7 +41,7 @@ class Statistics_Tiezi(object):
 		'submit':'登陆'.encode('gb2312')
 		}
 		self.req.post(self.url_login, headers=self.headers, data=data, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk'))
-		login_req = self.req.get('http://cadmin.xywy.com/main.php', headers=self.headers, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk')).content.decode('gb2312', errors='ignore')
+		login_req = self.req.get('http://cadmin.xywy.com/main.php', headers=self.headers, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk')).content.decode('GBK')
 		if '欢迎进入' in login_req:
 			return True
 		else:
@@ -48,6 +49,7 @@ class Statistics_Tiezi(object):
 
 	def get_reward_unpaid(self, sheet, column, data):
 		while True:
+			self.req.encoding = 'gb2312'
 			req = self.req.post(self.reward_url, data=data, headers=self.headers, auth=self.auth)
 			if req.status_code==200:
 				break
@@ -64,13 +66,13 @@ class Statistics_Tiezi(object):
 		# 	#print('非空')
 		# 	self.ws.write(self.row, column, q_num[0])
 
-		self.wb.Worksheets[sheet].Activate()
+		#self.wb.Worksheets[sheet].Activate()
 		if q_num==[]:
-			#print('空')
-			self.wb.ActiveSheet.Cells(self.row, column+1).Value='0'
+			print('空')
+			#self.wb.ActiveSheet.Cells(self.row, column+1).Value='0'
 		else:
-			#print('非空')
-			self.wb.ActiveSheet.Cells(self.row, column+1).Value=q_num[0]
+			print(q_num[0])
+			#self.wb.ActiveSheet.Cells(self.row, column+1).Value=q_num[0]
 
 
 	def get_reward_paid(self, sheet, column, data):
@@ -80,7 +82,8 @@ class Statistics_Tiezi(object):
 				break
 			else:
 				sleep(2)
-		req_text = req.content.decode('gb2312', errors='ignore')
+		req_content = req.content.replace('0xe8', '')
+		req_text=req_content.decode('gb2312')
 		shifu = re.findall(r'总悬赏金额：(.*)元', req_text)[0]
 		q_num = re.findall(r'总计: (.*)条', req_text)
 
@@ -98,19 +101,19 @@ class Statistics_Tiezi(object):
 		# 	#print(q_num[0])
 		# 	self.ws.write(self.row, column+1, q_num[0])
 
-		self.wb.Worksheets[sheet].Activate()
+		#self.wb.Worksheets[sheet].Activate()
 		if shifu == '':
-			#print('空')
-			self.wb.ActiveSheet.Cells(self.row, column+4).Value='0'
+			print('空')
+			#self.wb.ActiveSheet.Cells(self.row, column+4).Value='0'
 		else:
-			#print(shifu)
-			self.wb.ActiveSheet.Cells(self.row, column+4).Value=shifu
+			print(shifu)
+			#self.wb.ActiveSheet.Cells(self.row, column+4).Value=shifu
 		if q_num==[]:
-			#print('空')
-			self.wb.ActiveSheet.Cells(self.row, column+2).Value='0'
+			print('空')
+			#self.wb.ActiveSheet.Cells(self.row, column+2).Value='0'
 		else:
-			#print(q_num[0])
-			self.wb.ActiveSheet.Cells(self.row, column+2).Value=q_num[0]
+			print(q_num[0])
+			#self.wb.ActiveSheet.Cells(self.row, column+2).Value=q_num[0]
 
 	def get_assign_unpaid(self, sheet, column, data):
 		while True:
@@ -119,7 +122,7 @@ class Statistics_Tiezi(object):
 				break
 			else:
 				sleep(2)
-		req_text = req.content.decode('gb2312', errors='ignore')
+		req_text = req.content.decode('GBK')
 		q_num = re.findall(r'订单数量：(.*)</td>', req_text)
 
 		# self.ws = self.wb.get_sheet(sheet)
@@ -147,7 +150,7 @@ class Statistics_Tiezi(object):
 				break
 			else:
 				sleep(2)
-		req_text = req.content.decode('gb2312', errors='ignore')
+		req_text = req.content.decode('GBK')
 		shifu = re.findall(r'订单金额：(.*)元', req_text)[0]
 		q_num = re.findall(r'订单数量：(.*)</td>', req_text)
 
@@ -189,18 +192,19 @@ class Statistics_Tiezi(object):
 			return
 		self.reward_url = 'http://cadmin.xywy.com/ques_list.php?type=list'
 
-		reward_wx_jkwd_unpaid = {
+		reward_pc_unpaid = {
 			'subject_1':'-1',
 			'subject_2':'-1',
-			'table':'question',	
+			'table':'question',
 			'question_type':'100',
 			'id':'',
-			'ques_from': '64',
-			'order_from':'3',
+			'ques_from': '47',
+			'order_from':'100',
 			'title':'',
 			'pid':'',
 			'start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
 			'end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'xitongfree':'1',
 			'search':'搜索'.encode('gb2312')
 			}
 		reward_wx_jkwd_paid = {
@@ -218,8 +222,8 @@ class Statistics_Tiezi(object):
 			'search':'搜索'.encode('gb2312')
 			}
 
-		#self.get_reward_uppaid(2, 37, data=reward_wx_jkwd_unpaid)
-		self.get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
+		self.get_reward_unpaid(2, 37, data=reward_pc_unpaid)
+		#self.get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
 
 
 	def get_data(self):
@@ -502,67 +506,66 @@ class Statistics_Tiezi(object):
 			'search':'搜索'.encode('gb2312')
 			}
 
-		try:
-			self.get_reward_unpaid(2, 13, data=reward_pc_unpaid)
-			self.get_reward_paid(2, 13, data=reward_pc_paid)
+		# try:
+		# 	self.get_reward_unpaid(2, 13, data=reward_pc_unpaid)
+		# 	self.get_reward_paid(2, 13, data=reward_pc_paid)
 
-			self.get_reward_unpaid(2, 19, data=reward_3g_unpaid)
-			self.get_reward_paid(2, 19, data=reward_3g_paid)
+		# 	self.get_reward_unpaid(2, 19, data=reward_3g_unpaid)
+		# 	self.get_reward_paid(2, 19, data=reward_3g_paid)
 
-			self.get_reward_unpaid(2, 25, data=reward_xywyapp_unpaid)
-			self.get_reward_paid(2, 25, data=reward_xywyapp_paid)
+		# 	self.get_reward_unpaid(2, 25, data=reward_xywyapp_unpaid)
+		# 	self.get_reward_paid(2, 25, data=reward_xywyapp_paid)
 
-			self.get_reward_unpaid(2, 31, data=reward_askapp_unpaid)
-			self.get_reward_paid(2, 31, data=reward_askapp_paid)
+		# 	self.get_reward_unpaid(2, 31, data=reward_askapp_unpaid)
+		# 	self.get_reward_paid(2, 31, data=reward_askapp_paid)
 
-			self.get_reward_unpaid(2, 37, data=reward_wx_jkwd_unpaid)
-			self.get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
+		# 	self.get_reward_unpaid(2, 37, data=reward_wx_jkwd_unpaid)
+		# 	self.get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
 
-			self.get_reward_unpaid(2, 43, data=reward_wx_xywy_unpaid)
-			self.get_reward_paid(2, 43, data=reward_wx_xywy_paid)
+		# 	self.get_reward_unpaid(2, 43, data=reward_wx_xywy_unpaid)
+		# 	self.get_reward_paid(2, 43, data=reward_wx_xywy_paid)
 
-			self.get_reward_unpaid(2, 49, data=reward_zfb_unpaid)
-			self.get_reward_paid(2, 49, data=reward_zfb_paid)
+		# 	self.get_reward_unpaid(2, 49, data=reward_zfb_unpaid)
+		# 	self.get_reward_paid(2, 49, data=reward_zfb_paid)
 
-			self.get_reward_unpaid(2, 55, data=reward_zhrs_unpaid)
-			self.get_reward_paid(2, 55, data=reward_zhrs_paid)
+		# 	self.get_reward_unpaid(2, 55, data=reward_zhrs_unpaid)
+		# 	self.get_reward_paid(2, 55, data=reward_zhrs_paid)
 
-			self.get_reward_unpaid(2, 61, data=reward_58_unpaid)
-			self.get_reward_paid(2, 61, data=reward_58_paid)
-			
-		except Exception as e:
-			print(e)
-			print('帖子悬赏统计失败')
-		else:
-			print('帖子悬赏统计完成')
+		# 	self.get_reward_unpaid(2, 61, data=reward_58_unpaid)
+		# 	self.get_reward_paid(2, 61, data=reward_58_paid)
 
-		# self.get_reward_unpaid(2, 13, data=reward_pc_unpaid)
-		# self.get_reward_paid(2, 13, data=reward_pc_paid)
+		# except Exception as e:
+		# 	print(e)
+		# 	print('帖子悬赏统计失败')
+		# else:
+		# 	print('帖子悬赏统计完成')
 
-		# self.get_reward_unpaid(2, 19, data=reward_3g_unpaid)
-		# self.get_reward_paid(2, 19, data=reward_3g_paid)
+		self.get_reward_unpaid(2, 13, data=reward_pc_unpaid)
+		self.get_reward_paid(2, 13, data=reward_pc_paid)
 
-		# self.get_reward_unpaid(2, 25, data=reward_xywyapp_unpaid)
-		# self.get_reward_paid(2, 25, data=reward_xywyapp_paid)
+		self.get_reward_unpaid(2, 19, data=reward_3g_unpaid)
+		self.get_reward_paid(2, 19, data=reward_3g_paid)
 
-		# self.get_reward_unpaid(2, 31, data=reward_askapp_unpaid)
-		# self.get_reward_paid(2, 31, data=reward_askapp_paid)
+		self.get_reward_unpaid(2, 25, data=reward_xywyapp_unpaid)
+		self.get_reward_paid(2, 25, data=reward_xywyapp_paid)
 
-		# self.get_reward_unpaid(2, 37, data=reward_wx_jkwd_unpaid)
-		# self.get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
+		self.get_reward_unpaid(2, 31, data=reward_askapp_unpaid)
+		self.get_reward_paid(2, 31, data=reward_askapp_paid)
 
-		# self.get_reward_unpaid(2, 43, data=reward_wx_xywy_unpaid)
-		# self.get_reward_paid(2, 43, data=reward_wx_xywy_paid)
+		self.get_reward_unpaid(2, 37, data=reward_wx_jkwd_unpaid)
+		self.get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
 
-		# self.get_reward_unpaid(2, 49, data=reward_zfb_unpaid)
-		# self.get_reward_paid(2, 49, data=reward_zfb_paid)
+		self.get_reward_unpaid(2, 43, data=reward_wx_xywy_unpaid)
+		self.get_reward_paid(2, 43, data=reward_wx_xywy_paid)
 
-		# self.get_reward_unpaid(2, 55, data=reward_zhrs_unpaid)
-		# self.get_reward_paid(2, 55, data=reward_zhrs_paid)
+		self.get_reward_unpaid(2, 49, data=reward_zfb_unpaid)
+		self.get_reward_paid(2, 49, data=reward_zfb_paid)
 
-		# self.get_reward_unpaid(2, 61, data=reward_58_unpaid)
-		# self.get_reward_paid(2, 61, data=reward_58_paid)
+		self.get_reward_unpaid(2, 55, data=reward_zhrs_unpaid)
+		self.get_reward_paid(2, 55, data=reward_zhrs_paid)
 
+		self.get_reward_unpaid(2, 61, data=reward_58_unpaid)
+		self.get_reward_paid(2, 61, data=reward_58_paid)
 
 		#指定
 		#PC
@@ -754,54 +757,54 @@ class Statistics_Tiezi(object):
 			'end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
 			'search':'搜索'.encode('gb2312')
 			}
-		try:
-			self.get_assign_unpaid(4, 13, data=assign_pc_unpaid)
-			self.get_assign_paid(4, 13, data=assign_pc_paid)
+		# try:
+		# 	self.get_assign_unpaid(4, 13, data=assign_pc_unpaid)
+		# 	self.get_assign_paid(4, 13, data=assign_pc_paid)
 
-			self.get_assign_unpaid(4, 19, data=assign_3g_unpaid)
-			self.get_assign_paid(4, 19, data=assign_3g_paid)
+		# 	self.get_assign_unpaid(4, 19, data=assign_3g_unpaid)
+		# 	self.get_assign_paid(4, 19, data=assign_3g_paid)
 
-			self.get_assign_unpaid(4, 25, data=assign_xywyapp_unpaid)
-			self.get_assign_paid(4, 25, data=assign_xywyapp_paid)
+		# 	self.get_assign_unpaid(4, 25, data=assign_xywyapp_unpaid)
+		# 	self.get_assign_paid(4, 25, data=assign_xywyapp_paid)
 
-			self.get_assign_unpaid(4, 31, data=assign_askapp_unpaid)
-			self.get_assign_paid(4, 31, data=assign_askapp_paid)
+		# 	self.get_assign_unpaid(4, 31, data=assign_askapp_unpaid)
+		# 	self.get_assign_paid(4, 31, data=assign_askapp_paid)
 
-			self.get_assign_unpaid(4, 37, data=assign_wx_jkwd_unpaid)
-			self.get_assign_paid(4, 37, data=assign_wx_jkwd_paid)
+		# 	self.get_assign_unpaid(4, 37, data=assign_wx_jkwd_unpaid)
+		# 	self.get_assign_paid(4, 37, data=assign_wx_jkwd_paid)
 
-			self.get_assign_unpaid(4, 43, data=assign_wx_xywy_unpaid)
-			self.get_assign_paid(4, 43, data=assign_wx_xywy_paid)
+		# 	self.get_assign_unpaid(4, 43, data=assign_wx_xywy_unpaid)
+		# 	self.get_assign_paid(4, 43, data=assign_wx_xywy_paid)
 
-			self.get_assign_unpaid(4, 49, data=assign_wx_xcx_unpaid)
-			self.get_assign_paid(4, 49, data=assign_wx_xcx_paid)
+		# 	self.get_assign_unpaid(4, 49, data=assign_wx_xcx_unpaid)
+		# 	self.get_assign_paid(4, 49, data=assign_wx_xcx_paid)
 
-		except Exception as e:
-			print(e)
-			print('帖子指定统计失败')
-		else:
-			print('帖子指定统计完成')
+		# except Exception as e:
+		# 	print(e)
+		# 	print('帖子指定统计失败')
+		# else:
+		# 	print('帖子指定统计完成')
 
-		# self.get_assign_unpaid(4, 13, data=assign_pc_unpaid)
-		# self.get_assign_paid(4, 13, data=assign_pc_paid)
+		self.get_assign_unpaid(4, 13, data=assign_pc_unpaid)
+		self.get_assign_paid(4, 13, data=assign_pc_paid)
 
-		# self.get_assign_unpaid(4, 19, data=assign_3g_unpaid)
-		# self.get_assign_paid(4, 19, data=assign_3g_paid)
+		self.get_assign_unpaid(4, 19, data=assign_3g_unpaid)
+		self.get_assign_paid(4, 19, data=assign_3g_paid)
 
-		# self.get_assign_unpaid(4, 25, data=assign_xywyapp_unpaid)
-		# self.get_assign_paid(4, 25, data=assign_xywyapp_paid)
+		self.get_assign_unpaid(4, 25, data=assign_xywyapp_unpaid)
+		self.get_assign_paid(4, 25, data=assign_xywyapp_paid)
 
-		# self.get_assign_unpaid(4, 31, data=assign_askapp_unpaid)
-		# self.get_assign_paid(4, 31, data=assign_askapp_paid)
+		self.get_assign_unpaid(4, 31, data=assign_askapp_unpaid)
+		self.get_assign_paid(4, 31, data=assign_askapp_paid)
 
-		# self.get_assign_unpaid(4, 37, data=assign_wx_jkwd_unpaid)
-		# self.get_assign_paid(4, 37, data=assign_wx_jkwd_paid)
+		self.get_assign_unpaid(4, 37, data=assign_wx_jkwd_unpaid)
+		self.get_assign_paid(4, 37, data=assign_wx_jkwd_paid)
 
-		# self.get_assign_unpaid(4, 43, data=assign_wx_xywy_unpaid)
-		# self.get_assign_paid(4, 43, data=assign_wx_xywy_paid)
+		self.get_assign_unpaid(4, 43, data=assign_wx_xywy_unpaid)
+		self.get_assign_paid(4, 43, data=assign_wx_xywy_paid)
 
-		# self.get_assign_unpaid(4, 49, data=assign_wx_xcx_unpaid)
-		# self.get_assign_paid(4, 49, data=assign_wx_xcx_paid)
+		self.get_assign_unpaid(4, 49, data=assign_wx_xcx_unpaid)
+		self.get_assign_paid(4, 49, data=assign_wx_xcx_paid)
 
 
 if __name__ == '__main__':

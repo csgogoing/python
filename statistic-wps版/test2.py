@@ -7,10 +7,6 @@ import cv2
 import time
 import os
 
-P:a5i8mfsvn9pjd7dli4bs354056
-M:460a5d21e549b15e8632df2aab8404fc
-M:smqqs
-
 
 def clear_border(img,img_name):
 	'''去除边框
@@ -297,7 +293,7 @@ def main():
 	filedir = './easy_img'
 
 	for file in os.listdir(filedir):
-		if fnmatch(file, '*.png'):
+		if fnmatch(file, '*.bmp'):
 			img_name = file
 
 			# 自适应阈值二值化

@@ -41,7 +41,7 @@ class Statistics_Yuyue(object):
 		'submit':'登陆'.encode('gb2312')
 		}
 		self.req.post(self.url_login, headers=self.headers, data=data)
-		login_req = self.req.get('http://fzadmin.z.xywy.com/main.php', headers=self.headers).content.decode('GBK')
+		login_req = self.req.get('http://fzadmin.z.xywy.com/main.php', headers=self.headers).content.decode('gb2312', errors='ignore')
 		if '欢迎进入' in login_req:
 			return True
 		else:
@@ -54,7 +54,7 @@ class Statistics_Yuyue(object):
 				break
 			else:
 				sleep(2)		
-		req_text = req.content.decode('GBK')
+		req_text = req.content.decode('gb2312', errors='ignore')
 		elements = etree.HTML(req_text)
 		q_all = elements.xpath('/html/body/table[2]/tr[3]/td[2]/text()')[0]
 		q_pc = elements.xpath('/html/body/table[2]/tr[3]/td[3]/text()')[0]

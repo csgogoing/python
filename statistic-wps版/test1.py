@@ -1,7 +1,7 @@
 import re
 from lxml import etree
 
-req_text = '''HTTP/1.1 200 OK
+req_content = '''HTTP/1.1 200 OK
 Server: nginx
 Date: Mon, 11 Mar 2019 05:47:50 GMT
 Content-Type: text/html;charset=GB2312
