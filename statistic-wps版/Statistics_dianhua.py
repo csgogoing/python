@@ -1,13 +1,14 @@
 #coding=utf-8
+from requests.auth import HTTPBasicAuth
+from time import sleep
+from lxml import etree
 import time
 import requests
 import re
 import sys
 import json
 import datetime
-from requests.auth import HTTPBasicAuth
-from time import sleep
-from lxml import etree
+import pic_rec
 
 class Statistics_Dianhua(object):
 	'''
@@ -27,29 +28,34 @@ class Statistics_Dianhua(object):
 	def dianhua_login(self):
 		#获取加密参数与cookie
 		self.url_login = 'http://dhys.z.xywy.com/login.php'
+		self.url_pic = 'http://dhys.z.xywy.com/captcha.php'
 		self.req = requests.Session()
-		self.req.cookies['clubsid']=r'f6rSPMffrC%252Ble7VLt20eDcqB2F%252F77K7NzylLzC8pWGQYhDIHJKX%252FguL%252FwmAmLrySLs2FaHGRg1LPDgveGoYX83V2WjyXS5%252FiK3vqAYhyaoyrI5aLImsWjXsjE1hTDo05g%252B1lwiOCql2sIpxOqDB2iazOUFDmOHgZ'
-		self.req.cookies['member_login_captcha']=r'066da09a18bc975c1d03bc79ab233cbf'
-		self.req.cookies['PHPSESSID']=r'4o3k02552kr8852f1dp6jkh6s1'
-		data = {
-		'backurl':'',
-		'username':'dujun',
-		'passwd':'m=$=Bn(qoFYb',
-		'img_code':'TCEWH	',
-		'submit':'登陆'.encode('gb2312')
-		}
-		self.req.post(self.url_login, headers=self.headers, data=data)
-		login_req = self.req.get('http://dhys.z.xywy.com/main.php', headers=self.headers).content.decode('gb2312', errors='ignore')
-		if '欢迎进入' in login_req:
-			return True
-		else:
-			return False
+		times = 1
+		retry = 3
+		while True:
+			req_pic = self.req.post(self.url_pic, headers=self.headers)
+			result = pic_rec.recognition(req_pic.content)
+			data = {
+			'backurl':'',
+			'username':'dujun',
+			'passwd':'',
+			'img_code':'%s'%result,
+			'submit':'登陆'.encode('gb2312')
+			}
+			self.req.post(self.url_login, headers=self.headers, data=data)
+			login_req = self.req.get('http://dhys.z.xywy.com/main.php', headers=self.headers).content.decode('gb2312', errors='ignore')
+			if '欢迎进入' in login_req:
+				return True
+			else:
+				if times > retry:
+					return False
+				else:
+					times = times + 1
 
 
 	def get_num(self, sheet, column, params):
 		while True:
 			req = self.req.post(self.url, params=params, headers=self.headers)
-			print(req.url)
 			if req.status_code==200:
 				break
 			else:

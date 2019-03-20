@@ -259,7 +259,7 @@ def CFS(im):
 
 		try:
 			x_fd,y_fd = detectFgPix(im,xmax)
-			# print(y_fd,x_fd)
+			print(y_fd,x_fd)
 			xmax,xmin,ymax,ymin=cfs(im,x_fd,y_fd)
 			L = xmax - xmin
 			H = ymax - ymin
@@ -293,22 +293,22 @@ def main():
 	filedir = './easy_img'
 
 	for file in os.listdir(filedir):
-		if fnmatch(file, '*.bmp'):
+		if fnmatch(file, '*.jpg'):
 			img_name = file
 
 			# 自适应阈值二值化
 			im = _get_dynamic_binary_image(filedir, img_name)
 
 			# 去除边框
-			im = clear_border(im,img_name)
+			#im = clear_border(im,img_name)
 
 			# 对图片进行干扰线降噪
-			im = interference_line(im,img_name)
+			#im = interference_line(im,img_name)
 
 			# 对图片进行点降噪
-			im = interference_point(im,img_name)
+			#im = interference_point(im,img_name)
 
-			print(pytesseract.image_to_string(im,lang = 'eng'))
+			print(pytesseract.image_to_string(im, lang = 'eng'))
 
 			# 切割的位置
 			im_position = CFS(im)
@@ -316,7 +316,7 @@ def main():
 			maxL = max(im_position[0])
 			minL = min(im_position[0])
 
-			# 如果有粘连字符，如果一个字符的长度过长就认为是粘连字符，并从中间进行切割
+			如果有粘连字符，如果一个字符的长度过长就认为是粘连字符，并从中间进行切割
 			if(maxL > minL + minL * 0.7):
 				maxL_index = im_position[0].index(maxL)
 				minL_index = im_position[0].index(minL)

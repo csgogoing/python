@@ -46,8 +46,8 @@ class Statistics_Im(object):
 		self.req.cookies['_identity']=r'0c1e5eba030192c62326099615c43ff4cf5e632dea0b7499e9aa7c7918d99ad1a%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A47%3A%22%5B14%2C%2251UEIILfTj07Vd4XaDk6ftfhM3yYb5pT%22%2C2592000%5D%22%3B%7D'
 		data = {
 		'_csrf':r'd3ZZUXpxb0YcLhUBLUBbLSMZOwUsHwJrFhAaK0pEWi5CByM8EwAeNQ==',
-		'Login[username]':'fuyanqiu',
-		'Login[password]':'123456',
+		'Login[username]':'',
+		'Login[password]':'',
 		'Login[verifyCode]':'wefe',
 		'Login[rememberMe]':'0',
 		'Login[rememberMe]':'1',
@@ -430,45 +430,45 @@ class Statistics_Im(object):
 			'QuestionOrderSearch[bgDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
 			'QuestionOrderSearch[edDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day)
 			}
-		# try:
-		# 	self.get_num_unpaid(3, 13, reward_xywyapp_unpaid)
-		# 	self.get_num_paid(3, 13, reward_xywyapp_paid)
+		try:
+			self.get_num_unpaid(3, 13, reward_xywyapp_unpaid)
+			self.get_num_paid(3, 13, reward_xywyapp_paid)
 
-		# 	self.get_num_unpaid(3, 19, reward_askapp_unpaid)
-		# 	self.get_num_paid(3, 19, reward_askapp_paid)
+			self.get_num_unpaid(3, 19, reward_askapp_unpaid)
+			self.get_num_paid(3, 19, reward_askapp_paid)
 
-		# 	self.get_num_unpaid(3, 25, reward_baidu_xzh_unpaid)
-		# 	self.get_num_paid(3, 25, reward_baidu_xzh_paid)
+			self.get_num_unpaid(3, 25, reward_baidu_xzh_unpaid)
+			self.get_num_paid(3, 25, reward_baidu_xzh_paid)
 
-		# 	self.get_num_unpaid(3, 31, reward_bd_xcx_unpaid)
-		# 	self.get_num_paid(3, 31, reward_bd_xcx_paid)
+			self.get_num_unpaid(3, 31, reward_bd_xcx_unpaid)
+			self.get_num_paid(3, 31, reward_bd_xcx_paid)
 
-		# 	self.get_num_unpaid(3, 37, reward_toutiao_xcx_unpaid)
-		# 	self.get_num_paid(3, 37, reward_toutiao_xcx_paid)
+			self.get_num_unpaid(3, 37, reward_toutiao_xcx_unpaid)
+			self.get_num_paid(3, 37, reward_toutiao_xcx_paid)
 
-		# 	self.get_num_unpaid(3, 43, reward_3g_unpaid)
-		# 	self.get_num_paid(3, 43, reward_3g_paid)
+			self.get_num_unpaid(3, 43, reward_3g_unpaid)
+			self.get_num_paid(3, 43, reward_3g_paid)
 
-		# 	self.get_num_unpaid(3, 49, reward_weixin_xcx_unpaid)
-		# 	self.get_num_paid(3, 49, reward_weixin_xcx_paid)
+			self.get_num_unpaid(3, 49, reward_weixin_xcx_unpaid)
+			self.get_num_paid(3, 49, reward_weixin_xcx_paid)
 
-		# 	self.get_num_unpaid(3, 55, reward_baidu_unpaid)
-		# 	self.get_num_paid_l(3, 55, reward_baidu_paid)
+			self.get_num_unpaid(3, 55, reward_baidu_unpaid)
+			self.get_num_paid_l(3, 55, reward_baidu_paid)
 
-		# 	self.get_num_unpaid(3, 60, reward_hxbx_unpaid)
-		# 	self.get_num_paid_l(3, 60, reward_hxbx_paid)
+			self.get_num_unpaid(3, 60, reward_hxbx_unpaid)
+			self.get_num_paid_l(3, 60, reward_hxbx_paid)
 
-		# 	self.get_num_unpaid(3, 65, reward_sougou_unpaid)
-		# 	self.get_num_paid_l(3, 65, reward_sougou_paid)
+			self.get_num_unpaid(3, 65, reward_sougou_unpaid)
+			self.get_num_paid_l(3, 65, reward_sougou_paid)
 
-		# 	self.get_num_unpaid(3, 70, reward_kuaiyingyong_unpaid)
-		# 	self.get_num_paid_l(3, 70, reward_kuaiyingyong_paid)
+			self.get_num_unpaid(3, 70, reward_kuaiyingyong_unpaid)
+			self.get_num_paid_l(3, 70, reward_kuaiyingyong_paid)
 
-		# except Exception as e:
-		# 	print(e)
-		# 	print('IM悬赏统计失败')
-		# else:
-		# 	print('IM悬赏统计完成')
+		except Exception as e:
+			print(e)
+			print('IM悬赏统计失败')
+		else:
+			print('IM悬赏统计完成')
 
 		#指定
 		#寻医问药app
@@ -702,45 +702,45 @@ class Statistics_Im(object):
 			'QuestionOrderSearch[bgDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
 			'QuestionOrderSearch[edDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day)
 			}
-		# try:
-		# 	self.get_num_unpaid(5, 13, assign_xywyapp_unpaid)
-		# 	self.get_num_paid(5, 13, assign_xywyapp_paid)
+		try:
+			self.get_num_unpaid(5, 13, assign_xywyapp_unpaid)
+			self.get_num_paid(5, 13, assign_xywyapp_paid)
 
-		# 	self.get_num_unpaid(5, 19, assign_askapp_unpaid)
-		# 	self.get_num_paid(5, 19, assign_askapp_paid)
+			self.get_num_unpaid(5, 19, assign_askapp_unpaid)
+			self.get_num_paid(5, 19, assign_askapp_paid)
 
-		# 	self.get_num_unpaid(5, 25, assign_baidu_xzh_unpaid)
-		# 	self.get_num_paid(5, 25, assign_baidu_xzh_paid)
+			self.get_num_unpaid(5, 25, assign_baidu_xzh_unpaid)
+			self.get_num_paid(5, 25, assign_baidu_xzh_paid)
 
-		# 	self.get_num_unpaid(5, 31, assign_bd_xcx_unpaid)
-		# 	self.get_num_paid(5, 31, assign_bd_xcx_paid)
+			self.get_num_unpaid(5, 31, assign_bd_xcx_unpaid)
+			self.get_num_paid(5, 31, assign_bd_xcx_paid)
 
-		# 	self.get_num_unpaid(5, 37, assign_weixin_xcx_unpaid)
-		# 	self.get_num_paid(5, 37, assign_weixin_xcx_paid)
+			self.get_num_unpaid(5, 37, assign_weixin_xcx_unpaid)
+			self.get_num_paid(5, 37, assign_weixin_xcx_paid)
 
-		# 	self.get_num_unpaid(5, 43, assign_toutiao_xcx_unpaid)
-		# 	self.get_num_paid(5, 43, assign_toutiao_xcx_paid)
+			self.get_num_unpaid(5, 43, assign_toutiao_xcx_unpaid)
+			self.get_num_paid(5, 43, assign_toutiao_xcx_paid)
 
-		# 	self.get_num_unpaid(5, 49, assign_baidu_mip_unpaid)
-		# 	self.get_num_paid(5, 49, assign_baidu_mip_paid)
+			self.get_num_unpaid(5, 49, assign_baidu_mip_unpaid)
+			self.get_num_paid(5, 49, assign_baidu_mip_paid)
 
-		# 	self.get_num_unpaid(5, 55, assign_3g_unpaid)
-		# 	self.get_num_paid(5, 55, assign_3g_paid)
+			self.get_num_unpaid(5, 55, assign_3g_unpaid)
+			self.get_num_paid(5, 55, assign_3g_paid)
 
-		# 	self.get_num_unpaid(5, 61, assign_kuaiyingyong_unpaid)
-		# 	self.get_num_paid_l(5, 61, assign_kuaiyingyong_paid)
+			self.get_num_unpaid(5, 61, assign_kuaiyingyong_unpaid)
+			self.get_num_paid_l(5, 61, assign_kuaiyingyong_paid)
 
-		# 	self.get_num_unpaid(5, 66, assign_baidu_unpaid)
-		# 	self.get_num_paid_l(5, 66, assign_baidu_paid)
+			self.get_num_unpaid(5, 66, assign_baidu_unpaid)
+			self.get_num_paid_l(5, 66, assign_baidu_paid)
 
-		# 	self.get_num_unpaid(5, 71, assign_sougou_unpaid)
-		# 	self.get_num_paid_l(5, 71, assign_sougou_paid)
+			self.get_num_unpaid(5, 71, assign_sougou_unpaid)
+			self.get_num_paid_l(5, 71, assign_sougou_paid)
 
-		# except Exception as e:
-		# 	print(e)
-		# 	print('IM指定统计失败')
-		# else:
-		# 	print('IM指定统计完成')
+		except Exception as e:
+			print(e)
+			print('IM指定统计失败')
+		else:
+			print('IM指定统计完成')
 
 		#送心意
 		assign_tip = {
