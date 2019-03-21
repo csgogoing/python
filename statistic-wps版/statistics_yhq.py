@@ -32,7 +32,7 @@ class Statistics_Yhq(object):
 		self.url_pic = 'http://yhqadmin.xywy.com/index.php?r=login/create-verify-code'
 		self.req = requests.Session()
 		times = 1
-		retry = 20
+		retry = 30
 		req_token = self.req.post(self.url_login, headers=self.headers)
 		html = etree.HTML(req_token.text)
 		token = html.xpath('//head/meta[4]/@content')[0]

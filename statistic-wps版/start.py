@@ -51,8 +51,8 @@ class Write_Excel():
 		for date_time in self.datetime_need:
 			print('开始统计%s-%s-%s的数据'%(date_time.year,date_time.month,date_time.day))
 			# wps版本column从1开始
-			Statistics_Yhq(self.xlBook, date_time).get_data()
 			Statistics_Jsdh(self.xlBook, date_time).get_data()
+			Statistics_Yhq(self.xlBook, date_time).get_data()
 			Statistics_Im(self.xlBook, date_time).get_data()
 			Statistics_Tiezi(self.xlBook, date_time).get_data()
 			Statistics_Dianhua(self.xlBook, date_time).get_data()

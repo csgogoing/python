@@ -62,7 +62,7 @@ class Statistics_Jsdh(object):
 				return False
 		except Exception as e:
 			print(e)
-			print('请检查网络是否通畅')
+			print('请检查VPN及host是否绑定')
 
 	def get_num_jsdh(self, sheet, column, params):
 		while True:
