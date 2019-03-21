@@ -33,7 +33,7 @@ class Statistics_Dianhua(object):
 		data = {
 		'backurl':'',
 		'username':'dujun',
-		'passwd':'m=$=Bn(qoFYb',
+		'passwd':'',
 		'img_code':'smqqs',
 		'submit':'登陆'.encode('gb2312')
 		}

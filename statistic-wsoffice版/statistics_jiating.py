@@ -33,7 +33,7 @@ class Statistics_Jiating(object):
 		data = {
 		'backself.url':'',
 		'username':'dujun',
-		'passwd':'zCbCyIZDd0o4',
+		'passwd':'',
 		'submit':'登陆'.encode('gb2312')
 		}
 		self.req.post(self.url_login, headers=self.headers, data=data, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk'))

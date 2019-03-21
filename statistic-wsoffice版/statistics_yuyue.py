@@ -34,7 +34,7 @@ class Statistics_Yuyue(object):
 		data = {
 		'backurl':'',
 		'username':'dujun',
-		'passwd':'I<0,&3h%k^~j',
+		'passwd':'',
 		'img_code':'KP8P6',
 		'submit':'登陆'.encode('gb2312')
 		}

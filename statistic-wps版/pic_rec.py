@@ -10,7 +10,7 @@ def draw_circle(img, pos, circle_radius, color, line_width):
 	cv2.destroyAllWindows()
 
 
-def recognition(image_byte):
+def recognition(image_byte, num):
 	#识别验证码
 	with open('logincapture.bmp','wb') as f:
 		f.write(image_byte)
@@ -18,7 +18,7 @@ def recognition(image_byte):
 	imsrc = ac.imread('logincapture.bmp')
 	#imsrc = ac.imread(image_byte)
 	most_confidence = []
-	#根据模板内容，取出最自信的5个字符
+	#根据模板内容，取出最自信的n个字符
 	filedir = './template'
 	for file in os.listdir(filedir):
 		if fnmatch(file, '*.jpg'):
@@ -31,9 +31,14 @@ def recognition(image_byte):
 				pass
 	#排序后输出结果
 	most_confidence.sort(reverse=True)
-	target = most_confidence[0:5]
+	target = most_confidence[0:num]
 	target.sort(key=lambda x:x[1])
-	return('%s%s%s%s%s'%(target[0][2].strip('.')[0],target[1][2].strip('.')[0],target[2][2].strip('.')[0],target[3][2].strip('.')[0],target[4][2].strip('.')[0]))
+	result = ''
+	for i in range(len(target)):
+		result = result + target[i][2].strip('.')[0]
+	print(result)
+	return(result)
+
 
 if __name__ == "__main__":
 	recognition('a.bmp')

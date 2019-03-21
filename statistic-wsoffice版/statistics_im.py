@@ -44,8 +44,8 @@ class Statistics_Im(object):
 		self.req.cookies['_identity']=r'0c1e5eba030192c62326099615c43ff4cf5e632dea0b7499e9aa7c7918d99ad1a%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A47%3A%22%5B14%2C%2251UEIILfTj07Vd4XaDk6ftfhM3yYb5pT%22%2C2592000%5D%22%3B%7D'
 		data = {
 		'_csrf':r'd3ZZUXpxb0YcLhUBLUBbLSMZOwUsHwJrFhAaK0pEWi5CByM8EwAeNQ==',
-		'Login[username]':'fuyanqiu',
-		'Login[password]':'123456',
+		'Login[username]':'',
+		'Login[password]':'',
 		'Login[verifyCode]':'wefe',
 		'Login[rememberMe]':'0',
 		'Login[rememberMe]':'1',

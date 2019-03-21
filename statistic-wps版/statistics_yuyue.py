@@ -19,7 +19,8 @@ class Statistics_Yuyue(object):
 		self.cur = date_time
 		#self.cur = datetime.datetime.now()
 		self.pass_day = self.cur.timetuple().tm_yday
-		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day)
+		#由于预约挂号excel页面结构，需要行数多-1
+		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day-1)
 		print(self.row)
 		self.headers={
 		"User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
@@ -33,11 +34,11 @@ class Statistics_Yuyue(object):
 		times = 1
 		retry = 3
 		while True:
-			req_pic = self.req.post(self.url_pic, headers=self.headers)
-			result = pic_rec.recognition(req_pic.content)
+			req_pic = self.req.get(self.url_pic, headers=self.headers)
+			result = pic_rec.recognition(req_pic.content, 5)
 			data = {
 			'backurl':'',
-			'username':'dujun',
+			'username':'',
 			'passwd':'',
 			'img_code':'%s'%result,
 			'submit':'登陆'.encode('gb2312')
@@ -54,7 +55,7 @@ class Statistics_Yuyue(object):
 
 	def get_num_yuyue(self, sheet, column, params):
 		while True:
-			req = self.req.post(self.url, params=params, headers=self.headers)
+			req = self.req.get(self.url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -74,28 +75,28 @@ class Statistics_Yuyue(object):
 
 		self.wb.Worksheets[sheet].Activate()
 		#由于预约挂号excel页面结构，需要行数-1
-		self.wb.ActiveSheet.Cells(self.row-1, column+1).Value=q_all
-		self.wb.ActiveSheet.Cells(self.row-1, column+2).Value=q_pc
-		self.wb.ActiveSheet.Cells(self.row-1, column+3).Value=q_app
-		self.wb.ActiveSheet.Cells(self.row-1, column+4).Value=q_3g
-		self.wb.ActiveSheet.Cells(self.row-1, column+5).Value=q_wx
-		self.wb.ActiveSheet.Cells(self.row-1, column+6).Value=q_hujiao
-		self.wb.ActiveSheet.Cells(self.row-1, column+7).Value=q_hujiao_gy
-		self.wb.ActiveSheet.Cells(self.row-1, column+8).Value=q_xywyapp
-		self.wb.ActiveSheet.Cells(self.row-1, column+9).Value=q_askapp
-		self.wb.ActiveSheet.Cells(self.row-1, column+10).Value=q_others
+		self.wb.ActiveSheet.Cells(self.row, column+1).Value=q_all
+		self.wb.ActiveSheet.Cells(self.row, column+2).Value=q_pc
+		self.wb.ActiveSheet.Cells(self.row, column+3).Value=q_app
+		self.wb.ActiveSheet.Cells(self.row, column+4).Value=q_3g
+		self.wb.ActiveSheet.Cells(self.row, column+5).Value=q_wx
+		self.wb.ActiveSheet.Cells(self.row, column+6).Value=q_hujiao
+		self.wb.ActiveSheet.Cells(self.row, column+7).Value=q_hujiao_gy
+		self.wb.ActiveSheet.Cells(self.row, column+8).Value=q_xywyapp
+		self.wb.ActiveSheet.Cells(self.row, column+9).Value=q_askapp
+		self.wb.ActiveSheet.Cells(self.row, column+10).Value=q_others
 
 		# self.ws = self.wb.get_sheet(sheet)
-		# self.ws.write(self.row-1, column, q_all)
-		# self.ws.write(self.row-1, column+1, q_pc)
-		# self.ws.write(self.row-1, column+2, q_app)
-		# self.ws.write(self.row-1, column+3, q_3g)
-		# self.ws.write(self.row-1, column+4, q_wx)
-		# self.ws.write(self.row-1, column+5, q_hujiao)
-		# self.ws.write(self.row-1, column+6, q_hujiao_gy)
-		# self.ws.write(self.row-1, column+7, q_xywyapp)
-		# self.ws.write(self.row-1, column+8, q_askapp)
-		# self.ws.write(self.row-1, column+9, q_others)
+		# self.ws.write(self.row, column, q_all)
+		# self.ws.write(self.row, column+1, q_pc)
+		# self.ws.write(self.row, column+2, q_app)
+		# self.ws.write(self.row, column+3, q_3g)
+		# self.ws.write(self.row, column+4, q_wx)
+		# self.ws.write(self.row, column+5, q_hujiao)
+		# self.ws.write(self.row, column+6, q_hujiao_gy)
+		# self.ws.write(self.row, column+7, q_xywyapp)
+		# self.ws.write(self.row, column+8, q_askapp)
+		# self.ws.write(self.row, column+9, q_others)
 
 
 	def get_data(self):

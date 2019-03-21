@@ -17,7 +17,7 @@ class Statistics_Im(object):
 		# , wb, date_time
 		self.wb = wb
 		self.cur = date_time
-		# self.cur = datetime.datetime.now()
+		#self.cur = datetime.datetime.now()
 		self.pass_day = self.cur.timetuple().tm_yday
 		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day)
 		print(self.row)
@@ -39,23 +39,25 @@ class Statistics_Im(object):
 		# 		if i%2 == 0:
 		# 			self.cookies[cookie_item[i]] = cookie_item[i+1]
 				#获取加密参数与cookie
-		self.url_login = 'http://admin.d.xywy.com/admin/user/login'
+		#self.url_login = 'http://admin.d.xywy.com/admin/user/login'
+		self.url_login_detect = 'http://admin.d.xywy.com/'
 		self.req = requests.Session()
-		self.req.cookies['_csrf']=r'7869301893ff8393ee576f9b6c9bc514281e3c97a85b62ef781e1a52260eca2ea%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22kXLPW14kTobTVnm-afCz055h5qzmiqqs%22%3B%7D'
-		self.req.cookies['PHPSESSID']=r'ms0l2tu9h4ptqnde47vhosgvu2'
-		self.req.cookies['_identity']=r'0c1e5eba030192c62326099615c43ff4cf5e632dea0b7499e9aa7c7918d99ad1a%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A47%3A%22%5B14%2C%2251UEIILfTj07Vd4XaDk6ftfhM3yYb5pT%22%2C2592000%5D%22%3B%7D'
-		data = {
-		'_csrf':r'd3ZZUXpxb0YcLhUBLUBbLSMZOwUsHwJrFhAaK0pEWi5CByM8EwAeNQ==',
-		'Login[username]':'',
-		'Login[password]':'',
-		'Login[verifyCode]':'wefe',
-		'Login[rememberMe]':'0',
-		'Login[rememberMe]':'1',
-		'login-button':''
-		}
+		self.req.cookies['_csrf']=r'2c0c77a295c5f1b364dd97663958b91184c2b0f2bc0daa67ebc277399e073615a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22oE0Dq8cZ67KcnNHFAgeSz870JiknUj7Z%22%3B%7D'
+		self.req.cookies['PHPSESSID']=r'qng6k0vipamfu5gmmlri67h300'
+		self.req.cookies['_identity']=r''
+		# data = {
+		# '_csrf':r'd3ZZUXpxb0YcLhUBLUBbLSMZOwUsHwJrFhAaK0pEWi5CByM8EwAeNQ==',
+		# 'Login[username]':'',
+		# 'Login[password]':'',
+		# 'Login[verifyCode]':'wefe',
+		# 'Login[rememberMe]':'0',
+		# 'Login[rememberMe]':'1',
+		# 'login-button':''
+		# }
 		try:
-			req_login = self.req.post(self.url_login, headers=self.headers, data=data)
+			req_login = self.req.post(self.url_login_detect, headers=self.headers)
 			if '下架问题列表' in req_login.text:
+				print('登陆乘公共')
 				return True
 			else:
 				return False

@@ -33,11 +33,11 @@ class Statistics_Dianhua(object):
 		times = 1
 		retry = 3
 		while True:
-			req_pic = self.req.post(self.url_pic, headers=self.headers)
-			result = pic_rec.recognition(req_pic.content)
+			req_pic = self.req.get(self.url_pic, headers=self.headers)
+			result = pic_rec.recognition(req_pic.content, 5)
 			data = {
 			'backurl':'',
-			'username':'dujun',
+			'username':'',
 			'passwd':'',
 			'img_code':'%s'%result,
 			'submit':'登陆'.encode('gb2312')
@@ -55,7 +55,7 @@ class Statistics_Dianhua(object):
 
 	def get_num(self, sheet, column, params):
 		while True:
-			req = self.req.post(self.url, params=params, headers=self.headers)
+			req = self.req.get(self.url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -123,7 +123,7 @@ class Statistics_Dianhua(object):
 			'state':'0',	
 			'pay_state':'0',
 			'call_start':'',
-			'call_start': '',
+			'call_end': '',
 			'expert_name':'',
 			'operator_id':'0',
 			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
@@ -138,7 +138,7 @@ class Statistics_Dianhua(object):
 			'balance_end':'',
 			'order_num': '',
 			'is_dhysfz':'全部'.encode('gb2312'),
-			'source':'2',
+			'source':'3g',
 			'platform_source_pay':'0',
 			'hidden_test_check': 'on',	
 			'search':'搜  索'.encode('gb2312')
@@ -150,7 +150,7 @@ class Statistics_Dianhua(object):
 			'state':'0',	
 			'pay_state':'0',
 			'call_start':'',
-			'call_start': '',
+			'call_end': '',
 			'expert_name':'',
 			'operator_id':'0',
 			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
@@ -165,7 +165,7 @@ class Statistics_Dianhua(object):
 			'balance_end':'',
 			'order_num': '',
 			'is_dhysfz':'全部'.encode('gb2312'),
-			'source':'3',
+			'source':'xywy_app_all',
 			'platform_source_pay':'0',
 			'hidden_test_check': 'on',	
 			'search':'搜  索'.encode('gb2312')
@@ -177,7 +177,7 @@ class Statistics_Dianhua(object):
 			'state':'0',	
 			'pay_state':'0',
 			'call_start':'',
-			'call_start': '',
+			'call_end': '',
 			'expert_name':'',
 			'operator_id':'0',
 			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
@@ -192,7 +192,7 @@ class Statistics_Dianhua(object):
 			'balance_end':'',
 			'order_num': '',
 			'is_dhysfz':'全部'.encode('gb2312'),
-			'source':'8',
+			'source':'wys_app',
 			'platform_source_pay':'0',
 			'hidden_test_check': 'on',	
 			'search':'搜  索'.encode('gb2312')
@@ -204,7 +204,7 @@ class Statistics_Dianhua(object):
 			'state':'0',	
 			'pay_state':'0',
 			'call_start':'',
-			'call_start': '',
+			'call_end': '',
 			'expert_name':'',
 			'operator_id':'0',
 			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
@@ -219,7 +219,7 @@ class Statistics_Dianhua(object):
 			'balance_end':'',
 			'order_num': '',
 			'is_dhysfz':'全部'.encode('gb2312'),
-			'source':'12',
+			'source':'wechat',
 			'platform_source_pay':'0',
 			'hidden_test_check': 'on',	
 			'search':'搜  索'.encode('gb2312')
@@ -231,7 +231,7 @@ class Statistics_Dianhua(object):
 			'state':'0',	
 			'pay_state':'0',
 			'call_start':'',
-			'call_start': '',
+			'call_end': '',
 			'expert_name':'',
 			'operator_id':'0',
 			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
@@ -246,7 +246,7 @@ class Statistics_Dianhua(object):
 			'balance_end':'',
 			'order_num': '',
 			'is_dhysfz':'全部'.encode('gb2312'),
-			'source':'14',
+			'source':'baidumip',
 			'platform_source_pay':'0',
 			'hidden_test_check': 'on',	
 			'search':'搜  索'.encode('gb2312')
@@ -258,7 +258,7 @@ class Statistics_Dianhua(object):
 			'state':'0',	
 			'pay_state':'0',
 			'call_start':'',
-			'call_start': '',
+			'call_end': '',
 			'expert_name':'',
 			'operator_id':'0',
 			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
@@ -273,7 +273,7 @@ class Statistics_Dianhua(object):
 			'balance_end':'',
 			'order_num': '',
 			'is_dhysfz':'全部'.encode('gb2312'),
-			'source':'18',
+			'source':'sougou',
 			'platform_source_pay':'0',
 			'hidden_test_check': 'on',	
 			'search':'搜  索'.encode('gb2312')
@@ -285,7 +285,7 @@ class Statistics_Dianhua(object):
 			'state':'0',	
 			'pay_state':'0',
 			'call_start':'',
-			'call_start': '',
+			'call_end': '',
 			'expert_name':'',
 			'operator_id':'0',
 			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
@@ -300,7 +300,7 @@ class Statistics_Dianhua(object):
 			'balance_end':'',
 			'order_num': '',
 			'is_dhysfz':'全部'.encode('gb2312'),
-			'source':'1',
+			'source':'pc',
 			'platform_source_pay':'0',
 			'hidden_test_check': 'on',	
 			'search':'搜  索'.encode('gb2312')
@@ -312,7 +312,7 @@ class Statistics_Dianhua(object):
 			'state':'0',	
 			'pay_state':'0',
 			'call_start':'',
-			'call_start': '',
+			'call_end': '',
 			'expert_name':'',
 			'operator_id':'0',
 			'created_at_start':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
@@ -327,7 +327,7 @@ class Statistics_Dianhua(object):
 			'balance_end':'',
 			'order_num': '',
 			'is_dhysfz':'全部'.encode('gb2312'),
-			'source':'17',
+			'source':'jinritoutiao',
 			'platform_source_pay':'0',
 			'hidden_test_check': 'on',	
 			'search':'搜  索'.encode('gb2312')
