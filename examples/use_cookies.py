@@ -65,7 +65,7 @@ class Ask(object):
 			f.write(self.im_cookies)
 
 	def get_id(self, did):
-		cookies_origin = "_csrf=2b7ffcbd2dce2c393cff65059f26eb41dec964639a739e3607710f4fe7bfb005a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%222EGL9xLtFUtH57kn2v632UjmhCrGCGKf%22%3B%7D; PHPSESSID=fr2ohukn16616erun5eck5lfn6; _identity=0c1e5eba030192c62326099615c43ff4cf5e632dea0b7499e9aa7c7918d99ad1a%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A47%3A%22%5B14%2C%2251UEIILfTj07Vd4XaDk6ftfhM3yYb5pT%22%2C2592000%5D%22%3B%7D"
+		cookies_origin = "_csrf=2b7ffcbd2dce2c393cffb005a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%222EGL9xLtFUtH57kn2v632UjmhCrGCGKf%22%3B%7D; PHPSESSID=fr2ohukn16616erun5eck5lfn6; _identity=0c1e5eba030192c626ftfhM3yYb5pT%22%2C2592000%5D%22%3B%7D"
 		cookie_item = re.split(r'; |=', cookies_origin)
 		cookies = {}
 		for i in range(len(cookie_item)):

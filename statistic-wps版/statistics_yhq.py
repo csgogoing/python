@@ -1,4 +1,5 @@
 #coding=utf-8
+from login import Login
 from requests.auth import HTTPBasicAuth
 from time import sleep
 from lxml import etree
@@ -10,57 +11,27 @@ import json
 import datetime
 import pic_rec
 
-class Statistics_Yhq(object):
+class Statistics_Yhq():
 	'''
 	'''
-	def __init__(self, wb, date_time):
-		# , wb, date_time
+	def __init__(self, wb, date_time, yhq_req):
+		# , wb, row, yhq_req
+		self.yhq_req = yhq_req
 		self.wb = wb
 		self.cur = date_time
 		#self.cur = datetime.datetime.now()
 		self.pass_day = self.cur.timetuple().tm_yday
 		#由于医患群excel页面结构，需要行数-1
 		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day-1)
-		print(self.row)
 		self.headers={
 		"User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
 		}
 
-	def yhq_login(self):
-		#获取加密参数与cookie
-		self.url_login = 'http://yhqadmin.xywy.com/index.php?r=login/index'
-		self.url_pic = 'http://yhqadmin.xywy.com/index.php?r=login/create-verify-code'
-		self.req = requests.Session()
-		times = 1
-		retry = 30
-		req_token = self.req.post(self.url_login, headers=self.headers)
-		html = etree.HTML(req_token.text)
-		token = html.xpath('//head/meta[4]/@content')[0]
-		print(self.req.cookies)
-		print(token)
-		while True:
-			req_pic = self.req.get(self.url_pic, headers=self.headers)
-			result = pic_rec.recognition(req_pic.content, 4)		
-			data = {
-			'_csrf':'%s'%token,
-			'LoginForm[uname]':'',
-			'LoginForm[password]':'',
-			'LoginForm[verify]':'%s'%result,
-			'login-button':''
-			}
-			self.req.post(self.url_login, headers=self.headers, data=data)
-			login_req = self.req.get('http://yhqadmin.xywy.com/index.php?r=frame%2Findex', headers=self.headers).text
-			if 'wangpan666' in login_req:
-				return True
-			else:
-				if times > retry:
-					return False
-				else:
-					times = times + 1
 
-	def get_num_yhq(self, sheet, column, params):
+
+	def yhq_get_num(self, sheet, column, params):
 		while True:
-			req = self.req.get(self.url, params=params, headers=self.headers)
+			req = self.yhq_req.get(self.yhq_url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -74,12 +45,11 @@ class Statistics_Yhq(object):
 
 
 
-	def get_data(self):
-		#测试类
-		if not self.yhq_login():
-			print('预约挂号登陆失败')
-			return
-		self.url = 'http://yhqadmin.xywy.com/index.php'
+	def yhq_get_data(self):
+		# if not self.yhq_login():
+		# 	print('有问必答登陆失败')
+		# 	return
+		self.yhq_url = 'http://yhqadmin.xywy.com/index.php'
 
 		yhq_param = {
 			'r':'order/index',
@@ -93,22 +63,23 @@ class Statistics_Yhq(object):
 			'Order[order_type]':'',
 			'Order[is_zhzhen]':'',
 			'Order[list]':'1',
-			'Order[start]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
-			'Order[end]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
+			'Order[start]':'{}-{:0=2}-{:0=2}'.format(self.cur.year,self.cur.month,self.cur.day),
+			'Order[end]':'{}-{:0=2}-{:0=2}'.format(self.cur.year,self.cur.month,self.cur.day),
 			'Order[tag]':''
 			}
-		try:
-			self.get_num_yhq(0, 61, params=yhq_param)
-		except Exception as e:
-			print(e)
-			print('医患群统计失败')
-		else:
-			print('医患群统计完成')
-		#self.get_num_yhq(0, 61, params=yhq_param)
+		# try:
+		# 	self.yhq_get_num(0, 61, params=yhq_param)
+		# except Exception as e:
+		# 	print(e)
+		# 	print('医患群统计失败')
+		# else:
+		# 	print('医患群统计完成')
+		self.yhq_get_num(0, 61, params=yhq_param)
+		print('医患群统计完成')
 
 
 if __name__ == '__main__':
 	#测试运行
 	A = Statistics_Yhq()
-	A.get_data()
-	#A.get_data()
+	A.yhq_get_data()
+	#A.yhq_get_data()

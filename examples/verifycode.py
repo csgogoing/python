@@ -1,7 +1,6 @@
 #coding=utf-8
 import time
 from time import sleep
-from urllib import request,parse
 from lxml import etree
 import requests
 import re
@@ -21,21 +20,21 @@ class Ask(object):
 
 	def im_login(self):
 		#获取加密参数与cookie
-		url = 'http://admin.d.xywy.com'
-		url_login='http://admin.d.xywy.com/admin/user/login'
-		#传入的user_id查找页
-		headers={
-		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
-		}
-		req=requests.get(url_login)
-		sleep(2)
-		cookies=req.cookies.get_dict()
-		m_value = re.findall(r'f" value="(.*)">', req.text)
-		pic = re.findall(r'verifycode-image" src="(.*)" alt="', req.text)
-		url_pic = url + pic[0]
-		print(url_pic)
-		#请求验证码图,保存
-		req_pic=requests.get(url_pic)
+		# url = 'http://admin.d.xywy.com'
+		# url_login='http://admin.d.xywy.com/admin/user/login'
+		# #传入的user_id查找页
+		# headers={
+		# "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
+		# }
+		# req=requests.get(url_login)
+		# sleep(2)
+		# cookies=req.cookies.get_dict()
+		# m_value = re.findall(r'f" value="(.*)">', req.text)
+		# pic = re.findall(r'verifycode-image" src="(.*)" alt="', req.text)
+		# url_pic = url + pic[0]
+		# print(url_pic)
+		# #请求验证码图,保存
+		# req_pic=requests.get(url_pic)
 		with open('1.png', 'wb') as f:
 			f.write(req_pic.content)
 		#识别验证码
@@ -43,25 +42,23 @@ class Ask(object):
 		verifyCode = tesserocr.image_to_text(image).strip('\n\r\t')  
 		print('verfy:%s'%verifyCode)
 		#写入密钥
-		cookie=req_pic.cookies.get_dict()
-		#cookies['PHPSESSID']=cookie['PHPSESSID']
-		cookies['PHPSESSID']='a5fjoq805qsfpmpbnmk8h5qrm6'
-		print(cookies)
-		#登录im后台
-		data={
-		'_csrf':m_value,
-		'Login[username]':'fuyanqiu',
-		'Login[password]':'123456',
-		'Login[verifyCode]':'neuoja'
-		}
-		#登陆IM后台获取Cookie
-		try:
-			req_login=requests.post(url_login,data=data,cookies=cookies)
-		except:
-			return
-		self.im_cookies=req_login.cookies.get_dict()
-		with open('cookies', 'wb') as f:
-			f.write(self.im_cookies)
+		# cookie=req_pic.cookies.get_dict()
+		# #cookies['PHPSESSID']=cookie['PHPSESSID']
+		# cookies['PHPSESSID']='a5fjoq805qsfpmpbnmk8h5qrm6'
+		# print(cookies)
+		# #登录im后台
+		# data={
+		# '_csrf':m_value,
+		# 'Login[verifyCode]':'neuoja'
+		# }
+		# #登陆IM后台获取Cookie
+		# try:
+		# 	req_login=requests.post(url_login,data=data,cookies=cookies)
+		# except:
+		# 	return
+		# self.im_cookies=req_login.cookies.get_dict()
+		# with open('cookies', 'wb') as f:
+		# 	f.write(self.im_cookies)
 
 	def get_id(self, did):
 		sum = 0

@@ -295,6 +295,8 @@ def main():
 	for file in os.listdir(filedir):
 		if fnmatch(file, '*.jpg'):
 			img_name = file
+			im = filedir + '/' + img_name
+			print(pytesseract.image_to_string(im, lang = 'eng'))
 
 			# 自适应阈值二值化
 			im = _get_dynamic_binary_image(filedir, img_name)
@@ -343,7 +345,7 @@ def main():
 				file = './out_img/%s-cutting-%s.jpg' % (img_name.split('.')[0], i)
 				# 识别验证码
 				print(file)
-				str_img = str_img + pytesseract.image_to_string(Image.open(file),lang = 'eng', config='-psm 10') #单个字符是10，一行文本是7
+				str_img = str_img + pytesseract.image_to_string(Image.open(file), lang = 'eng', config='-psm 10') #单个字符是10，一行文本是7
 				print(str_img)
 			print('切图：%s' % cutting_img_num)
 			print('识别为：%s' % str_img)

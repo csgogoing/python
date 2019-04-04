@@ -5,7 +5,7 @@ class easyExcel:
       to save the data is your problem, as is    error handling. 
       Operates on one workbook at a time."""  
       def __init__(self, filename=None):  #打开文件或者新建文件（如果不存在的话）
-          self.xlApp = win32com.client.Dispatch('Excel.Application')  
+          self.xlApp = win32com.client.Dispatch('kwps.Application')  
           if filename:  
               self.filename = filename  
               self.xlBook = self.xlApp.Workbooks.Open(filename)  
@@ -62,7 +62,7 @@ class easyExcel:
 #下面是一些测试代码。  
 if __name__ == "__main__":  
       #PNFILE = r'c:/screenshot.bmp'
-      xls = easyExcel(r'C:/Users/Administrator/Desktop/statistic/2019年统计数据_基础服务&后台组-3月4日改.xlsx')   
+      xls = easyExcel(r'C:/Users/Administrator/Desktop/statistic/1.xls')   
       #xls.addPicture('Sheet1', PNFILE, 20,20,1000,1000)  
       #xls.cpSheet('Sheet1')
       xls.setCell('sheet1',2,'A',88)

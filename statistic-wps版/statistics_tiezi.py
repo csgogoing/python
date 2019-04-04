@@ -1,4 +1,5 @@
 #coding=utf-8
+from login import Login
 import time
 import requests
 import re
@@ -9,46 +10,27 @@ from requests.auth import HTTPBasicAuth
 from time import sleep
 from lxml import etree
 
-class Statistics_Tiezi(object):
+class Statistics_Tiezi():
 	'''
 	'''
-	def __init__(self, wb, date_time):
-		# , wb, date_time
+	def __init__(self, wb, date_time, tiezi_req):
+		# , wb, row, tiezi_req
+		self.tiezi_req = tiezi_req
 		self.wb = wb
 		self.cur = date_time
 		#self.cur = datetime.datetime.now()
 		self.pass_day = self.cur.timetuple().tm_yday
 		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day)
-		print(self.row)
 		self.headers={
-		#"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-		#"Accept-Language":"zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
-		"User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
+			"User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
 		}
-
-	def tiezi_login(self):
-		#获取加密参数与cookie
-		self.url_login = 'http://cadmin.xywy.com/login.php'
 		self.auth = HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk')
-		self.req = requests.Session()
-		self.req.get(self.url_login, headers=self.headers, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk'))
-		self.req.cookies['clubsid']=r'f6rSPMffrC%252Ble7VLt20eDcqB2F%252F77K7NzylLzC8pWGQYhDIHJKX%252FguL%252FwmAmLrySLs2FaHGRg1LPDgveGoYX83V2WjyXS5%252FiK3vqAYhyaoyrI5aLImsWjXsjE1hTDo05g%252B1lwiOCql2sIpxOqDB2iazOUFDmOHgZ'
-		data = {
-		'backurl':'',
-		'username':'',
-		'passwd':'',
-		'submit':'登陆'.encode('gb2312')
-		}
-		self.req.post(self.url_login, headers=self.headers, data=data, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk'))
-		login_req = self.req.get('http://cadmin.xywy.com/main.php', headers=self.headers, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk')).content.decode('gb2312', errors='ignore')
-		if '欢迎进入' in login_req:
-			return True
-		else:
-			return False
+
+
 
 	def get_reward_unpaid(self, sheet, column, data):
 		while True:
-			req = self.req.post(self.reward_url, data=data, headers=self.headers, auth=self.auth)
+			req = self.tiezi_req.post(self.reward_url, data=data, headers=self.headers, auth=self.auth)
 			if req.status_code==200:
 				break
 			else:
@@ -73,9 +55,9 @@ class Statistics_Tiezi(object):
 			self.wb.ActiveSheet.Cells(self.row, column+1).Value=q_num[0]
 
 
-	def get_reward_paid(self, sheet, column, data):
+	def tiezi_get_reward_paid(self, sheet, column, data):
 		while True:
-			req = self.req.post(self.reward_url, data=data, headers=self.headers, auth=self.auth)
+			req = self.tiezi_req.post(self.reward_url, data=data, headers=self.headers, auth=self.auth)
 			if req.status_code==200:
 				break
 			else:
@@ -112,9 +94,9 @@ class Statistics_Tiezi(object):
 			#print(q_num[0])
 			self.wb.ActiveSheet.Cells(self.row, column+2).Value=q_num[0]
 
-	def get_assign_unpaid(self, sheet, column, data):
+	def tiezi_get_assign_unpaid(self, sheet, column, data):
 		while True:
-			req = self.req.post(self.assign_url, data=data, headers=self.headers, auth=self.auth)
+			req = self.tiezi_req.post(self.assign_url, data=data, headers=self.headers, auth=self.auth)
 			if req.status_code==200:
 				break
 			else:
@@ -140,9 +122,9 @@ class Statistics_Tiezi(object):
 		# 	self.wb.ActiveSheet.Cells(self.row, column+1).Value=q_num[0]
 
 
-	def get_assign_paid(self, sheet, column, data):
+	def tiezi_get_assign_paid(self, sheet, column, data):
 		while True:
-			req = self.req.post(self.assign_url, data=data, headers=self.headers, auth=self.auth)
+			req = self.tiezi_req.post(self.assign_url, data=data, headers=self.headers, auth=self.auth)
 			if req.status_code==200:
 				break
 			else:
@@ -219,14 +201,14 @@ class Statistics_Tiezi(object):
 			}
 
 		#self.get_reward_uppaid(2, 37, data=reward_wx_jkwd_unpaid)
-		self.get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
+		self.tiezi_get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
 
 
-	def get_data(self):
+	def tiezi_get_data(self):
 		#获取数据
-		if not self.tiezi_login():
-			print('有问必答登陆失败')
-			return
+		# if not self.tiezi_login():
+		# 	print('有问必答登陆失败')
+		# 	return
 		self.reward_url = 'http://cadmin.xywy.com/ques_list.php?type=list'
 		self.assign_url = 'http://cadmin.xywy.com/pay_ques_list.php?type=list'
 
@@ -502,66 +484,61 @@ class Statistics_Tiezi(object):
 			'search':'搜索'.encode('gb2312')
 			}
 
-		try:
-			self.get_reward_unpaid(2, 13, data=reward_pc_unpaid)
-			self.get_reward_paid(2, 13, data=reward_pc_paid)
+		self.get_reward_unpaid(2, 13, data=reward_pc_unpaid)
+		self.tiezi_get_reward_paid(2, 13, data=reward_pc_paid)
 
-			self.get_reward_unpaid(2, 19, data=reward_3g_unpaid)
-			self.get_reward_paid(2, 19, data=reward_3g_paid)
+		self.get_reward_unpaid(2, 19, data=reward_3g_unpaid)
+		self.tiezi_get_reward_paid(2, 19, data=reward_3g_paid)
 
-			self.get_reward_unpaid(2, 25, data=reward_xywyapp_unpaid)
-			self.get_reward_paid(2, 25, data=reward_xywyapp_paid)
+		self.get_reward_unpaid(2, 25, data=reward_xywyapp_unpaid)
+		self.tiezi_get_reward_paid(2, 25, data=reward_xywyapp_paid)
 
-			self.get_reward_unpaid(2, 31, data=reward_askapp_unpaid)
-			self.get_reward_paid(2, 31, data=reward_askapp_paid)
+		self.get_reward_unpaid(2, 31, data=reward_askapp_unpaid)
+		self.tiezi_get_reward_paid(2, 31, data=reward_askapp_paid)
 
-			self.get_reward_unpaid(2, 37, data=reward_wx_jkwd_unpaid)
-			self.get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
+		self.get_reward_unpaid(2, 37, data=reward_wx_jkwd_unpaid)
+		self.tiezi_get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
 
-			self.get_reward_unpaid(2, 43, data=reward_wx_xywy_unpaid)
-			self.get_reward_paid(2, 43, data=reward_wx_xywy_paid)
+		self.get_reward_unpaid(2, 43, data=reward_wx_xywy_unpaid)
+		self.tiezi_get_reward_paid(2, 43, data=reward_wx_xywy_paid)
 
-			self.get_reward_unpaid(2, 49, data=reward_zfb_unpaid)
-			self.get_reward_paid(2, 49, data=reward_zfb_paid)
+		self.get_reward_unpaid(2, 49, data=reward_zfb_unpaid)
+		self.tiezi_get_reward_paid(2, 49, data=reward_zfb_paid)
 
-			self.get_reward_unpaid(2, 55, data=reward_zhrs_unpaid)
-			self.get_reward_paid(2, 55, data=reward_zhrs_paid)
+		self.get_reward_unpaid(2, 55, data=reward_zhrs_unpaid)
+		self.tiezi_get_reward_paid(2, 55, data=reward_zhrs_paid)
 
-			self.get_reward_unpaid(2, 61, data=reward_58_unpaid)
-			self.get_reward_paid(2, 61, data=reward_58_paid)
+		self.get_reward_unpaid(2, 61, data=reward_58_unpaid)
+		self.tiezi_get_reward_paid(2, 61, data=reward_58_paid)
 			
-		except Exception as e:
-			print(e)
-			print('帖子悬赏统计失败')
-		else:
-			print('帖子悬赏统计完成')
+		print('帖子悬赏统计完成')
 
 		# self.get_reward_unpaid(2, 13, data=reward_pc_unpaid)
-		# self.get_reward_paid(2, 13, data=reward_pc_paid)
+		# self.tiezi_get_reward_paid(2, 13, data=reward_pc_paid)
 
 		# self.get_reward_unpaid(2, 19, data=reward_3g_unpaid)
-		# self.get_reward_paid(2, 19, data=reward_3g_paid)
+		# self.tiezi_get_reward_paid(2, 19, data=reward_3g_paid)
 
 		# self.get_reward_unpaid(2, 25, data=reward_xywyapp_unpaid)
-		# self.get_reward_paid(2, 25, data=reward_xywyapp_paid)
+		# self.tiezi_get_reward_paid(2, 25, data=reward_xywyapp_paid)
 
 		# self.get_reward_unpaid(2, 31, data=reward_askapp_unpaid)
-		# self.get_reward_paid(2, 31, data=reward_askapp_paid)
+		# self.tiezi_get_reward_paid(2, 31, data=reward_askapp_paid)
 
 		# self.get_reward_unpaid(2, 37, data=reward_wx_jkwd_unpaid)
-		# self.get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
+		# self.tiezi_get_reward_paid(2, 37, data=reward_wx_jkwd_paid)
 
 		# self.get_reward_unpaid(2, 43, data=reward_wx_xywy_unpaid)
-		# self.get_reward_paid(2, 43, data=reward_wx_xywy_paid)
+		# self.tiezi_get_reward_paid(2, 43, data=reward_wx_xywy_paid)
 
 		# self.get_reward_unpaid(2, 49, data=reward_zfb_unpaid)
-		# self.get_reward_paid(2, 49, data=reward_zfb_paid)
+		# self.tiezi_get_reward_paid(2, 49, data=reward_zfb_paid)
 
 		# self.get_reward_unpaid(2, 55, data=reward_zhrs_unpaid)
-		# self.get_reward_paid(2, 55, data=reward_zhrs_paid)
+		# self.tiezi_get_reward_paid(2, 55, data=reward_zhrs_paid)
 
 		# self.get_reward_unpaid(2, 61, data=reward_58_unpaid)
-		# self.get_reward_paid(2, 61, data=reward_58_paid)
+		# self.tiezi_get_reward_paid(2, 61, data=reward_58_paid)
 
 
 		#指定
@@ -754,54 +731,50 @@ class Statistics_Tiezi(object):
 			'end':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
 			'search':'搜索'.encode('gb2312')
 			}
-		try:
-			self.get_assign_unpaid(4, 13, data=assign_pc_unpaid)
-			self.get_assign_paid(4, 13, data=assign_pc_paid)
 
-			self.get_assign_unpaid(4, 19, data=assign_3g_unpaid)
-			self.get_assign_paid(4, 19, data=assign_3g_paid)
+		self.tiezi_get_assign_unpaid(4, 13, data=assign_pc_unpaid)
+		self.tiezi_get_assign_paid(4, 13, data=assign_pc_paid)
 
-			self.get_assign_unpaid(4, 25, data=assign_xywyapp_unpaid)
-			self.get_assign_paid(4, 25, data=assign_xywyapp_paid)
+		self.tiezi_get_assign_unpaid(4, 19, data=assign_3g_unpaid)
+		self.tiezi_get_assign_paid(4, 19, data=assign_3g_paid)
 
-			self.get_assign_unpaid(4, 31, data=assign_askapp_unpaid)
-			self.get_assign_paid(4, 31, data=assign_askapp_paid)
+		self.tiezi_get_assign_unpaid(4, 25, data=assign_xywyapp_unpaid)
+		self.tiezi_get_assign_paid(4, 25, data=assign_xywyapp_paid)
 
-			self.get_assign_unpaid(4, 37, data=assign_wx_jkwd_unpaid)
-			self.get_assign_paid(4, 37, data=assign_wx_jkwd_paid)
+		self.tiezi_get_assign_unpaid(4, 31, data=assign_askapp_unpaid)
+		self.tiezi_get_assign_paid(4, 31, data=assign_askapp_paid)
 
-			self.get_assign_unpaid(4, 43, data=assign_wx_xywy_unpaid)
-			self.get_assign_paid(4, 43, data=assign_wx_xywy_paid)
+		self.tiezi_get_assign_unpaid(4, 37, data=assign_wx_jkwd_unpaid)
+		self.tiezi_get_assign_paid(4, 37, data=assign_wx_jkwd_paid)
 
-			self.get_assign_unpaid(4, 49, data=assign_wx_xcx_unpaid)
-			self.get_assign_paid(4, 49, data=assign_wx_xcx_paid)
+		self.tiezi_get_assign_unpaid(4, 43, data=assign_wx_xywy_unpaid)
+		self.tiezi_get_assign_paid(4, 43, data=assign_wx_xywy_paid)
 
-		except Exception as e:
-			print(e)
-			print('帖子指定统计失败')
-		else:
-			print('帖子指定统计完成')
+		self.tiezi_get_assign_unpaid(4, 49, data=assign_wx_xcx_unpaid)
+		self.tiezi_get_assign_paid(4, 49, data=assign_wx_xcx_paid)
 
-		# self.get_assign_unpaid(4, 13, data=assign_pc_unpaid)
-		# self.get_assign_paid(4, 13, data=assign_pc_paid)
+		print('帖子指定统计完成')
 
-		# self.get_assign_unpaid(4, 19, data=assign_3g_unpaid)
-		# self.get_assign_paid(4, 19, data=assign_3g_paid)
+		# self.tiezi_get_assign_unpaid(4, 13, data=assign_pc_unpaid)
+		# self.tiezi_get_assign_paid(4, 13, data=assign_pc_paid)
 
-		# self.get_assign_unpaid(4, 25, data=assign_xywyapp_unpaid)
-		# self.get_assign_paid(4, 25, data=assign_xywyapp_paid)
+		# self.tiezi_get_assign_unpaid(4, 19, data=assign_3g_unpaid)
+		# self.tiezi_get_assign_paid(4, 19, data=assign_3g_paid)
 
-		# self.get_assign_unpaid(4, 31, data=assign_askapp_unpaid)
-		# self.get_assign_paid(4, 31, data=assign_askapp_paid)
+		# self.tiezi_get_assign_unpaid(4, 25, data=assign_xywyapp_unpaid)
+		# self.tiezi_get_assign_paid(4, 25, data=assign_xywyapp_paid)
 
-		# self.get_assign_unpaid(4, 37, data=assign_wx_jkwd_unpaid)
-		# self.get_assign_paid(4, 37, data=assign_wx_jkwd_paid)
+		# self.tiezi_get_assign_unpaid(4, 31, data=assign_askapp_unpaid)
+		# self.tiezi_get_assign_paid(4, 31, data=assign_askapp_paid)
 
-		# self.get_assign_unpaid(4, 43, data=assign_wx_xywy_unpaid)
-		# self.get_assign_paid(4, 43, data=assign_wx_xywy_paid)
+		# self.tiezi_get_assign_unpaid(4, 37, data=assign_wx_jkwd_unpaid)
+		# self.tiezi_get_assign_paid(4, 37, data=assign_wx_jkwd_paid)
 
-		# self.get_assign_unpaid(4, 49, data=assign_wx_xcx_unpaid)
-		# self.get_assign_paid(4, 49, data=assign_wx_xcx_paid)
+		# self.tiezi_get_assign_unpaid(4, 43, data=assign_wx_xywy_unpaid)
+		# self.tiezi_get_assign_paid(4, 43, data=assign_wx_xywy_paid)
+
+		# self.tiezi_get_assign_unpaid(4, 49, data=assign_wx_xcx_unpaid)
+		# self.tiezi_get_assign_paid(4, 49, data=assign_wx_xcx_paid)
 
 
 if __name__ == '__main__':
@@ -809,4 +782,4 @@ if __name__ == '__main__':
 	A = Statistics_Tiezi()
 	#A.tiezi_login()
 	A.test()
-	#A.get_data()
+	#A.tiezi_get_data()

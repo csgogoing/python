@@ -1,4 +1,5 @@
 #coding=utf-8
+from login import Login
 from requests.auth import HTTPBasicAuth
 from time import sleep
 from lxml import etree
@@ -10,52 +11,26 @@ import json
 import datetime
 import pic_rec
 
-class Statistics_Yuyue(object):
+class Statistics_Yuyue():
 	'''
 	'''
-	def __init__(self, wb, date_time):
-		# , wb, date_time
+	def __init__(self, wb, date_time, yuyue_req):
+		# , wb, row, yuyue_req
+		self.yuyue_req = yuyue_req
 		self.wb = wb
 		self.cur = date_time
 		#self.cur = datetime.datetime.now()
 		self.pass_day = self.cur.timetuple().tm_yday
 		#由于预约挂号excel页面结构，需要行数多-1
 		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day-1)
-		print(self.row)
 		self.headers={
 		"User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
 		}
 
-	def yuyue_login(self):
-		#获取加密参数与cookie
-		self.url_login = 'http://fzadmin.z.xywy.com/login.php'
-		self.url_pic = 'http://fzadmin.z.xywy.com/captcha.php'
-		self.req = requests.Session()
-		times = 1
-		retry = 3
-		while True:
-			req_pic = self.req.get(self.url_pic, headers=self.headers)
-			result = pic_rec.recognition(req_pic.content, 5)
-			data = {
-			'backurl':'',
-			'username':'',
-			'passwd':'',
-			'img_code':'%s'%result,
-			'submit':'登陆'.encode('gb2312')
-			}
-			self.req.post(self.url_login, headers=self.headers, data=data)
-			login_req = self.req.get('http://fzadmin.z.xywy.com/main.php', headers=self.headers).content.decode('gb2312', errors='ignore')
-			if '欢迎进入' in login_req:
-				return True
-			else:
-				if times > retry:
-					return False
-				else:
-					times = times + 1
 
-	def get_num_yuyue(self, sheet, column, params):
+	def yuyue_get_num(self, sheet, column, params):
 		while True:
-			req = self.req.get(self.url, params=params, headers=self.headers)
+			req = self.yuyue_req.get(self.yuyue_url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -99,12 +74,12 @@ class Statistics_Yuyue(object):
 		# self.ws.write(self.row, column+9, q_others)
 
 
-	def get_data(self):
+	def yuyue_get_data(self):
 		#测试类
-		if not self.yuyue_login():
-			print('预约挂号登陆失败')
-			return
-		self.url = 'http://fzadmin.z.xywy.com/statistics.php'
+		# if not self.yuyue_login():
+		# 	print('预约挂号登陆失败')
+		# 	return
+		self.yuyue_url = 'http://fzadmin.z.xywy.com/statistics.php'
 
 		yuyue_param = {
 			'type':'plus_state_source_statistics',
@@ -113,14 +88,15 @@ class Statistics_Yuyue(object):
 			'enddate':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
 			}
 
-		try:
-			self.get_num_yuyue(8, 2, params=yuyue_param)
-		except Exception as e:
-			print(e)
-			print('预约挂号统计失败')
-		else:
-			print('预约挂号统计完成')
-		# self.get_num_yuyue(8, 2, params=yuyue_param)
+		# try:
+		# 	self.yuyue_get_num(8, 2, params=yuyue_param)
+		# except Exception as e:
+		# 	print(e)
+		# 	print('预约挂号统计失败')
+		# else:
+		# 	print('预约挂号统计完成')
+		self.yuyue_get_num(8, 2, params=yuyue_param)
+		print('预约挂号统计完成')
 
 
 if __name__ == '__main__':

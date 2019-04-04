@@ -1,14 +1,15 @@
+from fnmatch import fnmatch
 import cv2
 import aircv as ac
 import os
-from fnmatch import fnmatch
+import pytesseract
 
 def draw_circle(img, pos, circle_radius, color, line_width):
+	#显示识别位置
 	cv2.circle(img, pos, circle_radius, color, line_width)
 	cv2.imshow('objDetect', imsrc)
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
-
 
 def recognition(image_byte, num):
 	#识别验证码
@@ -35,10 +36,21 @@ def recognition(image_byte, num):
 	target.sort(key=lambda x:x[1])
 	result = ''
 	for i in range(len(target)):
+		# print(target[i][2].strip('.'))
 		result = result + target[i][2].strip('.')[0]
+	print(result)
+	return(result)
+
+def recognition_IM(image_byte):
+	#识别IM验证码
+	with open('logincapture.bmp','wb') as f:
+		f.write(image_byte)
+		f.close()
+	imsrc = ac.imread('logincapture.bmp')
+	result = pytesseract.image_to_string(imsrc, lang = 'eng')
 	print(result)
 	return(result)
 
 
 if __name__ == "__main__":
-	recognition('a.bmp')
+	recognition('a.bmp',5)

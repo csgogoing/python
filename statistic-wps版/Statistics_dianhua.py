@@ -1,4 +1,5 @@
 #coding=utf-8
+from login import Login
 from requests.auth import HTTPBasicAuth
 from time import sleep
 from lxml import etree
@@ -10,52 +11,25 @@ import json
 import datetime
 import pic_rec
 
-class Statistics_Dianhua(object):
+class Statistics_Dianhua():
 	'''
 	'''
-	def __init__(self, wb, date_time):
-		# , wb, date_time
+	def __init__(self, wb, date_time, dianhua_req):
+		# , wb, row, dianhua_req
+		self.dianhua_req = dianhua_req
 		self.wb = wb
 		self.cur = date_time
 		# self.cur = datetime.datetime.now()
 		self.pass_day = self.cur.timetuple().tm_yday
 		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day)
-		print(self.row)
 		self.headers={
 		"User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
 		}
 
-	def dianhua_login(self):
-		#获取加密参数与cookie
-		self.url_login = 'http://dhys.z.xywy.com/login.php'
-		self.url_pic = 'http://dhys.z.xywy.com/captcha.php'
-		self.req = requests.Session()
-		times = 1
-		retry = 3
-		while True:
-			req_pic = self.req.get(self.url_pic, headers=self.headers)
-			result = pic_rec.recognition(req_pic.content, 5)
-			data = {
-			'backurl':'',
-			'username':'',
-			'passwd':'',
-			'img_code':'%s'%result,
-			'submit':'登陆'.encode('gb2312')
-			}
-			self.req.post(self.url_login, headers=self.headers, data=data)
-			login_req = self.req.get('http://dhys.z.xywy.com/main.php', headers=self.headers).content.decode('gb2312', errors='ignore')
-			if '欢迎进入' in login_req:
-				return True
-			else:
-				if times > retry:
-					return False
-				else:
-					times = times + 1
 
-
-	def get_num(self, sheet, column, params):
+	def dianhua_get_num(self, sheet, column, params):
 		while True:
-			req = self.req.get(self.url, params=params, headers=self.headers)
+			req = self.dianhua_req.get(self.dianhua_url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -109,13 +83,13 @@ class Statistics_Dianhua(object):
 			#print(pay_amount[0])
 			self.wb.ActiveSheet.Cells(self.row, column+4).Value=pay_amount[0]
 
-	def get_data(self):
+	def dianhua_get_data(self):
 		#获取数据
-		if not self.dianhua_login():
-			print('电话医生登陆失败')
-			return
+		# if not self.dianhua_login():
+		# 	print('电话医生登陆失败')
+		# 	return
 
-		self.url = 'http://dhys.z.xywy.com/order.php'
+		self.dianhua_url = 'http://dhys.z.xywy.com/order.php'
 
 		dianhua_3g = {
 			'type':'order_list',
@@ -333,20 +307,15 @@ class Statistics_Dianhua(object):
 			'search':'搜  索'.encode('gb2312')
 			}
 
-		try:
-			self.get_num(6, 17, params=dianhua_3g)
-			self.get_num(6, 25, params=dianhua_xywyapp)
-			self.get_num(6, 33, params=dianhua_askapp)
-			self.get_num(6, 41, params=dianhua_wx)
-			self.get_num(6, 49, params=dianhua_baidu_xzh)
-			self.get_num(6, 57, params=dianhua_sougou)
-			self.get_num(6, 65, params=dianhua_pc)
-			self.get_num(6, 73, params=dianhua_jrtt)
-		except Exception as e:
-			print(e)
-			print('电话医生统计失败')
-		else:
-			print('电话医生统计完成')
+		self.dianhua_get_num(6, 17, params=dianhua_3g)
+		self.dianhua_get_num(6, 25, params=dianhua_xywyapp)
+		self.dianhua_get_num(6, 33, params=dianhua_askapp)
+		self.dianhua_get_num(6, 41, params=dianhua_wx)
+		self.dianhua_get_num(6, 49, params=dianhua_baidu_xzh)
+		self.dianhua_get_num(6, 57, params=dianhua_sougou)
+		self.dianhua_get_num(6, 65, params=dianhua_pc)
+		self.dianhua_get_num(6, 73, params=dianhua_jrtt)
+		print('电话医生统计完成')
 
 
 if __name__ == '__main__':

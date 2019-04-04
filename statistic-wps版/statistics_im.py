@@ -1,4 +1,5 @@
 #coding=utf-8
+from login import Login
 import time
 import requests
 import re
@@ -9,65 +10,27 @@ from time import sleep
 from urllib import request,parse
 from lxml import etree
 
-class Statistics_Im(object):
+class Statistics_Im():
 	'''
 	IM统计类
 	'''
-	def __init__(self, wb, date_time):
-		# , wb, date_time
+	def __init__(self, wb, date_time, im_req):
+		# , wb, row, im_req
+		self.im_req = im_req
 		self.wb = wb
 		self.cur = date_time
 		#self.cur = datetime.datetime.now()
 		self.pass_day = self.cur.timetuple().tm_yday
 		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day)
-		print(self.row)
 		self.headers={
 		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
 		}
 
-	def im_login(self):
-		#获取加密参数与cookie
-		# try:
-		# 	with open('im_cookies') as f:
-		# 		cookies_origin = f.read()
-		# except FileNotFoundError:
-		# 	print('请在当前目录下保存im_cookies文件与相应cookies内容')
-		# else:
-		# 	cookie_item = re.split(r'; |=', cookies_origin)
-		# 	self.cookies = {}
-		# 	for i in range(len(cookie_item)):
-		# 		if i%2 == 0:
-		# 			self.cookies[cookie_item[i]] = cookie_item[i+1]
-				#获取加密参数与cookie
-		#self.url_login = 'http://admin.d.xywy.com/admin/user/login'
-		self.url_login_detect = 'http://admin.d.xywy.com/'
-		self.req = requests.Session()
-		self.req.cookies['_csrf']=r'2c0c77a295c5f1b364dd97663958b91184c2b0f2bc0daa67ebc277399e073615a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22oE0Dq8cZ67KcnNHFAgeSz870JiknUj7Z%22%3B%7D'
-		self.req.cookies['PHPSESSID']=r'qng6k0vipamfu5gmmlri67h300'
-		self.req.cookies['_identity']=r''
-		# data = {
-		# '_csrf':r'd3ZZUXpxb0YcLhUBLUBbLSMZOwUsHwJrFhAaK0pEWi5CByM8EwAeNQ==',
-		# 'Login[username]':'',
-		# 'Login[password]':'',
-		# 'Login[verifyCode]':'wefe',
-		# 'Login[rememberMe]':'0',
-		# 'Login[rememberMe]':'1',
-		# 'login-button':''
-		# }
-		try:
-			req_login = self.req.post(self.url_login_detect, headers=self.headers)
-			if '下架问题列表' in req_login.text:
-				print('登陆乘公共')
-				return True
-			else:
-				return False
-		except Exception as e:
-			print(e)
-			print('请检查网络是否通畅')
 
-	def get_num_unpaid(self, sheet, column, params):
+
+	def im_get_num_unpaid(self, sheet, column, params):
 		while True:
-			req = self.req.get(self.url, params=params, headers=self.headers)
+			req = self.im_req.get(self.im_url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -86,9 +49,9 @@ class Statistics_Im(object):
 		else:
 			self.wb.ActiveSheet.Cells(self.row, column+1).Value=q_num[0]
 
-	def get_num_paid(self, sheet, column, params):
+	def im_get_num_paid(self, sheet, column, params):
 		while True:
-			req = self.req.get(self.url, params=params, headers=self.headers)
+			req = self.im_req.get(self.im_url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -110,9 +73,9 @@ class Statistics_Im(object):
 		else:
 			self.wb.ActiveSheet.Cells(self.row, column+2).Value=q_num[0]
 
-	def get_num_paid_l(self, sheet, column, params):
+	def im_get_num_paid_l(self, sheet, column, params):
 		while True:
-			req = self.req.get(self.url, params=params, headers=self.headers)
+			req = self.im_req.get(self.im_url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -134,10 +97,10 @@ class Statistics_Im(object):
 		else:
 			self.wb.ActiveSheet.Cells(self.row, column+2).Value=q_num[0]
 
-	def get_num_tip(self, sheet, column, params):
+	def im_get_num_tip(self, sheet, column, params):
 		#送心意写入行由于业务流水页面不同，需要-1
 		while True:
-			req = self.req.get(self.tip_url, params=params, headers=self.headers)
+			req = self.im_req.get(self.tip_url, params=params, headers=self.headers)
 			if req.status_code==200:
 				break
 			else:
@@ -159,12 +122,12 @@ class Statistics_Im(object):
 		else:
 			self.wb.ActiveSheet.Cells(self.row-1, column+1).Value=q_num[0]
 
-	def get_data(self):
-		if not self.im_login():
-			print('IM登陆失败')
-			return
+	def im_get_data(self):
+		# if not self.im_login():
+		# 	print('IM登陆失败')
+		# 	return
 
-		self.url = "http://admin.d.xywy.com/order/question/index"
+		self.im_url = "http://admin.d.xywy.com/order/question/index"
 		self.tip_url = 'http://admin.d.xywy.com/order/reward/index'
 		#免费
 		#百度
@@ -189,16 +152,10 @@ class Statistics_Im(object):
 			'QuestionOrderSearch[bgDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
 			'QuestionOrderSearch[edDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day)
 			}
-		try:
 
-			self.get_num_unpaid(1, 10, reward_baidu_unpaid)
-			self.get_num_unpaid(1, 16, reward_xywyapp_unpaid)
-			
-		except Exception as e:
-			print(e)
-			print('IM免费统计失败')
-		else:
-			print('IM免费统计完成')
+		self.im_get_num_unpaid(1, 10, reward_baidu_unpaid)
+		self.im_get_num_unpaid(1, 16, reward_xywyapp_unpaid)
+		print('IM免费统计完成')
 
 		#悬赏
 		#寻医问药app
@@ -432,45 +389,41 @@ class Statistics_Im(object):
 			'QuestionOrderSearch[bgDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
 			'QuestionOrderSearch[edDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day)
 			}
-		try:
-			self.get_num_unpaid(3, 13, reward_xywyapp_unpaid)
-			self.get_num_paid(3, 13, reward_xywyapp_paid)
+		
+		self.im_get_num_unpaid(3, 13, reward_xywyapp_unpaid)
+		self.im_get_num_paid(3, 13, reward_xywyapp_paid)
 
-			self.get_num_unpaid(3, 19, reward_askapp_unpaid)
-			self.get_num_paid(3, 19, reward_askapp_paid)
+		self.im_get_num_unpaid(3, 19, reward_askapp_unpaid)
+		self.im_get_num_paid(3, 19, reward_askapp_paid)
 
-			self.get_num_unpaid(3, 25, reward_baidu_xzh_unpaid)
-			self.get_num_paid(3, 25, reward_baidu_xzh_paid)
+		self.im_get_num_unpaid(3, 25, reward_baidu_xzh_unpaid)
+		self.im_get_num_paid(3, 25, reward_baidu_xzh_paid)
 
-			self.get_num_unpaid(3, 31, reward_bd_xcx_unpaid)
-			self.get_num_paid(3, 31, reward_bd_xcx_paid)
+		self.im_get_num_unpaid(3, 31, reward_bd_xcx_unpaid)
+		self.im_get_num_paid(3, 31, reward_bd_xcx_paid)
 
-			self.get_num_unpaid(3, 37, reward_toutiao_xcx_unpaid)
-			self.get_num_paid(3, 37, reward_toutiao_xcx_paid)
+		self.im_get_num_unpaid(3, 37, reward_toutiao_xcx_unpaid)
+		self.im_get_num_paid(3, 37, reward_toutiao_xcx_paid)
 
-			self.get_num_unpaid(3, 43, reward_3g_unpaid)
-			self.get_num_paid(3, 43, reward_3g_paid)
+		self.im_get_num_unpaid(3, 43, reward_3g_unpaid)
+		self.im_get_num_paid(3, 43, reward_3g_paid)
 
-			self.get_num_unpaid(3, 49, reward_weixin_xcx_unpaid)
-			self.get_num_paid(3, 49, reward_weixin_xcx_paid)
+		self.im_get_num_unpaid(3, 49, reward_weixin_xcx_unpaid)
+		self.im_get_num_paid(3, 49, reward_weixin_xcx_paid)
 
-			self.get_num_unpaid(3, 55, reward_baidu_unpaid)
-			self.get_num_paid_l(3, 55, reward_baidu_paid)
+		self.im_get_num_unpaid(3, 55, reward_baidu_unpaid)
+		self.im_get_num_paid_l(3, 55, reward_baidu_paid)
 
-			self.get_num_unpaid(3, 60, reward_hxbx_unpaid)
-			self.get_num_paid_l(3, 60, reward_hxbx_paid)
+		self.im_get_num_unpaid(3, 60, reward_hxbx_unpaid)
+		self.im_get_num_paid_l(3, 60, reward_hxbx_paid)
 
-			self.get_num_unpaid(3, 65, reward_sougou_unpaid)
-			self.get_num_paid_l(3, 65, reward_sougou_paid)
+		self.im_get_num_unpaid(3, 65, reward_sougou_unpaid)
+		self.im_get_num_paid_l(3, 65, reward_sougou_paid)
 
-			self.get_num_unpaid(3, 70, reward_kuaiyingyong_unpaid)
-			self.get_num_paid_l(3, 70, reward_kuaiyingyong_paid)
+		self.im_get_num_unpaid(3, 70, reward_kuaiyingyong_unpaid)
+		self.im_get_num_paid_l(3, 70, reward_kuaiyingyong_paid)
 
-		except Exception as e:
-			print(e)
-			print('IM悬赏统计失败')
-		else:
-			print('IM悬赏统计完成')
+		print('IM悬赏统计完成')
 
 		#指定
 		#寻医问药app
@@ -704,45 +657,41 @@ class Statistics_Im(object):
 			'QuestionOrderSearch[bgDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
 			'QuestionOrderSearch[edDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day)
 			}
-		try:
-			self.get_num_unpaid(5, 13, assign_xywyapp_unpaid)
-			self.get_num_paid(5, 13, assign_xywyapp_paid)
 
-			self.get_num_unpaid(5, 19, assign_askapp_unpaid)
-			self.get_num_paid(5, 19, assign_askapp_paid)
+		self.im_get_num_unpaid(5, 13, assign_xywyapp_unpaid)
+		self.im_get_num_paid(5, 13, assign_xywyapp_paid)
 
-			self.get_num_unpaid(5, 25, assign_baidu_xzh_unpaid)
-			self.get_num_paid(5, 25, assign_baidu_xzh_paid)
+		self.im_get_num_unpaid(5, 19, assign_askapp_unpaid)
+		self.im_get_num_paid(5, 19, assign_askapp_paid)
 
-			self.get_num_unpaid(5, 31, assign_bd_xcx_unpaid)
-			self.get_num_paid(5, 31, assign_bd_xcx_paid)
+		self.im_get_num_unpaid(5, 25, assign_baidu_xzh_unpaid)
+		self.im_get_num_paid(5, 25, assign_baidu_xzh_paid)
 
-			self.get_num_unpaid(5, 37, assign_weixin_xcx_unpaid)
-			self.get_num_paid(5, 37, assign_weixin_xcx_paid)
+		self.im_get_num_unpaid(5, 31, assign_bd_xcx_unpaid)
+		self.im_get_num_paid(5, 31, assign_bd_xcx_paid)
 
-			self.get_num_unpaid(5, 43, assign_toutiao_xcx_unpaid)
-			self.get_num_paid(5, 43, assign_toutiao_xcx_paid)
+		self.im_get_num_unpaid(5, 37, assign_weixin_xcx_unpaid)
+		self.im_get_num_paid(5, 37, assign_weixin_xcx_paid)
 
-			self.get_num_unpaid(5, 49, assign_baidu_mip_unpaid)
-			self.get_num_paid(5, 49, assign_baidu_mip_paid)
+		self.im_get_num_unpaid(5, 43, assign_toutiao_xcx_unpaid)
+		self.im_get_num_paid(5, 43, assign_toutiao_xcx_paid)
 
-			self.get_num_unpaid(5, 55, assign_3g_unpaid)
-			self.get_num_paid(5, 55, assign_3g_paid)
+		self.im_get_num_unpaid(5, 49, assign_baidu_mip_unpaid)
+		self.im_get_num_paid(5, 49, assign_baidu_mip_paid)
 
-			self.get_num_unpaid(5, 61, assign_kuaiyingyong_unpaid)
-			self.get_num_paid_l(5, 61, assign_kuaiyingyong_paid)
+		self.im_get_num_unpaid(5, 55, assign_3g_unpaid)
+		self.im_get_num_paid(5, 55, assign_3g_paid)
 
-			self.get_num_unpaid(5, 66, assign_baidu_unpaid)
-			self.get_num_paid_l(5, 66, assign_baidu_paid)
+		self.im_get_num_unpaid(5, 61, assign_kuaiyingyong_unpaid)
+		self.im_get_num_paid_l(5, 61, assign_kuaiyingyong_paid)
 
-			self.get_num_unpaid(5, 71, assign_sougou_unpaid)
-			self.get_num_paid_l(5, 71, assign_sougou_paid)
+		self.im_get_num_unpaid(5, 66, assign_baidu_unpaid)
+		self.im_get_num_paid_l(5, 66, assign_baidu_paid)
 
-		except Exception as e:
-			print(e)
-			print('IM指定统计失败')
-		else:
-			print('IM指定统计完成')
+		self.im_get_num_unpaid(5, 71, assign_sougou_unpaid)
+		self.im_get_num_paid_l(5, 71, assign_sougou_paid)
+
+		print('IM指定统计完成')
 
 		#送心意
 		assign_tip = {
@@ -754,16 +703,9 @@ class Statistics_Im(object):
 			'RewardOrderSearch[bgDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day),
 			'RewardOrderSearch[edDate]':'%s-%s-%s'%(self.cur.year,self.cur.month,self.cur.day)
 			}
-		try:
-			self.get_num_tip(0, 58, assign_tip)
-
-		except Exception as e:
-			print(e)
-			print('IM送心意统计失败')
-		else:
-			print('IM送心意统计完成')
 		
-		self.get_num_tip(0, 58, assign_tip)
+		self.im_get_num_tip(0, 58, assign_tip)
+		print('IM送心意统计完成')
 
 
 if __name__ == '__main__':
@@ -773,4 +715,4 @@ if __name__ == '__main__':
 		print('登陆失败')
 	else:
 		print('成功')
-	#A.get_data()
+	#A.im_get_data()

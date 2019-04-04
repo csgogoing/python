@@ -1,4 +1,5 @@
 #coding=utf-8
+from login import Login
 import time
 import requests
 import re
@@ -9,44 +10,26 @@ from requests.auth import HTTPBasicAuth
 from time import sleep
 from lxml import etree
 
-class Statistics_Jiating(object):
+class Statistics_Jiating():
 	'''
 	'''
-	def __init__(self, wb, date_time):
-		# , wb, date_time
+	def __init__(self, wb, date_time, jiating_req):
+		# , wb, row, jiating_req
+		self.jiating_req = jiating_req
 		self.wb = wb
 		self.cur = date_time
 		# self.cur = datetime.datetime.now()
 		self.pass_day = self.cur.timetuple().tm_yday
 		self.row = int(4+(self.cur.month+2)/3+self.cur.month+self.pass_day)
-		print(self.row)
 		self.headers={
 		"User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
 		}
-
-	def jiating_login(self):
-		#获取加密参数与cookie
-		self.url_login = 'http://cadmin.xywy.com/login.php'
 		self.auth = HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk')
-		self.req = requests.Session()
-		self.req.get(self.url_login, headers=self.headers, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk'))
-		self.req.cookies['clubsid']=r'f6rSPMffrC%252Ble7VLt20eDcqB2F%252F77K7NzylLzC8pWGQYhDIHJKX%252FguL%252FwmAmLrySLs2FaHGRg1LPDgveGoYX83V2WjyXS5%252FiK3vqAYhyaoyrI5aLImsWjXsjE1hTDo05g%252B1lwiOCql2sIpxOqDB2iazOUFDmOHgZ'
-		data = {
-		'backurl':'',
-		'username':'',
-		'passwd':'',
-		'submit':'登陆'.encode('gb2312')
-		}
-		self.req.post(self.url_login, headers=self.headers, data=data, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk'))
-		login_req = self.req.get('http://cadmin.xywy.com/main.php', headers=self.headers, auth=HTTPBasicAuth('XyWy_wenKANG_C199','A3ci1UvKUk')).content.decode('gb2312', errors='ignore')
-		if '欢迎进入' in login_req:
-			return True
-		else:
-			return False
 
-	def get_num(self, sheet, column, data):
+
+	def jiating_get_num(self, sheet, column, data):
 		while True:
-			req = self.req.post(self.url, data=data, headers=self.headers, auth=self.auth)
+			req = self.jiating_req.post(self.jiating_url, data=data, headers=self.headers, auth=self.auth)
 			if req.status_code==200:
 				break
 			else:
@@ -76,12 +59,12 @@ class Statistics_Jiating(object):
 			self.wb.ActiveSheet.Cells(self.row, column+5).Value=pay_amount[0]
 
 			
-	def get_data(self):
+	def jiating_get_data(self):
 		#获取数据
-		if not self.jiating_login():
-			print('有问必答登陆失败')
-			return
-		self.url = 'http://cadmin.xywy.com/fd_doctor.php?type=orderlist'
+		# if not self.jiating_login():
+		# 	print('有问必答登陆失败')
+		# 	return
+		self.jiating_url = 'http://cadmin.xywy.com/fd_doctor.php?type=orderlist'
 
 		reward_jtys = {
 			'sel':'0',
@@ -104,17 +87,12 @@ class Statistics_Jiating(object):
 			'search':'搜索'.encode('gb2312')
 			}
 
-		try:
-			self.get_num(7, 2, data=reward_jtys)
-		except Exception as e:
-			print(e)
-			print('家庭医生统计失败')
-		else:
-			print('家庭医生统计完成')
+		self.jiating_get_num(7, 2, data=reward_jtys)
+		print('家庭医生统计完成')
 
 
 if __name__ == '__main__':
 	#测试运行
 	A = Statistics_Jiating()
 	print(A.jiating_login())
-	#A.get_data()
+	#A.jiating_get_data()
