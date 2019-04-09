@@ -1,47 +1,55 @@
-class A:
+class A():
 	# def __new__(cls):
-	# 	print("__new__A方法被执行")
+	# 	print("__new__A execute")
 	# 	return super().__new__(cls)
 	def __init__(self):
-		self.tempA = 1
-		print("__init__A方法被执行")
+		self.tempX = 1
+		print("__init__A execute")
+	tempZ = 3
+	print("A main execute")
 
 	def login_B(self):
-		if 'tempB' in globals():
+		if 'tempY' in globals():
 			return
 		else:
-			global tempB
-			tempB = 2
+			global tempY
+			tempY = 2
 			print("tempB被赋值")
-		print("login_B方法被执行")
+		print("login_B execute")
 
 	def login_C(self):
-		print("login_C方法被执行")
+		print("login_C execute")
 
 class B(A):
 	# def __new__(cls):
-	# 	print("__new__B方法被执行")
+	# 	print("__new__B execute")
 	# 	return super().__new__(cls)
 	def __init__(self):
-		print("__init__B方法被执行")
+		print("__init__B execute")
+	print("B main execute")
 
 	def test_B(self):
 		super().login_B()
-		print(tempB)
+		print(tempY)
+		print(self.tempZ)
 		print("test_B")
 
 class C(A):
 	# def __new__(cls):
-	# 	print("__new__C方法被执行")
+	# 	print("__new__C execute")
 	# 	return super().__new__(cls)
 	def __init__(self):
-		print("__init__C方法被执行")
+		print("__init__C execute")
+	print("C main execute")
 
 	def test_C(self):
 		super().login_B()
-		print(tempB)
+		print(tempY)
+		print(self.tempZ)
 		print("test_C")
 
-#a = A()
-b = B().test_B()
-c = C().test_C()
+if __name__ == '__main__':
+	a = A()
+	print(a.tempX)
+	b = B().test_B()
+	c = C().test_C()
