@@ -12,6 +12,7 @@ import pic_rec
 
 class Login(object):
 	'''
+	由于公司机密限制，所有帐号密码均已清空
 	'''
 	def __init__(self):
 		print('开始登陆')
