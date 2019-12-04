@@ -1,0 +1,876 @@
+ERP词汇中英文对照（参照APICS词典，比较全面）
+
+ 在APICS词典中，有约3500个词汇。这些词汇翻译成中文后从字面已经难以理解。所以，真正理解这些词汇，还是要借助APICS词典。这里根据个人的接触情况对其中频率比较高的专业词汇做简单的分析。根据我个人的学习情况，其中未标注的词汇表示经常接触的词汇；蓝色：表示已经接触但了解不多的词汇；红色，表示第一次接触的词汇。欢迎有兴趣的同志就ERP词汇的实际意义在这里展开交流。
+
+1 ABM Activity-based Management 基于作业活动管理
+2 AO Application Outsourcing 应用程序外包
+3 APICS American Production and Inventory Control Society,Inc 美国生产与库存管理协会
+4 APICS Applied Manufacturing Education Series 实用制造管理系列培训教材
+5 APO Advanced Planning and Optimization 先进计划及优化技术
+6 APS Advanced Planning and Scheduling 高级计划与排程技术
+7 ASP Application Service/Software Provider 应用服务/软件供应商
+8 ATO Assemble To Order 定货组装
+9 ATP Available To Promise 可供销售量(可签约量)
+10 B2B Business to Business 企业对企业(电子商务)
+11 B2C Business to Consumer 企业对消费者(电子商务)
+12 B2G Business to Government 企业对政府(电子商务)
+13 B2R Business to Retailer 企业对经销商(电子商务)
+14 BIS Business Intelligence System 商业智能系统
+15 BOM Bill Of Materials 物料清单
+16 BOR Bill Of Resource 资源清单
+17 BPR Business Process Reengineering 业务/企业流程重组
+18 BPM Business Process Management 业务/企业流程管理
+19 BPS Business Process Standard 业务/企业流程标准
+20 C/S Client/Server(C/S)\Browser/Server(B/S) 客户机/服务器\浏览器/服务器
+21 CAD Computer-Aided Design 计算机辅助设计
+22 CAID Computer-Aided Industrial Design 计算机辅助工艺设计
+23 CAM Computer-Aided Manufacturing 计算机辅助制造
+24 CAPP Computer-Aided Process Planning 计算机辅助工艺设计
+25 CASE Computer-Aided Software Engineering 计算机辅助软件工程
+26 CC Collaborative Commerce 协同商务
+27 CIMS Computer Integrated Manufacturing System 计算机集成制造系统
+28 CMM Capability Maturity Model 能力成熟度模型
+29 COMMS Customer Oriented Manufacturing Management System 面向客户制造管理系统
+30 CORBA Common Object Request Broker Architecture 通用对象请求代理结构
+31 CPC Collaborative Product Commerce 协同产品商务
+32 CPIM Certified Production and Inventory Management 生产与库存管理认证资格
+33 CPM Critical Path Method 关键线路法
+34 CRM Customer Relationship Management 客户关系管理
+35 CRP capacity requirements planning 能力需求计划
+36 CTI Computer Telephony Integration 电脑电话集成(呼叫中心)
+37 CTP Capable to Promise 可承诺的能力
+38 DCOM Distributed Component Object Model 分布式组件对象模型
+39 DCS Distributed Control System 分布式控制系统
+40 DMRP Distributed MRP 分布式MRP
+41 DRP Distribution Resource Planning 分销资源计划
+42 DSS Decision Support System 决策支持系统
+43 DTF Demand Time Fence 需求时界
+44 DTP Delivery to Promise 可承诺的交货时间
+45 EAI Enterprise Application Integration 企业应用集成
+46 EAM Enterprise Assets Management 企业资源管理
+47 ECM Enterprise Commerce Management 企业商务管理
+48 ECO Engineering Change Order 工程变更订单
+49 EDI Electronic Data Interchange 电子数据交换
+50 EDP Electronic Data Processing 电子数据处理
+51 EEA Extended Enterprise Applications 扩展企业应用系统
+52 EIP Enterprise Information Portal 企业信息门户
+53 EIS Executive Information System 高层领导信息系统
+54 EOI Economic Order Interval 经济定货周期
+55 EOQ Economic Order Quantity 经济订货批量(经济批量法)
+56 EPA Enterprise Proficiency Analysis 企业绩效分析 (翻译为企业获利分析比较好）
+57 ERP Enterprise Resource Planning 企业资源计划
+58 ERM Enterprise Resource Management 企业资源管理
+59 ETO Engineer To Order 专项设计，按订单设计
+60 FAS Final Assembly Schedule 最终装配计划
+61 FCS Finite Capacity Scheduling 有限能力计划
+62 FMS Flexible Manufacturing System 柔性制造系统
+63 FOQ Fixed Order Quantity 固定定货批量法
+64 GL General Ledger 总账
+65 GUI Graphical User Interface 图形用户界面
+66 HRM Human Resource Management 人力资源管理
+67 HRP Human Resource Planning 人力资源计划
+68 IE Industry Engineering/Internet Exploration 工业工程/浏览器
+69 ISO International Standard Organization 国际标准化组织
+70 ISP Internet Service Provider 互联网服务提供商
+71 ISPE International Society for Productivity Enhancement 国际生产力促进会
+72 IT/GT Information/Group Technology 信息/成组技术
+73 JIT Just In Time 准时制造/准时制生产
+74 KPA Key Process Areas 关键过程域
+75 KPI Key Performance Indicators 关键业绩指标
+76 LP Lean Production 精益生产
+77 MES Manufacturing Executive System 制造执行系统
+78 MIS Management Information System 管理信息系统
+79 MPS Master Production Schedule 主生产计划
+80 MRP Material Requirements Planning 物料需求计划
+81 MRPII Manufacturing Resource Planning 制造资源计划
+82 MTO Make To Order 定货(订货)生产
+83 MTS Make To Stock 现货(备货)生产
+84 OA Office Automation 办公自动化
+85 OEM Original Equipment Manufacturing 原始设备制造商
+86 OPT Optimized Production Technology 最优生产技术
+87 OPT Optimized Production Timetable 最优生产时刻表
+88 PADIS Production And Decision Information System 生产和决策管理信息系统
+89 PDM Product Data Management 产品数据管理
+90 PERT Program Evaluation Research Technology 计划评审技术
+91 PLM Production Lifecycle Management 产品生命周期管理
+92 PM Project Management 项目管理
+93 POQ Period Order Quantity 周期定量法
+94 PRM Partner Relationship Management 合作伙伴关系管理
+95 PTF Planned Time Fence 计划时界
+96 PTX Private Trade Exchange 自用交易网站
+97 RCCP Rough-Cut Capacity Planning 粗能力计划
+98 RDBM Relational Data Base Management 关系数据库管理
+99 RPM Rapid Prototype Manufacturing 快速原形制造
+100 RRP Resource Requirements Planning 资源需求计划
+101 SCM Supply Chain Management 供应链管理
+102 SCP Supply Chain Partnership 供应链合作伙伴关系
+103 SFA Sales Force Automation 销售自动化
+104 SMED Single-Minute Exchange Of Dies 快速换模法
+105 SOP Sales And Operation Planning 销售与运作规划
+106 SQL Structure Query Language 结构化查询语言
+107 TCO Total Cost Ownership 总体运营成本
+108 TEI Total Enterprise Integration 全面企业集成
+109 TOC Theory Of Constraints/Constraints managemant 约束理论/约束管理
+110 TPM Total Productive Maintenance 全员生产力维护
+111 TQC Total Quality Control 全面质量控制
+112 TQM Total Quality Management 全面质量管理
+113 WBS Work Breakdown System 工作分解系统
+114 XML eXtensible Markup Language 可扩展标记语言
+115 ABC Classification(Activity Based Classification) ABC分类法
+116 ABC costing 作业成本法
+117 ABC inventory control ABC 库存控制
+118 abnormal demand 反常需求
+119 acquisition cost ,ordering cost 定货费
+120 action message 行为/活动(措施)信息
+121 action report flag 活动报告标志
+122 activity cost pool 作业成本集
+123 activity-based costing(ABC) 作业基准成本法/业务成本法
+124 actual capacity 实际能力
+125 adjust on hand 调整现有库存量
+126 advanced manufacturing technology 先进制造技术
+127 advanced pricing 高级定价系统
+128 AM Agile Manufacturing 敏捷制造
+129 alternative routing 替代工序(工艺路线)
+130 Anticipated Delay Report 拖期预报
+131 anticipation inventory 预期储备
+132 apportionment code 分摊码
+133 assembly parts list 装配零件表
+134 automated storage/retrieval system 自动仓储/检索系统
+135 Automatic Rescheduling 计划自动重排
+136 available inventory 可达到库存
+137 available material 可用物料
+138 available stock 达到库存
+139 available work 可利用工时
+140 average inventory 平均库存
+141 back order 欠交(脱期)订单
+142 back scheduling 倒排(序)计划/倒序排产?
+143 base currency 本位币
+144 batch number 批号
+145 batch process 批流程
+146 batch production 批量生产
+147 benchmarking 标杆瞄准(管理)
+148 bill of labor 工时清单
+149 bill of lading 提货单
+150 branch warehouse 分库
+151 bucketless system 无时段系统
+152 business framework 业务框架
+153 business plan 经营规划
+154 capacity level 能力利用水平
+155 capacity load 能力负荷
+156 capacity management 能力管理
+157 carrying cost 保管费
+158 carrying cost rate 保管费率
+159 cellular manufacturing 单元式制造
+160 change route 修改工序
+161 change structure 修改产品结构
+162 check point 检查点
+163 closed loop MRP 闭环MRP
+164 Common Route Code(ID) 通用工序标识
+165 component-based development 组件(构件)开发技术
+166 concurrent engineering 并行(同步)工程
+167 conference room pilot 会议室模拟
+168 configuration code 配置代码
+169 continuous improvement 进取不懈（这个词翻译不好，应该是持续改进，是运营管理中的一个重要阶段和方法）
+170 continuous process 连续流程
+171 cost driver 作业成本发生因素（作业成本动因）
+172 cost driver rate 作业成本发生因素单位费用
+173 cost of stockout 短缺损失
+174 cost roll-up 成本滚动计算法
+175 crew size 班组规模
+176 critical part 急需零件
+177 critical ratio 紧迫系数
+178 critical work center 关键工作中心
+179 CLT Cumulative Lead Time 累计提前期
+180 current run hour 现有运转工时
+181 current run quantity 现有运转数量
+182 customer care 客户关怀
+183 customer deliver lead time 客户交货提前期
+184 customer loyalty 客户忠诚度
+185 customer order number 客户订单号
+186 customer satisfaction 客户满意度
+187 customer status 客户状况
+188 cycle counting 周期盘点
+189 DM Data Mining 数据挖掘
+190 Data Warehouse 数据仓库
+191 days offset 偏置天数
+192 dead load 空负荷
+193 demand cycle 需求周期
+194 demand forecasting 需求预测
+195 demand management 需求管理
+
+196 Deming circle 戴明环 APICS:Deming circle : The concept of a continuously rotating wheel of plan-do-check-action (PDCA) used to show the need for interaction among market research, design, production, and sales to improve quality. See: plan-do-check-action.
+
+197 demonstrated capacity 实际能力 （翻译得好！，APICS的词典解释为：demonstrated capacity : Proven capacity calculated from actual performance data, usually expressed as the average number of items produced multiplied by the standard hours per item. See: maximum demonstrated capacity. ）
+
+
+198 discrete manufacturing 离散型生产
+199 dispatch to 调度
+200 DRP Distribution Requirements Planning 分销需求计划
+201 drop shipment 直运
+202 dunning letter 催款信
+203 ECO workbench ECO工作台
+204 employee enrolled 在册员工
+205 employee tax id 员工税号
+206 end item 最终产品
+207 engineering change mode flag 工程变更方式标志
+208 engineering change notice 工程变更通知
+209 equipment distribution 设备分配
+210 equipment management 设备管理
+211 exception control 例外控制
+212 excess material analysis 呆滞物料分析
+213 expedite code 急送代码
+214 external integration 外部集成
+215 fabrication order 加工订单（相对于装配 assemble)
+216 factory order 工厂订单
+217 fast path method 快速路径法
+218 fill backorder 补足欠交
+219 final assembly lead time 总装提前期
+220 final goods 成品
+221 finite forward scheduling 有限顺排计划
+222 finite loading 有限排负荷
+223 firm planned order 确认的计划订单
+224 firm planned time fence 确认计划需求时界
+225 FPR Fixed Period Requirements 定期用量法
+226 fixed quantity 固定数量法
+227 fixed time 固定时间法
+228 floor stock 作业现场库存
+229 flow shop 流水车间
+230 focus forecasting 调焦预测
+231 forward scheduling 顺排计划
+232 freeze code 冻结码
+233 freeze space 冷冻区
+234 frozen order 冻结订单
+235 gross requirements 毛需求
+236 hedge inventory 囤积库存
+237 in process inventory 在制品库存
+238 in stock 在库
+239 incrementing 增值
+240 indirect cost 间接成本
+241 indirect labor 间接人工
+242 infinite loading 无限排负荷
+243 input/output control 投入/产出控制
+244 inspection ID 检验标识
+245 integrity 完整性
+246 inter companies 公司内部间
+247 interplant demands 厂际需求量
+248 inventory carry rate 库存周转率
+249 inventory cycle time 库存周期
+250 inventory issue 库存发放
+251 inventory location type 仓库库位类型
+252 inventory scrap 库存报废量
+253 inventory transfers 库存转移
+254 inventory turns/turnover 库存(资金)周转次数
+255 invoice address 发票地址
+256 invoice amount gross 发票金额
+257 invoice schedule 发票清单
+258 issue cycle 发放周期
+259 issue order 发送订单
+260 issue parts 发放零件
+261 issue policy 发放策略
+262 item availability 项目可供量
+263 item description 项目说明
+264 item number 项目编号
+265 item record 项目记录
+266 item remark 项目备注
+267 item status 项目状态
+268 job shop 加工车间
+269 job step 作业步骤
+270 kit item 配套件项目
+271 labor hour 人工工时
+272 late days 延迟天数
+273 lead time 提前期
+274 lead time level 提前期水平
+275 lead time offset days 提前期偏置(补偿)天数
+276 least slack per operation 最小单个工序平均时差
+277 line item 单项产品
+278 live pilot 应用模拟
+279 load leveling 负荷量
+280 load report 负荷报告
+281 location code 仓位代码
+282 location remarks 仓位备注
+283 location status 仓位状况
+284 lot for lot 按需定货(因需定量法/缺补法)
+285 lot ID 批量标识
+286 lot number 批量编号
+287 lot number traceability 批号跟踪
+288 lot size 批量
+289 lot size inventory 批量库存
+290 lot sizing 批量规划
+291 low level code 低层(位)码
+292 machine capacity 机器能力
+293 machine hours 机时
+294 machine loading 机器加载
+295 maintenance ,repair,and operating supplies 维护修理操作物料
+296 make or buy decision 外购或自制决策
+297 management by exception 例外管理法
+298 manufacturing cycle time 制造周期时间
+299 manufacturing lead time 制造提前期
+300 manufacturing standards 制造标准
+301 master scheduler 主生产计划员
+302 material 物料
+303 material available 物料可用量
+304 material cost 物料成本
+305 material issues and receipts 物料发放和接收
+306 material management 物料管理
+307 material manager 物料经理
+308 material master,item master 物料主文件
+309 material review board 物料核定机构
+310 measure of velocity 生产速率水平
+311 memory-based processing speed 基于存储的处理速度
+312 minimum balance 最小库存余量
+313 Modern Materials Handling 现代物料搬运
+314 month to date 月累计
+315 move time , transit time 传递时间
+316 MSP book flag MPS登录标志
+317 multi-currency 多币制
+318 multi-facility 多场所
+319 multi-level 多级
+320 multi-plant management 多工厂管理
+321 multiple location 多重仓位
+322 net change 净改变法
+323 net change MRP 净改变式MRP
+324 net requirements 净需求
+325 new location 新仓位
+326 new parent 新组件
+327 new warehouse 新仓库
+328 next code 后续编码
+329 next number 后续编号
+330 No action report 不活动报告
+331 non-nettable 不可动用量
+332 on demand 急需的
+333 on-hand balance 现有库存量
+334 on hold 挂起
+335 on time 准时
+336 open amount 未清金额
+337 open order 未结订单/开放订单
+338 order activity rules 订单活动规则
+339 order address 订单地址
+340 order entry 订单输入
+341 order point 定货点
+342 order point system 定货点法
+343 order policy 定货策略
+344 order promising 定货承诺
+345 order remarks 定货备注
+346 ordered by 定货者
+347 overflow location 超量库位
+348 overhead apportionment/allocation 间接费分配
+349 overhead rate,burden factor,absorption rate 间接费率
+350 owner's equity 所有者权益
+351 parent item 母件
+352 part bills 零件清单
+353 part lot 零件批次
+354 part number 零件编号
+355 people involvement 全员参治
+356 performance measurement 业绩评价
+357 physical inventory 实际库存
+358 picking 领料/提货
+359 planned capacity 计划能力
+360 planned order 计划订单
+361 planned order receipts 计划产出量
+362 planned order releases 计划投入量
+363 planning horizon 计划期/计划展望期
+364 point of use 使用点
+365 Policy and procedure 工作准则与工作规程
+366 price adjustments 价格调整
+367 price invoice 发票价格
+368 price level 物价水平
+369 price purchase order 采购订单价格
+370 priority planning 优先计划
+371 processing manufacturing 流程制造
+372 product control 产品控制
+373 product family 产品系列
+374 product mix 产品搭配组合
+375 production activity control 生产作业控制
+376 production cycle 生产周期
+377 production line 产品线
+378 production rate 产品率
+379 production tree 产品结构树
+380 PAB Projected Available Balance 预计可用库存(量)
+381 purchase order tracking 采购订单跟踪
+382 quantity allocation 已分配量
+383 quantity at location 仓位数量
+384 quantity backorder 欠交数量
+385 quantity completion 完成数量
+386 quantity demand 需求量
+387 quantity gross 毛需求量
+388 quantity in 进货数量
+389 quantity on hand 现有数量
+390 quantity scrapped 废品数量
+391 quantity shipped 发货数量
+392 queue time 排队时间
+393 rated capacity 额定能力
+394 receipt document 收款单据
+395 reference number 参考号
+396 regenerated MRP 重生成式MRP
+397 released order 下达订单
+398 reorder point 再订购点
+399 repetitive manufacturing 重复式生产(制造)
+400 replacement parts 替换零件
+401 required capacity 需求能力
+402 requisition orders 请购单
+403 rescheduling assumption 重排假设
+404 resupply order 补库单
+405 rework bill 返工单
+406 roll up 上滚
+407 rough cut resource planning 粗资源计划
+408 rounding amount 舍入金额
+409 run time 加工(运行)时间
+410 safety lead time 安全提前期
+411 safety stock 安全库存
+412 safety time 保险期
+413 sales order 销售订单
+414 scheduled receipts 计划接收量(预计入库量/预期到货量)
+415 seasonal stock 季节储备
+416 send part 发送零件
+417 service and support 服务和支持
+418 service parts 维修件
+419 set up time 准备时间
+420 ship address 发运地址
+421 ship contact 发运单联系人
+422 ship order 发货单
+423 shop calendar 工厂日历(车间日历)
+424 shop floor control 车间作业管理(控制)
+425 shop order , work order 车间订单
+426 shrink factor 损耗因子(系数)
+427 single level where used 单层物料反查表
+428 standard cost system 标准成本体系
+429 standard hours 标准工时
+430 standard product cost 标准产品成本
+431 standard set up hour 标准机器设置工时
+432 standard unit run hour 标准单位运转工时
+433 standard wage rate 标准工资率
+434 status code 状态代码
+435 stores control 库存控制
+436 suggested work order 建议工作单
+437 supply chain 供应链
+438 synchronous manufacturing 同步制造/同期生产
+439 time bucket 时段(时间段)
+440 time fence 时界
+441 time zone 时区
+442 top management commitment 领导承诺
+443 total lead time 总提前期
+444 transportation inventory 在途库存
+445 unfavorable variance, adverse 不利差异
+446 unit cost 单位成本
+447 unit of measure 计量单位
+448 value chain 价值链
+449 value-added chain 增值链
+450 variance in quantity 量差
+451 vendor scheduler,supplier scheduler 采购计划员/供方计划员
+452 vendor scheduling 采购计划法
+453 Virtual Enterprise(VE)/ Organization 虚拟企业/公司
+454 volume variance 产量差异
+455 wait time 等待时间
+456 where-used list 反查用物料单
+457 work center capacity 工作中心能力
+458 workflow 工作流
+459 work order 工作令
+460 work order tracking 工作令跟踪
+461 work scheduling 工作进度安排
+462 world class manufacturing excellence 国际优秀制造业
+463 zero inventories 零库存
+464
+465 Call/Contact/Work/Cost center 呼叫/联络/工作/成本中心
+466 Co/By-product 联/副产品
+467 E-Commerce/E-Business/E-Marketing 电子商务/电子商务/电子集市
+468 E-sales/E-procuement/E-partner 电子销售/电子采购/电子伙伴
+469 independent/dependent demand 独立需求/相关需求件
+470 informal/formal system 非/规范化管理系统
+471 Internet/Intranet/Extranet 互联网/企业内部网/企业外联网
+472 middle/hard/soft/share/firm/group ware 中间/硬/软/共享/固/群件
+473 pegging/kitting/netting/nettable 追溯(反查)/配套出售件/净需求计算
+474 picking/dispatch/disbursement list 领料单(或提货单)/派工单/发料单.(这几个词太重要了，但是在不同厂商中，这些词好象还没有统一）
+475 preflush/backflush/super backflush 预冲/倒冲法/完全反冲
+476 yield/scrap/shrinkage (rate) 成品率/废品率/缩减率
+477 scrap/shrinkage factor 残料率（废品系数）/损耗系数
+478
+479 costed BOM 成本物料清单
+480 engineering BOM 设计物料清单
+481 indented BOM 缩排式物料清单
+482 manufacturing BOM 制造物料清单
+483 modular BOM 模块化物料清单
+484 planning BOM 计划物料清单
+485 single level BOM 单层物料清单
+486 summarized BOM 汇总物料清单
+487
+488 account balance 账户余额
+489 account code 账户代码
+490 account ledger 分类账
+491 account period 会计期间
+492 accounts payable 应付账款
+493 accounts receivable 应收账款
+494 actual cost 实际成本
+495 aging 账龄
+496 balance due 到期余额
+497 balance in hand 现有余额
+498 balance sheet 资产负债表
+499 beginning balance 期初余额
+500 cash basis 现金收付制
+501 cash on bank 银行存款
+502 cash on hand 现金
+503 cash out to 支付给
+504 catalog 目录
+505 category code 分类码
+506 check out 结帐
+507 collection 催款
+508 cost simulation 成本模拟
+509 costing 成本核算
+510 current assets 流动资产
+511 current liabilities 流动负债
+512 current standard cost 现行标准成本
+513 detail 明细
+514 draft remittance 汇票汇出
+515 end of year 年末
+516 ending availables 期末可供量
+517 ending balance 期末余额
+518 exchange rate 汇率
+519 expense 费用
+520 financial accounting 财务会计
+521 financial entity 财务实体
+522 financial reports 财务报告
+523 financial statements 财务报表
+524 fiscal period 财务期间
+525 fiscal year 财政年度
+526 fixed assets 固定资产
+527 foreign amount 外币金额
+528 gains and loss 损益
+529 in balance 平衡
+530 income statement 损益表
+531 intangible assets 无形资产
+532 journal entry 分录
+533 management accounting 管理会计
+534 manual reconciliation 手工调账
+535 notes payable 应付票据
+536 notes receivable 应收票据
+537 other receivables 其他应收款
+538 pay aging 付款账龄
+539 pay check 工资支票
+540 pay in 缴款
+541 pay item 付款项目
+542 pay point 支付点
+543 pay status 支付状态
+544 payment instrument 付款方式
+545 payment reminder 催款单
+546 payment status 付款状态
+547 payment terms 付款期限
+548 period 期间
+549 post 过账
+550 proposed cost 建议成本
+551 simulated cost 模拟成本
+552 spending variance,expenditure variance 开支差异
+553 subsidiary 明细账
+554 summary 汇总
+555 tax code 税码
+556 tax rate 税率
+557 value added tax 增值税
+558
+559 as of date , stop date 截止日期
+560 change lot date 修改批量日期
+561 clear date 结清日期
+562 date adjust 调整日期
+563 date available 有效日期
+564 date changed 修改日期
+565 date closed 结束日期
+566 date due 截止日期
+567 date in produced 生产日期
+568 date inventory adjust 库存调整日期
+569 date obsolete 作废日期
+570 date received 收到日期
+571 date released 交付日期
+572 date required 需求日期
+573 date to pull 发货日期
+574 earliest due date 最早订单完成日期
+575 effective date 生效日期
+576 engineering change effect date 工程变更生效日期
+577 engineering stop date 工程停止日期
+578 expired date 失效日期，报废日期
+579 from date 起始日期
+580 last shipment date 最后运输日期
+581 need date 需求日期
+582 new date 新日期
+583 pay through date 付款截止日期
+584 receipt date 收到日期
+585 ship date 发运日期
+586
+587 allocation 已分配量 APICS: 1) The classification of quantities of items that have been assigned to specific orders but have not yet been released from the stockroom to production. It is an “uncashed” stockroom requisition. 2) A process used to distribute material in short supply. Syn: assignment. See: reservation.
+ 
+588 alphanumeric 字母数字
+589 approver 批准者
+590 assembly 装配(件)
+591 backlog 未结订单/拖欠订单
+592 billing 开单
+593 bill-to 发票寄往地
+594 bottleneck 瓶颈资源。这里，资源的概念是非常广泛的，APICS的定义是A facility, function, department, or resource whose capacity is less than the demand placed upon it. For example, a bottleneck machine or work center exists where jobs are processed at a slower rate than they are demanded.
+
+595 bulk 散装
+596 buyer 采购员
+597 component 子件/组件
+598 customer 客户
+599 delivery 交货
+600 demand 需求
+601 description 说明
+602 discrete 离散
+603 ergonomics 工效学(人类工程学)
+604 facility 设备、功能
+605 feature 基本组件/特征件
+606 forecast 预测
+607 freight 运费
+608 holidays 例假日
+609 implement 实施
+610 ingredient 配料、成分
+611 inquire 查询
+612 inventory 库存
+613 item 物料项目
+614 job 作业
+615 Kanban 看板
+616 level 层次(级)
+617 load 负荷
+618 locate 定位
+619 logistics 后勤保障体系；物流管理
+620 lot 批次
+621 option 可选件
+622 outstanding 逾期未付
+623 overhead 制造费用
+624 override 覆盖
+625 overtime 加班
+626 parent 双亲(文件)
+627 part 零件
+628 phantom 虚拟件
+629 plant 工厂，场所
+630 preference 优先权
+631 priority 优先权(级)
+632 procurement 采购
+633 prototyping 原形测试
+634 queue 队列
+635 quota 任务额，报价
+636 receipt 收款、收据
+637 regeneration 全重排法
+638 remittance 汇款
+639 requisition 请购单
+640 returned 退货
+641 roll 滚动
+642 routing 工艺线路
+643 schedule 计划表
+644 shipment 发运量
+645 ship-to 交货地
+646 shortage 短缺
+647 shrink 损耗
+648 spread 分摊
+649 statement 报表
+650 subassembly 子装配件
+651 supplier 供应商
+652 transaction 事务处理
+653 what-if 如果怎样-将会怎样
+654
+655 post-deduct inventory transaction processing 后减库存处理法
+656 pre-deduct inventory transaction processing 前减库存处理法
+657 generally accepted manufacturing practices 通用生产管理原则
+658 direct-deduct inventory transaction processing 直接增减库存处理法
+659 Pareto Principle 帕拉图原理
+660 Drum-buffer-rope 鼓点-缓冲-绳子 APICS：In the theory of constraints, the generalized process used to manage resources to maximize throughput. The drum is the rate or pace of production set by the system’s constraint. The buffers establish the protection against uncertainty so that the system can maximize throughput. The rope is a communication process from the constraint to the gating operation that checks or limits material released into the system to support the constraint
+661
+663 Open Database Connectivity 开放数据库互连
+664 Production Planning 生产规划编制
+665 Work in Process 在制品
+666 accelerated cost recovery system 快速成本回收制度
+667 accounting information system 会计信息系统
+668 acceptable quality kevel 可接受质量水平
+669 constant purchasing power accounting 不买够买力会计
+670 break-even analysis 保本分析
+671 book value 帐面价值
+672 cost-benefit analysis 成本效益分析
+673 chief financial office 财务总监
+674 degree of financial leverage 财务杠杆系数
+675 degree of operating leverage 经济杠杆系数
+676 first-in , first-out 先进先出法
+677 economic lot size 经济批量
+678 first-in ,still-here 后进先出法
+679 full pegging 完全跟踪
+680 linear programming 线性规划
+681 management by objective 目标管理
+682 value engineering 价值工程
+683 zero based budgeting 零基预算
+684 CAQ computer aided quality assurance 计算机辅助质量保证
+685 DBMS database management system 数据库管理系统
+686 IP Internet Protocol 网际协议
+687 TCP Transmission Control Protocol 传输控制协议
+689
+690 API Advanced Process Industry 高级流程工业
+691 A2A Application to Application 应用到应用(集成)
+692 article 物品
+693 article reserves 物品存储
+694 assembly order 装配订单
+695 balance-on-hand-inventory 现有库存余额
+696 bar code 条形码
+697 boned warehouse 保税仓库
+698 CPA Capacity Requirements Planning 能力需求计划
+699 change management 变革管理
+700 chill space 冷藏区
+701 combined transport 联合运输
+702 commodity inspection 进出口商品检验
+703 competitive edge 竞争优势
+704 container 集装箱
+705 container transport 集装箱运输
+706 CRP Continuous Replenishment Program 连续补充系数
+707 core competence 核心才能
+708 cross docking 直接换装
+709 CLV Customer Lifetime value 客户生命周期价值
+710 CReM Customer Relationship Marketing 客户关系营销
+711 CSS Customer Service and Support 客户服务和支持
+712 Customer Service Representative 客户服务代表
+713 customized logistics 定制物流
+714 customs declaration 报关
+715 cycle stock 经常库存
+716 data cleansing 数据整理
+717 Data Knowledge and Decision Support 数据知识和决策支持
+718 data level integration 数据层集成
+719 data transformation 数据转换
+720 desktop conferencing 桌面会议
+721 distribution 配送
+722 distribution and logistics 分销和后勤
+723 distribution center 配送中心
+724 distribution logistics 销售物流
+725 distribution processing 流通加工
+726 distribution requirements 分销量
+727 DRP distribution resource planning 配送/分销资源计划
+728 door-to-door 门到门
+729 drop and pull transport 甩挂运输
+730 DEM Dynamic Enterprise Module 动态企业建模技术
+731 ECR Efficient Consumer Response 有效顾客反应
+732 e-Government Affairs 电子政务
+733 EC Electronic Commerce 电子商务
+734 Electronic Display Boards 电子公告板
+735 EOS Electronic order system 电子订货系统
+736 ESD Electronic Software Distribution 电子软件分发
+737 embedding 插入
+738 employee category 员工分类
+739 empowerment 授权
+740 engineering change effect work order 工程变更生效单
+741 environmental logistics 绿色物流
+742 experiential marketing 直效行销(又称体验行销)
+743 export supervised warehouse 出口监管仓库
+744 ERP Extended Resource Planning 扩展资源计划
+745 field sales/cross sale/cross sell 现场销售/交叉销售/连带销售
+746 franchising 加盟连销权
+747 FCL Full Container Load 整箱货
+748 Global Logistics Management 全球运筹管理
+749 goods collection 集货
+750 goods shed 料棚
+751 goods shelf 货架
+752 goods stack 货垛
+753 goods yard 货场
+754 handing/carrying 搬运
+755 high performance organization 高绩效组织
+756 inland container depot 公路集装箱中转站
+757 inside sales 内部销售
+758 inspection 检验
+759 intangible loss 无形消耗
+760 internal logistics 企业物流
+761 international freight forwarding agent 国际货运代理
+762 international logistics 国际物流
+763 invasive integration 侵入性集成
+764 joint distribution 共同配送
+765 just-in-time logistics 准时制物流
+766 KM Knowledge Management 知识管理
+767 lead (customer) management 潜在客户管理
+768 learning organization 学习型组织
+769 LCL less than container load 拼装货
+770 load balancing 负载平衡
+771 loading and unloading 装载
+772 logistics activity 物流活动
+773 logistics alliance 物流联盟
+774 logistics center 物流中心
+775 logistics cost 物流成本
+776 logistics cost control 物流成本管理
+777 logistics documents 物流单证
+778 logistics enterprise 物流企业
+779 logistics information 物流信息
+780 logistics management 物流管理
+781 logistics modulus 物流模数
+782 logistics network 物流网络
+783 logistics operation 物流作业
+784 LRP Logistics Resource Planning 物流资源计划
+785 logistics strategy 物流战略
+786 logistics strategy management 物流战略管理
+787 logistics technology 物流技术
+788 MES Manufacture Execute System 制造执行系统
+789 mass customization 大规模定制
+790 NPV Net Present value 净现值
+791 neutral packing 中性包装
+792 OLAP On-line Analysis Processing 联机/在线分析系统
+793 OAG Open Application Group 开放应用集成
+794 order picking 拣选
+795 outsourcing 外包
+796 package/packaging 包装
+797 packing of nominated brand 定牌包装
+798 palletizing 托盘包装
+799 PDA Personal Digital Assistant 个人数据助理
+800 personalization 个性化
+801 PTF Planning time fence 计划时界
+802 POS Point Of Sells 电子收款机
+803 priority queuing 优先排队
+804 PBX Private Branch Exchange 专用分组交换机
+805 production logistics 生产物流
+806 publish/subscribe 发布/订阅
+807 quality of working life 工作生活品质
+808 Quick Response 快速反映
+809 receiving space 收货区
+810 REPs Representatives 代表或业务员
+811 return logistics 回收物流
+812 ROI Return On Investment 投资回报率
+813 RM Risk Management 风险管理
+814 sales package 销售包装
+815 scalability 可扩充性
+816 shipping space 发货区
+817 situational leadership 情境领导
+818 six sigma 六个标准差
+819 sorting/stacking 分拣/堆拣
+820 stereoscopic warehouse 立体仓库
+821 storage 保管
+822 stored procedure 存储过程
+823 storehouse 库房
+824 storing 储存
+825 SRM Supplier Relationship Management 供应商关系管理
+826 tangible loss 有形消耗
+827 team building 团队建立
+828 TEM Technology-enabled Marketing 技术辅助式营销
+829 TES Technology-enabled Selling 技术辅助式销售
+830 TSR TeleSales Service Representative 销售服务代表
+831 TPL Third-Part Logistics 第三方物流
+832 through transport 直达运输
+833 unit loading and unloading 单元装卸
+834 value Management 价值管理
+835 value-added logistics service 增值物流服务
+836 value-chain integration 价值链集成
+837 VMI Vender Managed Inventory 卖方主导型库存管理/供应商管理仓库
+838 virtual logistics 虚拟物流
+839 virtual warehouse 虚拟仓库
+840 vision 远景管理
+841 volume pricing model 批量定价模型
+842 warehouse 仓库
+843 waste material logistics 废弃物物流
+844 workflow management 工作流管理
+845 zero latency 零等待
+846 ZLE Zero Latency Enterprise 零等待企业
+847 ZLP Zero Latency Process 零等待过程
+848 zero-inventory technology 零库存技术
+
+
+
+很有用，值得称赞！个别词汇可商榷：
+46 EAM Enterprise Assets Management 企业资源管理
+--应该是企业资产管理，资产包括固定资产、办公用品等
+136 available inventory 可达到库存--应该是可用物料
+138 available stock 达到库存 --应该是可用库存
+199 dispatch to 调度 --应该是派工
+203 ECO workbench ECO工作台--工程变更订单工作台
+262 item availability 项目可供量
+263 item description 项目说明
+264 item number 项目编号
+265 item record 项目记录
+266 item remark 项目备注
+267 item status 项目状态
+这里Item应该指Inventory，应该译作物料、料件
+459 work order 工作令 --应该译制令单
+460 work order tracking 工作令跟踪 --制令单跟踪
+507 collection 催款 --应该译收款
