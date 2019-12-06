@@ -1,8 +1,10 @@
 国内pip镜像网址：pip install '包名' pymongo'' -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com
 
 常用命令：
-pip3 install Appium-Python-Client -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com
-http://chromedriver.storage.googleapis.com/index.html
+pip3 install pyinstaller -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com
+pip3 install execjs -i https://pypi.tuna.tsinghua.edu.cn/simple/  --trusted-host pypi.tuna.tsinghua.edu.cn
 
 python -m pip install --upgrade pip -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com
+
+ChromeAPI:
 http://chromedriver.storage.googleapis.com/index.html
