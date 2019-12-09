@@ -1,5 +1,41 @@
-
-
+#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+ 
+#######################################################
+#  用于批量删除excel的指定行                          #
+#  适用于所有office，前提需要安装pywin32和office软件  #
+#######################################################
+ 
+import os
+import sys
+import time
+import glob
+import shutil
+import string
+import os.path
+import traceback
+import ConfigParser
+import win32com.client
+ 
+SPATH = ""            #需处理的excel文件目录
+DPATH = ""            #处理后的excel存放目录
+ 
+SKIP_FILE_LIST = []   #需要跳过的文件列表
+MAX_SHEET_INDEX = 1   #每个excel文件的前几个表需要处理
+DELETE_ROW_LIST = []  #需要删除的行号
+ 
+def dealPath(pathname=''):
+	'''deal with windows file path'''
+	if pathname:
+		pathname = pathname.strip()
+	if pathname:
+		pathname = r'%s'%pathname
+		pathname = string.replace(pathname, r'/', '\\')
+		pathname = os.path.abspath(pathname)
+		if pathname.find(":\\") == -1:
+			pathname = os.path.join(os.getcwd(), pathname)
+	return pathname
+ 
 class EasyExcel(object):
 	'''class of easy to deal with excel'''
 	
@@ -7,8 +43,8 @@ class EasyExcel(object):
 		'''initial excel application'''
 		self.m_filename = ''
 		self.m_exists = False
-		self.m_excel = win32com.client.DispatchEx('Excel.Application') 
-		self.m_excel.DisplayAlerts = False                             
+		self.m_excel = win32com.client.DispatchEx('Excel.Application') #也可以用Dispatch，前者开启新进程，后者会复用进程中的excel进程
+		self.m_excel.DisplayAlerts = False                             #覆盖同名文件时不弹出确认框
 	
 	def open(self, filename=''):
 		'''open excel file'''
@@ -183,7 +219,88 @@ class EasyExcel(object):
 		if fromCol > maxCol or endCol < 1:
 			return
 		self.getRange(sheet, 1, fromCol, maxRow, endCol).Delete()
-
-
-if __name__ == '__main__':
+		
+ 
+def echo(msg):
+	'''echo message'''
+	print msg
+	
+def dealSingle(excel, sfile, dfile):
+	'''deal with single excel file'''
+	echo("deal with %s"%sfile)
+	basefile = os.path.basename(sfile)
+	excel.open(sfile)
+	sheetcount = excel.getSheetCount()
+	if not (basefile in SKIP_FILE_LIST or file in SKIP_FILE_LIST):
+		for sheet in range(1, sheetcount+1):
+			if sheet > MAX_SHEET_INDEX: 
+				continue
+			reduce = 0
+			for row in DELETE_ROW_LIST:
+				excel.deleteRow(sheet, row-reduce)
+				reduce += 1
+			#excel.deleteRows(sheet, 2, 2)
+	excel.save(dfile)
+	
+def dealExcel(spath, dpath):
+	'''deal with excel files'''
+	start = time.time()
+	#check source path exists or not 
+	spath = dealPath(spath)
+	if not os.path.isdir(spath):
+		echo("No this directory :%s"%spath)
+		return
+	#check destination path exists or not
+	dpath = dealPath(dpath)
+	if not os.path.isdir(dpath):
+		os.makedirs(dpath)
+	shutil.rmtree(dpath)
+	#list the excel file
+	filelist = glob.glob(os.path.join(spath, '*.xlsx'))
+	if not filelist:
+		echo('The path of %s has no excel file'%spath)
+		return
+	#deal with excel file
+	excel = EasyExcel()
+	for file in filelist:
+		basefile = os.path.basename(file)
+		destfile = os.path.join(dpath, basefile)
+		dealSingle(excel, file, destfile)
+	echo('Use time:%s'%(time.time()-start))
+	excel.close()
+	
+def loadConfig(configfile='./config.ini'):
+	'''parse config file'''
+	global SPATH
+	global DPATH
+	global SKIP_FILE_LIST
+	global MAX_SHEET_INDEX
+	global DELETE_ROW_LIST
+	
+	file = dealPath(configfile)
+	if not os.path.isfile(file):
+		echo('Can not find the config.ini')
+		return False
+	parser = ConfigParser.ConfigParser()
+	parser.read(file)
+	SPATH = parser.get('pathconfig', 'spath').strip()
+	DPATH = parser.get('pathconfig', 'dpath').strip()
+	filelist = parser.get('otherconfig', 'filelist').strip()
+	index = parser.get('otherconfig', 'maxindex').strip()
+	rowlist = parser.get('otherconfig', 'deleterows').strip()
+	if filelist:
+		SKIP_FILE_LIST = filelist.split(";")
+	if rowlist:
+		DELETE_ROW_LIST = map(int, rowlist.split(";"))
+	MAX_SHEET_INDEX = int(index) if index else MAX_SHEET_INDEX
+		
+	
+def main():
+	'''main function'''
+	loadConfig()
+	if SPATH and DPATH and MAX_SHEET_INDEX:
+		dealExcel(SPATH, DPATH)
+	raw_input("Please press any key to exit!")
+	
+if __name__=="__main__":
 	main()

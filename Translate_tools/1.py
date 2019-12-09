@@ -1,25 +1,24 @@
 a = [
 	[
-		["Stubborn child", "顽固子弟", 'null', 'null', 3, 'null', 'null', 'null', [
+		["#", "#", 'null', 'null', 3, 'null', 'null', 'null', [
 			[
 				["2d872eccc9e3cd77b6198222b546ff3f", "zh_en_2019q4.md"]
 			]
 		]],
-		['null', 'null', 'null', "Wángù zǐdì"]
+		['null', 'null', 'null', "#"]
 	], 'null', "zh-CN", 'null', 'null', [
-		["顽固子弟", 'null', [
-				["Stubborn child", 0, 1, 0],
-				["Stubborn children", 0, 1, 0]
+		["#", 'null', [
+				["#", 0, True, False]
 			],
 			[
-				[0, 4]
-			], "顽固子弟", 0, 0
+				[0, 1]
+			], "#", 0, 0
 		]
-	], 1.0, ["\u003cem\u003e纨绔\u003c/em\u003e子弟", "纨绔子弟", [1], 'null', 'null', 0],
+	], 0.0, [],
 	[
-		["zh-CN"], 'null', [1.0],
+		["zh-CN"], 'null', [0.0],
 		["zh-CN"]
-	], 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', ['null', 2]
+	]
 ]
 
 b = [
@@ -47,7 +46,8 @@ b = [
 	]
 ]
 
-print(a[7][0].replace('<em>','').replace('</em>',''))
+print(a[0][0][0])
+print(a[7])
 print(b[7]==[])
 
 
