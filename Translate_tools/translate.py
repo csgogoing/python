@@ -73,7 +73,7 @@ class Py4Js():
 		baseUrl+='q='+text
 		return baseUrl
 
-	def google_translate(self, text):
+	def google_translate(self, text, tip):
 		header={
 			'authority':'translate.google.cn',
 			'method':'GET',
@@ -86,29 +86,52 @@ class Py4Js():
 			'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
 			'x-client-data':'CIy2yQEIorbJAQjBtskBCKmdygEI4qjKAQivq8oBCMuuygEIzrDKAQjoscoBCPS0ygEI97TKARirpMoB'
 		}
-		proxies={
-			'https':'180.160.52.103:8118',
-			'https':'180.153.144.138:8800',
-		}
+		if tip == 1:
+			proxies={
+				#'https':'180.160.52.103:8118',
+				'https':'180.153.144.138:8800',
+				'https':'180.160.77.132:8118',
+				'https':'115.159.31.195:8080',
+				'https':'180.158.11.89:58080'
+			}
+		elif tip == 2:
+			proxies={
+				#'https':'101.4.136.34:8080',
+				#'https':'120.132.52.137:8888',
+				'https':'39.137.69.9:8080',
+				'https':'39.137.69.8:8080',
+				'https':'116.196.115.209:8080'
+			}
+		else:
+			proxies={
+				'https':'139.199.153.25:1080',
+				'https':'183.57.44.62:8888',
+				'https':'119.29.177.120:1080',
+				'https':'119.23.246.94:80',
+				'https':'39.108.2.79:8000'
+			}
+
 		url=self.buildUrl(text,self.getTk(text))
 		res=''
 		try:
-			r=requests.get(url,proxies=proxies)
+			#r=requests.get(url,proxies=proxies)
+			r=requests.get(url)
 			result=json.loads(r.text)
-			if result[7]!=None:
-			# 如果我们文本输错，提示你是不是要找xxx的话，那么重新把xxx正确的翻译之后返回
-				try:
-					correctText=result[7][0].replace('<b><i>',' ').replace('</i></b>','')
-					print(correctText)
-					correctUrl=self.buildUrl(correctText,self.getTk(correctText))
-					correctR=requests.get(correctUrl)
-					newResult=json.loads(correctR.text)
-					res=newResult[0][0][0]
-				except Exception as e:
-					#print(e)
-					res=result[0][0][0]
-			else:
-				res=result[0][0][0]
+			# if result[7]!=[]:
+			# # 如果我们文本输错，提示你是不是要找xxx的话，那么重新把xxx正确的翻译之后返回
+			# 	try:
+			# 		correctText=result[7][0].replace('<em>','').replace('</em>','')
+			# 		print(correctText)
+			# 		correctUrl=self.buildUrl(correctText,self.getTk(correctText))
+			# 		correctR=requests.get(correctUrl)
+			# 		newResult=json.loads(correctR.text)
+			# 		res=newResult[0][0][0]
+			# 	except Exception as e:
+			# 		print(e)
+			# 		res=result[0][0][0]
+			# else:
+			# 	res=result[0][0][0]
+			res=result[0][0][0]
 		except Exception as e:
 			res=''
 			print(url)
