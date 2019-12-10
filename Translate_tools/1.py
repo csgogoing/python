@@ -1,60 +1,9 @@
-a = [
-	[
-		["#", "#", 'null', 'null', 3, 'null', 'null', 'null', [
-			[
-				["2d872eccc9e3cd77b6198222b546ff3f", "zh_en_2019q4.md"]
-			]
-		]],
-		['null', 'null', 'null', "#"]
-	], 'null', "zh-CN", 'null', 'null', [
-		["#", 'null', [
-				["#", 0, True, False]
-			],
-			[
-				[0, 1]
-			], "#", 0, 0
-		]
-	], 0.0, [],
-	[
-		["zh-CN"], 'null', [0.0],
-		["zh-CN"]
-	]
-]
-
-b = [
-	[
-		['Activity Based Management', '基于作业活动管理', None, None, 3, None, None, None, [
-			[
-				['2d872eccc9e3cd77b6198222b546ff3f', 'zh_en_2019q4.md']
-			]
-		]],
-		[None, None, None, 'Jīyú zuòyè huódòng guǎnlǐ']
-	], None, 'zh-CN', None, None, 
-	[
-		['基于作业活动管理', None, [
-				['Activity Based Management', 0, True, False],
-				['Activity - based management', 0, True, False]
-			],
-			[
-				[0, 8]
-			], '基于作业活动管理', 0, 0
-		]
-	], 1.0, [],
-	[
-		['zh-CN'], None, [1.0],
-		['zh-CN']
-	]
-]
-
-print(a[0][0][0])
-print(a[7])
-print(b[7]==[])
+a = [1,2,3,4]
+b = '.'.join(a)
+print(b)
 
 
 
-# a = [1,2,3,4]
-# b = '.'.join(a)
-# print(b)
 
 # def get_url():
 # 	host = 'http://www.dongao.com'

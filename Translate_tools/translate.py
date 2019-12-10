@@ -2,6 +2,7 @@ import requests
 import json
 from bs4 import BeautifulSoup
 import execjs
+import urllib.parse
 
 
 class Py4Js():
@@ -70,7 +71,8 @@ class Py4Js():
 		baseUrl+='tsel=0&'
 		baseUrl+='kc=2&'
 		baseUrl+='tk='+str(tk)+'&'
-		baseUrl+='q='+text
+		test_code = urllib.parse.quote(text)
+		baseUrl+='q='+test_code
 		return baseUrl
 
 	def google_translate(self, text):
@@ -85,26 +87,8 @@ class Py4Js():
 			'cookie':'',
 			'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
 			'x-client-data':'CIy2yQEIorbJAQjBtskBCKmdygEI4qjKAQivq8oBCMuuygEIzrDKAQjoscoBCPS0ygEI97TKARirpMoB',
-			'Proxy-Authorization': 'Basic H8Q58IM9I22N6X7P:D9E48E09D39DDCF4'
+			#'Proxy-Authorization': 'Basic H8Q58IM9I22N6X7P:D9E48E09D39DDCF4'
 		}
-		# if tip == 1:
-		# 	print(tip)
-		# 	proxies={
-		# 		'https':'139.186.2.80:47586',
-		# 	}
-		# elif tip == 2:
-		# 	print(tip)
-		# 	proxies={
-		# 		'https':'114.233.51.251:9999',
-		# 	}
-		# elif tip == 3:
-		# 	print(tip)
-		# 	proxies={
-		# 		'https':'60.12.89.218:33920',
-		# 	}
-		# else:
-		# 	proxies={
-		# 	}
 
 
 		proxyHost = "http-pro.abuyun.com"
@@ -130,8 +114,8 @@ class Py4Js():
 		res=''
 		for i in range(5):
 			try:
-				r=requests.get(url,proxies=proxies)
-				#r=requests.get(url)
+				#r=requests.get(url,proxies=proxies)
+				r=requests.get(url)
 				result=json.loads(r.text)
 				# if result[7]!=[]:
 				# # 如果我们文本输错，提示你是不是要找xxx的话，那么重新把xxx正确的翻译之后返回
