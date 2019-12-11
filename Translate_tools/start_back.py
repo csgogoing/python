@@ -38,7 +38,7 @@ class Translate_Excel():
 		for word_need in list_need:
 			sleep(1)
 			print('当前第%s行'%row)
-			result = str(self.tran_google.google_translate(word_need))
+			result = str(self.tran_google.google_translate(word_need,1))
 			if result != '':
 				self.sheet.write(row, 2, result)
 				if re.search(r'[\u4e00-\u9fa5]',result):
