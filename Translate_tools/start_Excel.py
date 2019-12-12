@@ -12,7 +12,7 @@ import json
 import win32com.client
 from xlutils.copy import copy
 from lxml import etree
-from translate import Py4Js
+from Translate import Py4Js
 from time import sleep
 #from pyexcel import EasyExcel
 
@@ -43,7 +43,7 @@ class Translate_Excel():
 		self.xlBook.Worksheets[0].Activate()
 		self.sheet = self.xlBook.ActiveSheet
 		#找到当前未翻译的位置
-		row = 2
+		row = 83745
 
 		while self.sheet.Cells(row, 3).Value != None:
 			row = row + 1

@@ -1,0 +1,265 @@
+Main Data	Master Data
+Settlement mode	Payment Methods
+Country and areas	Countries/Regions
+Administrative division	Jurisdictions
+Material Inventory	Stock Controls Of Materials
+Material procurement	Procurement Controls Of Material
+Material Sales Strategy	Sales Controls Of Material
+Measuring unit	Unit of Measure
+Material classifcation standard	Material Classification Criteria
+Transceiver type	Movement Types
+Business type	Transaction Types
+Inventory services	Inventory Transactions
+Batch number main file	Lot Number Profiles
+Payment Conditions	Supplier Payment Conditions
+Collection Conditions	Customer Payment Conditions
+Serial number main file	Serial Number Profiles
+Staff Bank Card	Bank Information of Employees
+Establishment of Standard currency…	Functional Currency of Organization
+Subject table	Chart of Account
+Accounting subject	Accounts
+SOB type	Accounting Books
+Established	Created
+Loan	Advanced Payment Request
+Expense reimbursement	Expense Report
+Official Reimbursement	Expense Bills
+Expense Application	Expense Request
+Loan	Advanced Payment Request
+Expense reimbursement	Expense Report
+Official Reimbursement	Expense Bills
+Expense Application Form	Expense Request
+Borrowing Sheet	Advanced Payment Request
+Expense reimbursement form	Expense Report
+Official Reimbursement form	Expense Bills
+Repayment Form	Advanced Payment Clearing
+Collection information	Payee Information
+Statement of loan and repayment	Progress Of Advanced Payment
+Quota reimbusement situation	Budget Implementation Progress
+Date of application	Date
+Expense bearing department ID	Department
+Expense bearing company	Company
+Cause	Purpose
+Expense Item	Item
+Expense Occurrence date	Date
+Application amount	Amount
+Application amount（Domestic currency）	Amount of Functional Currency
+Support Ctrl+V paste screenshots	Ctrl+V to paste screenshots
+Click or drag upload	Click or drag to upload
+Date of application	Date
+Expense bearing department ID	Department
+Expense bearing company	Subsidiary
+Repayment date	Due Date of Repayment
+Date of application	Date
+Expense bearing department ID	Department
+Expense bearing company	Subsidiary
+Repayment date	Due Date of Repayment
+New	Create
+Processing of receivables	Process Receibales
+Invoice processing	Process China Invoices
+Revenue recognition	Recognize Revenue
+Settlement Processing	Clear A/R
+Write-off treatment	Revenue & COGS Matching
+Report query	Reports
+Bad debt processing	Process Bad Debts
+Initialization	Opening Balances
+Financial Receivables Processing	Process Receivables
+Temporary Estimated Receivables Processing	Process Goods-receipts
+VAT Invoice Processing	Issue VAT Invoices
+Other Invoice processing	Issue Other Invoices
+Revenue recognition	Recognize Revenue
+Manual Settlement	Odinary Transactions
+Different currency settlement	Multi-currencies Transactions
+Settlement records	Records
+Settlement plan	Plans
+Clean-up of uniquidated Items	To Be Cleared
+Manual cancellation after verification	Manual Match
+Write-off records	Records
+Summary of receivables	A/R Summary
+Detailed list of receivables	A/R Register
+Group internal reconcliation	Inter-companies Reconciliation
+Aging analysis table	A/R Aging
+Bad debt provision	Recognize Bad Debts
+Summary Result	Bad Debts Report
+Bad debt loss	Wirte-off Bad Debts
+Initial financial receivables	Receivables
+Opening estimated AR	Goods-receipts
+Beginning receivable in advance	Customer Prepayments
+Provision for bad debts at the beginning of the	Bad Debts
+Accrual Plan	Plan Of Recognize Bad Debts
+Launch	Shortcuts
+To be audited	Pending Approval
+Processing of receivables	A/R Progress
+Invoice Processing	Invoicing Progress
+Settlement Processing	Progress Of AR Clear
+Turnover rate of receivables	Turnover Trend
+Receivable age analysis	Aging
+Receivable transactions	Transaction Quantity
+Amount receivable	Amount
+account current	Customers
+Audit	Approve
+Receivable settlement	Clear Receivables
+View image	View Images
+Generate voucher	Generate Journals
+Online query	Joint Transactions
+Collection	Customer Payments
+Writing off	Reverse
+Transfer of creditor's rights	Third Party Offset
+Bad debt loss	Write-off Bad Debts
+Payment Application	Payment Requests
+Preview credential	Preview Journals
+Delete voucher	Delete Jounals
+Doc Number	Document Number
+Doc Type	Form
+Doc Date	Transaction Date
+Settlement	Sales Orgnization
+Account current	Customer
+Collection conditions	Customer Payment Term
+Collection organization	Sales Orgnization
+Settlement mode	Payment Method
+Remark	Memo
+Exchange rate table	Exchange Rate Type
+Amount not wirtten off	Amount (COGS not matched）
+Unsettled amount	Amount （A/R uncleared）
+Enter tax included unit price	Enter Tax Inclusive Price
+Charge unit	Pricing UoM
+Tax-included unit price	Tax Inclusive Price
+Rush receipt	For Reversal
+Full invoice	Fully Invoiced
+Income confirmation	Recognize Revenue
+Unlimited	ALL
+Total amount in local currency	Total Amount (Functional Currency)
+Confirmation rate%	Recognized Rate%
+Confirm the amount	Recognized Amount
+Confirmed amount in local currency	Recognized Amount (Functional Currency)
+Launch	Shortcuts
+Sales return requisition	Return Requests
+To be audited	Pending Approval
+Sales Amount in the Current Month	Revenue Of Current Month
+Sales Amount in the Current Quarter	Revenue Of Current Current Quarter
+Ten thousand yuan	Ten Thousand
+Delivery Notice	Shipping Notices
+Sales ex-warehouse entry	Deliver Goods
+Sales return requisition	Return Requests
+Sales execution	Process Sales
+Sales order processing	Sales Orders
+Order change processing	Change Orders
+Sales and Delivery Processing	Shipping 
+Selling out of warehouse	Deliver Orders
+Sales goods return	Process 
+Application processing for return	Return Requests
+Report query	Sales Reports
+Order execution query	Progress of Orders
+Material Sales Strategy	Sales Controls Of Material
+Sales Business Group	Sales Group
+Doc Number	Document Number
+Doc Type	Form
+Business Type	Transaction Type
+Doc Status	Status
+Order Date	Date
+Switch	Change
+Add customer	Select
+Remark	Memo
+Salesperson	Sales Reps
+Receiving customer	Ship To Customer
+Receiving contact	Shipping Contact
+Receiving address	Ship To Address
+Invoice Customer	Bill To Customer
+Settlement currency	Transaction Currency
+Settlement mode	Payment Method
+Exchange Rate Table	Exchange Rate Type
+Collection Condition	Customer Payment Conditions
+Total Amount	Net Amount
+Total ad valorem tax	Gross Amount
+Tax included	Enter Tax Inclusive Price
+Order Details	Details
+Material Details	Materials
+Material Code	Code
+Material Name	Name
+Material Vers	Version
+Measuring unit	UoM
+Tax Rate	Tax Code
+Tax-included unit price	Tax Inclusive Price
+Total ad valorem tax	Gross Amount
+Delivery Plan	Shipping Plan
+Cumulative number of delivery notifications	Shipped Quantity
+Cumulative outgoing quantity	Delivered Quantity
+Cumulative amount of depot withdrawl	Returned Quantity
+Refundable quantity sold	Refundable Quantity
+Cumulative confirmed quantity	Confirmed Quantity
+Cumulative purchase quantity	Purchased Quantity
+Associated purchase quantity	Associated Purchased Quantity
+Scheduled delivery date	Planned Shipping Date
+Measuing unit	UoM
+Planned shipment quantity	Planned Quantity
+Actual shipment quantity	Actual Quantity
+Actual develivery date	Actualy Shipping Date
+Collection Plan	Payment Plan
+Input by proportion	By Proportion
+Name of money	Payment Progress
+percentage of receivables	Percentage
+Amount receivable	Amount
+is it collected in advance	Prepayment?
+Paid-in Amount	Received Amount
+Appendix	Attachment
+Support Ctrl+V paste screenshots	Ctrl+V to paste screenshots
+Click or drag upload	Click or drag to upload
+Billing Information	System Notes
+Create time	Creation Time
+Modified by	Edited By
+Modify the time	Edit Time
+Date of review	Approval Time
+Closed state	Closure Status
+Close person	Closed By
+Closing date	Closure Date
+Change State	Changing Status
+Altered person	Changed By
+Date of Change	Changing Date
+New	Create
+Audit	Approve
+Reverse audit	Cancel Approval
+Business operation	Actions
+Shut down	Close
+Rever-close	Reopen
+Associated generation	Related Transactions
+Export by the list	Export by list
+Notice date	Date
+Contact telephone	Phone
+Receiving address	Ship To Address
+Delivery mode	Shipping Method
+Inventory	Inventory Organization
+Sales	Sales Organization
+Business date	Date
+Treasury Management Department	Inventory Department
+Salesperson	Sales Rep
+Doc state	Status
+warehouse	Storage Bin
+Out-of-stock status	Stock Status
+Remark	Memo
+Support Ctrl+V paste screenshots	Ctrl+V to paste screenshots
+Click or drag upload	Click or drag to upload
+min	score
+New	Create
+Audit	Approve
+Reverse audit	Withdraw Approval
+Business operation	Actions
+Shut down	Close
+Rever-close	Reopen
+Associated generation	Related Transactions
+Export by the list	Export by list
+Preview credential	Preview
+Delete voucher	Delete
+Doc Number	Document Number
+Doc Type	Form
+Doc Date	Transaction Date
+Account current	Customer
+Collection conditions	Customer Payment Term
+Settlement mode	Payment Method
+Remark	Memo
+Business Type	Transaction Type
+Doc Status	Status
+Order Date	Date
+Switch	Change
+Add customer	Select
+Remark	Memo
+Generate voucher	Generate Journals
+Online query	Joint Transactions
