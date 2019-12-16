@@ -20,7 +20,7 @@ from time import sleep
 class Translate_Excel():
 	#主类
 	def __init__(self):
-		ERP_path = os.getcwd()+'\\ERP.xlsx'
+		ERP_path = os.getcwd()+'\\need_trans.xlsx'
 		#ERP_path = os.getcwd()+'\\ERP6-9.xls'
 		if os.path.exists(ERP_path):
 			self.wpsApp = win32com.client.Dispatch("Excel.Application")
@@ -42,12 +42,14 @@ class Translate_Excel():
 	def translate(self):
 		self.xlBook.Worksheets[0].Activate()
 		self.sheet = self.xlBook.ActiveSheet
-		#找到当前未翻译的位置
-		row = 83745
 
+		#记得表格设置成文本格式
+
+		row = 2
+		#找到当前未翻译的位置
 		while self.sheet.Cells(row, 3).Value != None:
 			row = row + 1
-			
+		
 		while self.sheet.Cells(row, 1).Value != None:
 			sleep(1)
 			print('当前第%s行'%(row))
@@ -75,7 +77,6 @@ class Translate_Excel():
 				else:
 					print('第%s行数据翻译失败'%row)
 					self.sheet.Cells(row, 4).Value='未翻译'
-					return
 				row = row + 1
 
 

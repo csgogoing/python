@@ -19,7 +19,7 @@ from Mysql_Use import Mysql
 class Translate_Excel():
 	#主类
 	def __init__(self):
-		ERP_path = os.getcwd()+'\\090923.xlsx'
+		ERP_path = os.getcwd()+'\\ERP_test.xlsx'
 		#ERP_path = os.getcwd()+'\\ERP6-9.xls'
 		if os.path.exists(ERP_path):
 			self.wpsApp = win32com.client.Dispatch("Excel.Application")
@@ -82,42 +82,6 @@ class Translate_Excel():
 		file_CE.close()
 		file_EE.close()
 
-		# row = 2
-		# for i in range(row,186):
-		# 	yuanwen = str(self.sheet.Cells(row, 1).Value)
-		# 	if yuanwen != None and re.search(r'\W',yuanwen):
-		# 		yiwen = str(self.sheet.Cells(row, 2).Value)
-		# 		file.write(yiwen + "\n")
-
-
-		# auxiliary = ['is','was','are','were','do','did','does','be']
-		# while self.sheet.Cells(row, 2).Value != None:
-		# 	print(row)
-		# 	is_sentense = 1
-		# 	trans_word = str(self.sheet.Cells(row, 2).Value)
-		# 	#判断是否是句子
-		# 	if '.' not in trans_word and ',' not in trans_word and '!' not in trans_word:
-		# 		baidu_list = trans_word.split(' ')
-		# 		if len(baidu_list)>5:
-		# 			is_sentense = 1
-		# 		else:
-		# 			is_sentense = 0
-		# 			for tar in auxiliary:
-		# 				if tar in baidu_list:
-		# 					is_sentense = 1
-		# 					break
-		# 	#如果不是句子，首字母大写
-		# 	if is_sentense == 0:
-		# 		for i in range(len(baidu_list)):
-		# 			if re.search('[a-z]',baidu_list[i]):
-		# 				baidu_list[i]=baidu_list[i].title()
-		# 		up_word = ' '.join(baidu_list)
-		# 		try:
-		# 			self.sheet.Cells(row, 3).Value = trans_word
-		# 			self.sheet.Cells(row, 2).Value = up_word
-		# 		except:
-		# 			self.sheet.Cells(row, 4).Value = '写入表格失败'
-		# 	row = row + 1
 
 
 	def replace_title(self):
@@ -127,43 +91,67 @@ class Translate_Excel():
 
 		row = 2
 		auxiliary = ['is','was','are','were','do','did','does','be']
-		while self.sheet.Cells(row, 2).Value != None:
+		special_characters = ['% S', '% s', '%S', '\\ N', '\\N', '\\ n', '\\ R', '\\R','\\ r',\
+							 '\\ T', '\\T', '\\ t', ' & ', '\'S', ' \\ ']
+
+		while self.sheet.Cells(row, 1).Value != None:
 			print(row)
 			is_sentense = 1
 			need_write = 0
 			trans_word = str(self.sheet.Cells(row, 2).Value)
+			print(trans_word)
+			if trans_word == 'None':
+				print('--------------------------------')
+				row = row + 1
+				continue
 			#判断是否是句子
-			if '.' not in trans_word and ',' not in trans_word and '!' not in trans_word:
+			if '.' not in trans_word and ',' not in trans_word and '!' not in trans_word and '?' not in trans_word:
 				baidu_list = trans_word.split(' ')
+				print(baidu_list)
 				if len(baidu_list)>5:
 					is_sentense = 1
 				else:
 					is_sentense = 0
-					for tar in auxiliary:
-						if tar in baidu_list:
+					for aux in auxiliary:
+						if aux in baidu_list:
 							is_sentense = 1
 							break
 			#如果不是句子，首字母大写
 			if is_sentense == 0:
+				need_write = 1
 				for i in range(len(baidu_list)):
 					if re.search('[a-z]',baidu_list[i]):
 						baidu_list[i]=baidu_list[i].title()
 				up_word = ' '.join(baidu_list)
-				need_write = 1
 			else:
 				need_write = 0
 				up_word = trans_word
 			# 翻译结果中的特殊符号替换成小写防止出错
-			if '%S' in up_word or '\\N' in up_word or '\\R' in up_word or '\\T' in up_word:
-				need_write = 1
-				up_word = up_word.replace('%S','%s')
-				up_word = up_word.replace('\\N','\\n')
-				up_word = up_word.replace('\\R','\\r')
-				up_word = up_word.replace('\\T','\\t')
+			for characters in special_characters:
+				if special_characters in up_word:
+					need_write = 1
+					up_word = up_word.replace('% S','%s')
+					up_word = up_word.replace('% s','%s')
+					up_word = up_word.replace('%S','%s')
+					up_word = up_word.replace('\\ N','\\n')
+					up_word = up_word.replace('\\N','\\n')
+					up_word = up_word.replace('\\ n','\\n')
+					up_word = up_word.replace('\\ R','\\r')
+					up_word = up_word.replace('\\R','\\r')
+					up_word = up_word.replace('\\ r','\\r')
+					up_word = up_word.replace('\\ T','\\t')
+					up_word = up_word.replace('\\T','\\t')
+					up_word = up_word.replace('\\ t','\\t')
+					up_word = up_word.replace(' & ','&')
+					up_word = up_word.replace('\'S','\'s')
+
+					continue
+
 			if need_write == 1:
 				try:
 					#self.sheet.Cells(row, 3).Value = trans_word
 					self.sheet.Cells(row, 2).Value = up_word
+					self.sheet.Cells(row, 4).Value = '需要转换'
 				except:
 					self.sheet.Cells(row, 4).Value = '写入表格失败'
 			row = row + 1
@@ -303,4 +291,4 @@ if __name__ == '__main__':
 	#tools.insert_words()
 	tools.replace_title()
 	#tools.replace_target()
-	tools.save_excel()
+	#tools.save_excel()
