@@ -1,0 +1,39 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BeautifulSoup	.\translate.py	/^from bs4 import BeautifulSoup$/;"	i
+ERP_path	.\start.py	/^	ERP_path = os.getcwd()+'\\\\ERP.xls'$/;"	v	class:Translate_Excel
+Py4Js	.\start.py	/^from translate import Py4Js$/;"	i
+Py4Js	.\translate.py	/^class Py4Js():$/;"	c
+Translate_Excel	.\start.py	/^class Translate_Excel():$/;"	c
+__init__	.\start.py	/^	def __init__(self, file):$/;"	m	class:Translate_Excel
+__init__	.\translate.py	/^	def __init__(self):$/;"	m	class:Py4Js
+a	.\1.py	/^a = [1,2,3,4]$/;"	v
+b	.\1.py	/^b = '.'.join(a)$/;"	v
+buildUrl	.\translate.py	/^	def buildUrl(self, text, tk):$/;"	m	class:Py4Js
+copy	.\start.py	/^from xlutils.copy import copy$/;"	i
+datetime	.\start.py	/^import datetime$/;"	i
+etree	.\start.py	/^from lxml import etree$/;"	i
+execjs	.\translate.py	/^import execjs$/;"	i
+getTk	.\translate.py	/^	def getTk(self, text): $/;"	m	class:Py4Js
+google_translate	.\translate.py	/^	def google_translate(self, text):$/;"	m	class:Py4Js
+js	.\translate.py	/^	js=Py4Js()$/;"	v	class:Py4Js
+json	.\start.py	/^import json$/;"	i
+json	.\translate.py	/^import json$/;"	i
+os	.\start.py	/^import os$/;"	i
+random	.\start.py	/^import random$/;"	i
+re	.\start.py	/^import re$/;"	i
+requests	.\start.py	/^import requests$/;"	i
+requests	.\translate.py	/^import requests$/;"	i
+res	.\translate.py	/^	res=js.translate('苹果')$/;"	v	class:Py4Js
+save_excel	.\start.py	/^	def save_excel(self):$/;"	m	class:Translate_Excel
+sys	.\start.py	/^import sys$/;"	i
+time	.\start.py	/^import time$/;"	i
+tools	.\start.py	/^	tools = Translate_Excel(ERP_path)$/;"	v	class:Translate_Excel
+translate	.\start.py	/^	def translate(self):$/;"	m	class:Translate_Excel
+txt_to_excel	.\txt_excel.py	/^def txt_to_excel():$/;"	f
+xlrd	.\start.py	/^import xlrd$/;"	i
+xlwt	.\start.py	/^import xlwt$/;"	i
