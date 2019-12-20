@@ -1,54 +1,8 @@
 import re
 
-
-
-def replace_title(word):
-	up_word = ''
-	auxiliary = ['is','was','are','were','do','did','does','be']
-	is_sentense = 1
-	need_write = 0
-	#判断是否是句子
-	if not re.search('[a-zA-Z]',word):
-
-	if '.' not in word and ',' not in word and '!' not in word:
-		word_list = word.split(' ')
-		if len(word_list)>5:
-			is_sentense = 1
-		else:
-			is_sentense = 0
-			for tar in auxiliary:
-				if tar in word_list:
-					is_sentense = 1
-					break
-	#如果不是句子，首字母大写
-	if is_sentense == 0:
-		for i in range(len(word_list)):
-			if re.search('[a-z]',word_list[i]):
-				print('a-z')
-				word_list[i]=word_list[i].title()
-		up_word = ' '.join(word_list)
-		need_write = 1
-	else:
-		need_write = 0
-		up_word = trans_word
-	# 翻译结果中的特殊符号替换成小写防止出错
-		if '%S' in up_word or '\\N' in up_word or '\\R' in up_word or '\\T' in up_word:
-			need_write = 1
-			up_word = up_word.replace('%S','%s')
-			up_word = up_word.replace('\\N','\\n')
-			up_word = up_word.replace('\\R','\\r')
-			up_word = up_word.replace('\\T','\\t')
-		print(up_word)
-
-	return(need_write,up_word)
-
 def main():
-	a = ['esfsd sdfds ','g  ff 234223','sdfs sdfs is ss','sdfsfs sdfdsf sdfd d d d d ','AAAA','sfds ss,']
-	for i in range(6):
-		up_word = ''
-		trans_word = a[i]
-		up_word = replace_title(trans_word)
-
+	a = None
+	print(str(a))
 
 
 

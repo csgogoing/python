@@ -47,7 +47,7 @@ if __name__ == '__main__':
 	id = 1
 	chn_word = '2'
 	baidu_word = '1'
-	sql = "insert into common_words(id, chn_word, baidu_word) values(%d,%s,%s);"%(id,chn_word,baidu_word)
-	db.exec(sql)
+	# sql = "insert into common_words(id, chn_word, baidu_word) values(%d,%s,%s);"%(id,chn_word,baidu_word)
+	# db.exec(sql)
 
-	#db.query("select * from common_words")
+	#print(db.query('select from common_words where chn_word="请选择一行！")))

@@ -1,0 +1,228 @@
+main	1.py	/^def main():$/;"	f
+re	1.py	/^import re$/;"	i
+Mysql	Excel_Del_Word.py	/^from Mysql_Use import Mysql$/;"	i
+Translate_Excel	Excel_Del_Word.py	/^class Translate_Excel():$/;"	c
+__init__	Excel_Del_Word.py	/^	def __init__(self):$/;"	m	class:Translate_Excel
+client	Excel_Del_Word.py	/^import win32com.client$/;"	i
+copy	Excel_Del_Word.py	/^from xlutils.copy import copy$/;"	i
+datetime	Excel_Del_Word.py	/^import datetime$/;"	i
+del_words	Excel_Del_Word.py	/^	def del_words(self):$/;"	m	class:Translate_Excel
+etree	Excel_Del_Word.py	/^from lxml import etree$/;"	i
+find_repeat	Excel_Del_Word.py	/^	def find_repeat(self):$/;"	m	class:Translate_Excel
+insert_words	Excel_Del_Word.py	/^	def insert_words(self):$/;"	m	class:Translate_Excel
+json	Excel_Del_Word.py	/^import json$/;"	i
+os	Excel_Del_Word.py	/^import os$/;"	i
+random	Excel_Del_Word.py	/^import random$/;"	i
+re	Excel_Del_Word.py	/^import re$/;"	i
+re_insert_words	Excel_Del_Word.py	/^	def re_insert_words(self):$/;"	m	class:Translate_Excel
+replace_target	Excel_Del_Word.py	/^	def replace_target(self):$/;"	m	class:Translate_Excel
+replace_title	Excel_Del_Word.py	/^	def replace_title(self):$/;"	m	class:Translate_Excel
+replace_word	Excel_Del_Word.py	/^	def replace_word(self):$/;"	m	class:Translate_Excel
+requests	Excel_Del_Word.py	/^import requests$/;"	i
+save_excel	Excel_Del_Word.py	/^	def save_excel(self):$/;"	m	class:Translate_Excel
+sleep	Excel_Del_Word.py	/^from time import sleep$/;"	i
+sys	Excel_Del_Word.py	/^import sys$/;"	i
+test	Excel_Del_Word.py	/^	def test(self, word):$/;"	m	class:Translate_Excel
+time	Excel_Del_Word.py	/^import time$/;"	i
+tools	Excel_Del_Word.py	/^	tools = Translate_Excel()$/;"	v	class:Translate_Excel
+win32com	Excel_Del_Word.py	/^import win32com.client$/;"	i
+xlrd	Excel_Del_Word.py	/^import xlrd$/;"	i
+xlwt	Excel_Del_Word.py	/^import xlwt$/;"	i
+Mysql	Mysql_Use.py	/^class Mysql(object):$/;"	c
+__del__	Mysql_Use.py	/^	def __del__(self):$/;"	m	class:Mysql	file:
+__init__	Mysql_Use.py	/^	def __init__(self,db,charset='utf8'):$/;"	m	class:Mysql
+baidu_word	Mysql_Use.py	/^	baidu_word = '1'$/;"	v
+chn_word	Mysql_Use.py	/^	chn_word = '2'$/;"	v
+db	Mysql_Use.py	/^	db = Mysql('multilang')$/;"	v
+exec	Mysql_Use.py	/^	def exec(self,sql):$/;"	m	class:Mysql
+id	Mysql_Use.py	/^	id = 1$/;"	v
+pymysql	Mysql_Use.py	/^import pymysql$/;"	i
+query	Mysql_Use.py	/^	def query(self,sql):$/;"	m	class:Mysql
+sql	Mysql_Use.py	/^	sql = "insert into common_words(id, chn_word, baidu_word) values(%d,%s,%s);"%(id,chn_word,baidu_word)$/;"	v
+BeautifulSoup	Translate.py	/^from bs4 import BeautifulSoup$/;"	i
+Py4Js	Translate.py	/^class Py4Js():$/;"	c
+__init__	Translate.py	/^	def __init__(self):$/;"	m	class:Py4Js
+buildUrl	Translate.py	/^	def buildUrl(self, text, tk):$/;"	m	class:Py4Js
+execjs	Translate.py	/^import execjs$/;"	i
+getTk	Translate.py	/^	def getTk(self, text): $/;"	m	class:Py4Js
+google_translate	Translate.py	/^	def google_translate(self, text):$/;"	m	class:Py4Js
+js	Translate.py	/^	js=Py4Js()$/;"	v	class:Py4Js
+json	Translate.py	/^import json$/;"	i
+parse	Translate.py	/^import urllib.parse$/;"	i
+requests	Translate.py	/^import requests$/;"	i
+res	Translate.py	/^	res=js.translate('苹果')$/;"	v	class:Py4Js
+urllib	Translate.py	/^import urllib.parse$/;"	i
+Mysql	common_tool\Excel_Use.py	/^from Mysql_Use import Mysql$/;"	i
+Translate_Excel	common_tool\Excel_Use.py	/^class Translate_Excel():$/;"	c
+__init__	common_tool\Excel_Use.py	/^	def __init__(self, filename):$/;"	m	class:Translate_Excel
+client	common_tool\Excel_Use.py	/^import win32com.client$/;"	i
+copy	common_tool\Excel_Use.py	/^from xlutils.copy import copy$/;"	i
+datetime	common_tool\Excel_Use.py	/^import datetime$/;"	i
+del_words	common_tool\Excel_Use.py	/^	def del_words(self):$/;"	m	class:Translate_Excel
+etree	common_tool\Excel_Use.py	/^from lxml import etree$/;"	i
+find_repeat	common_tool\Excel_Use.py	/^	def find_repeat(self):$/;"	m	class:Translate_Excel
+insert_words	common_tool\Excel_Use.py	/^	def insert_words(self):$/;"	m	class:Translate_Excel
+json	common_tool\Excel_Use.py	/^import json$/;"	i
+locate_sheet	common_tool\Excel_Use.py	/^	def locate_sheet(self, num):$/;"	m	class:Translate_Excel
+os	common_tool\Excel_Use.py	/^import os$/;"	i
+random	common_tool\Excel_Use.py	/^import random$/;"	i
+re	common_tool\Excel_Use.py	/^import re$/;"	i
+re_insert_words	common_tool\Excel_Use.py	/^	def re_insert_words(self):$/;"	m	class:Translate_Excel
+replace_target	common_tool\Excel_Use.py	/^	def replace_target(self, sheet):$/;"	m	class:Translate_Excel
+replace_title	common_tool\Excel_Use.py	/^	def replace_title(self):$/;"	m	class:Translate_Excel
+replace_word	common_tool\Excel_Use.py	/^	def replace_word(self):$/;"	m	class:Translate_Excel
+requests	common_tool\Excel_Use.py	/^import requests$/;"	i
+save_excel	common_tool\Excel_Use.py	/^	def save_excel(self):$/;"	m	class:Translate_Excel
+sleep	common_tool\Excel_Use.py	/^from time import sleep$/;"	i
+sys	common_tool\Excel_Use.py	/^import sys$/;"	i
+test	common_tool\Excel_Use.py	/^	def test(self, word):$/;"	m	class:Translate_Excel
+time	common_tool\Excel_Use.py	/^import time$/;"	i
+tools	common_tool\Excel_Use.py	/^	tools = Translate_Excel()$/;"	v	class:Translate_Excel
+win32com	common_tool\Excel_Use.py	/^import win32com.client$/;"	i
+xlrd	common_tool\Excel_Use.py	/^import xlrd$/;"	i
+xlwt	common_tool\Excel_Use.py	/^import xlwt$/;"	i
+Mysql	common_tool\Mysql_Use.py	/^class Mysql(object):$/;"	c
+__del__	common_tool\Mysql_Use.py	/^	def __del__(self):$/;"	m	class:Mysql	file:
+__init__	common_tool\Mysql_Use.py	/^	def __init__(self,db,charset='utf8'):$/;"	m	class:Mysql
+baidu_word	common_tool\Mysql_Use.py	/^	baidu_word = '1'$/;"	v
+chn_word	common_tool\Mysql_Use.py	/^	chn_word = '2'$/;"	v
+db	common_tool\Mysql_Use.py	/^	db = Mysql('multilang')$/;"	v
+exec	common_tool\Mysql_Use.py	/^	def exec(self,sql):$/;"	m	class:Mysql
+id	common_tool\Mysql_Use.py	/^	id = 1$/;"	v
+pymysql	common_tool\Mysql_Use.py	/^import pymysql$/;"	i
+query	common_tool\Mysql_Use.py	/^	def query(self,sql):$/;"	m	class:Mysql
+sql	common_tool\Mysql_Use.py	/^	sql = "insert into common_words(id, chn_word, baidu_word) values(%d,%s,%s);"%(id,chn_word,baidu_word)$/;"	v
+Mysql	common_tool\Word_Handle.py	/^from Mysql_Use import Mysql$/;"	i
+Word_handle	common_tool\Word_Handle.py	/^class Word_handle():$/;"	c
+__init__	common_tool\Word_Handle.py	/^	def __init__(self):$/;"	m	class:Word_handle
+client	common_tool\Word_Handle.py	/^import win32com.client$/;"	i
+copy	common_tool\Word_Handle.py	/^from xlutils.copy import copy$/;"	i
+datetime	common_tool\Word_Handle.py	/^import datetime$/;"	i
+del_words	common_tool\Word_Handle.py	/^	def del_words(self):$/;"	m	class:Word_handle
+etree	common_tool\Word_Handle.py	/^from lxml import etree$/;"	i
+find_repeat	common_tool\Word_Handle.py	/^	def find_repeat(self):$/;"	m	class:Word_handle
+insert_words	common_tool\Word_Handle.py	/^	def insert_words(self):$/;"	m	class:Word_handle
+json	common_tool\Word_Handle.py	/^import json$/;"	i
+os	common_tool\Word_Handle.py	/^import os$/;"	i
+random	common_tool\Word_Handle.py	/^import random$/;"	i
+re	common_tool\Word_Handle.py	/^import re$/;"	i
+re_insert_words	common_tool\Word_Handle.py	/^	def re_insert_words(self):$/;"	m	class:Word_handle
+replace_excel_title	common_tool\Word_Handle.py	/^	def replace_excel_title(self, sheet, colomn):$/;"	m	class:Word_handle
+replace_target	common_tool\Word_Handle.py	/^	def replace_target(self, sheet):$/;"	m	class:Word_handle
+replace_title	common_tool\Word_Handle.py	/^	def replace_title(self, word):$/;"	m	class:Word_handle
+replace_word	common_tool\Word_Handle.py	/^	def replace_word(self):$/;"	m	class:Word_handle
+requests	common_tool\Word_Handle.py	/^import requests$/;"	i
+sleep	common_tool\Word_Handle.py	/^from time import sleep$/;"	i
+sys	common_tool\Word_Handle.py	/^import sys$/;"	i
+test	common_tool\Word_Handle.py	/^	def test(self, word):$/;"	m	class:Word_handle
+time	common_tool\Word_Handle.py	/^import time$/;"	i
+tools	common_tool\Word_Handle.py	/^	tools = Word_handle()$/;"	v	class:Word_handle
+win32com	common_tool\Word_Handle.py	/^import win32com.client$/;"	i
+xlrd	common_tool\Word_Handle.py	/^import xlrd$/;"	i
+xlwt	common_tool\Word_Handle.py	/^import xlwt$/;"	i
+ConfigParser	pyexcel.py	/^import ConfigParser$/;"	i
+DELETE_ROW_LIST	pyexcel.py	/^DELETE_ROW_LIST = []  #需要删除的行号$/;"	v
+DPATH	pyexcel.py	/^DPATH = ""            #处理后的excel存放目录$/;"	v
+EasyExcel	pyexcel.py	/^class EasyExcel(object):$/;"	c
+MAX_SHEET_INDEX	pyexcel.py	/^MAX_SHEET_INDEX = 1   #每个excel文件的前几个表需要处理$/;"	v
+SKIP_FILE_LIST	pyexcel.py	/^SKIP_FILE_LIST = []   #需要跳过的文件列表$/;"	v
+SPATH	pyexcel.py	/^SPATH = ""            #需处理的excel文件目录$/;"	v
+__init__	pyexcel.py	/^	def __init__(self):$/;"	m	class:EasyExcel
+addSheet	pyexcel.py	/^	def addSheet(self, sheetname=None):$/;"	m	class:EasyExcel
+clearCell	pyexcel.py	/^	def clearCell(self, sheet, row, col):$/;"	m	class:EasyExcel
+clearCol	pyexcel.py	/^	def clearCol(self, sheet, col):$/;"	m	class:EasyExcel
+clearRow	pyexcel.py	/^	def clearRow(self, sheet, row):$/;"	m	class:EasyExcel
+clearSheet	pyexcel.py	/^	def clearSheet(self, sheet):$/;"	m	class:EasyExcel
+client	pyexcel.py	/^import win32com.client$/;"	i
+close	pyexcel.py	/^	def close(self):$/;"	m	class:EasyExcel
+dealExcel	pyexcel.py	/^def dealExcel(spath, dpath):$/;"	f
+dealPath	pyexcel.py	/^def dealPath(pathname=''):$/;"	f
+dealSingle	pyexcel.py	/^def dealSingle(excel, sfile, dfile):$/;"	f
+deleteCell	pyexcel.py	/^	def deleteCell(self, sheet, row, col):$/;"	m	class:EasyExcel
+deleteCol	pyexcel.py	/^	def deleteCol(self, sheet, col):$/;"	m	class:EasyExcel
+deleteCols	pyexcel.py	/^	def deleteCols(self, sheet, fromCol, count=1):$/;"	m	class:EasyExcel
+deleteRow	pyexcel.py	/^	def deleteRow(self, sheet, row):$/;"	m	class:EasyExcel
+deleteRows	pyexcel.py	/^	def deleteRows(self, sheet, fromRow, count=1):$/;"	m	class:EasyExcel
+deleteSheet	pyexcel.py	/^	def deleteSheet(self, sheet):$/;"	m	class:EasyExcel
+echo	pyexcel.py	/^def echo(msg):$/;"	f
+getCell	pyexcel.py	/^	def getCell(self, sheet=1, row=1, col=1):$/;"	m	class:EasyExcel
+getCellValue	pyexcel.py	/^	def getCellValue(self, sheet, row, col):$/;"	m	class:EasyExcel
+getCol	pyexcel.py	/^	def getCol(self, sheet, col):$/;"	m	class:EasyExcel
+getColValue	pyexcel.py	/^	def getColValue(self, sheet, col):$/;"	m	class:EasyExcel
+getMaxCol	pyexcel.py	/^	def getMaxCol(self, sheet):$/;"	m	class:EasyExcel
+getMaxRow	pyexcel.py	/^	def getMaxRow(self, sheet):$/;"	m	class:EasyExcel
+getRange	pyexcel.py	/^	def getRange(self, sheet, row1, col1, row2, col2):$/;"	m	class:EasyExcel
+getRangeValue	pyexcel.py	/^	def getRangeValue(self, sheet, row1, col1, row2, col2):$/;"	m	class:EasyExcel
+getRow	pyexcel.py	/^	def getRow(self, sheet=1, row=1):$/;"	m	class:EasyExcel
+getRowValue	pyexcel.py	/^	def getRowValue(self, sheet, row):$/;"	m	class:EasyExcel
+getSheet	pyexcel.py	/^	def getSheet(self, sheet=1):$/;"	m	class:EasyExcel
+getSheetByName	pyexcel.py	/^	def getSheetByName(self, name):$/;"	m	class:EasyExcel
+getSheetCount	pyexcel.py	/^	def getSheetCount(self):$/;"	m	class:EasyExcel
+glob	pyexcel.py	/^import glob$/;"	i
+loadConfig	pyexcel.py	/^def loadConfig(configfile='.\/config.ini'):$/;"	f
+main	pyexcel.py	/^def main():$/;"	f
+open	pyexcel.py	/^	def open(self, filename=''):$/;"	m	class:EasyExcel
+os	pyexcel.py	/^import os$/;"	i
+os	pyexcel.py	/^import os.path$/;"	i
+path	pyexcel.py	/^import os.path$/;"	i
+reset	pyexcel.py	/^	def reset(self):$/;"	m	class:EasyExcel
+save	pyexcel.py	/^	def save(self, newfile=''):$/;"	m	class:EasyExcel
+setCellValue	pyexcel.py	/^	def setCellValue(self, sheet, row, col, value):$/;"	m	class:EasyExcel
+setColValue	pyexcel.py	/^	def setColValue(self, sheet, col, values):$/;"	m	class:EasyExcel
+setRangeValue	pyexcel.py	/^	def setRangeValue(self, sheet, row1, col1, data):$/;"	m	class:EasyExcel
+setRowValue	pyexcel.py	/^	def setRowValue(self, sheet, row, values):$/;"	m	class:EasyExcel
+shutil	pyexcel.py	/^import shutil$/;"	i
+string	pyexcel.py	/^import string$/;"	i
+sys	pyexcel.py	/^import sys$/;"	i
+time	pyexcel.py	/^import time$/;"	i
+traceback	pyexcel.py	/^import traceback$/;"	i
+win32com	pyexcel.py	/^import win32com.client$/;"	i
+Py4Js	start_Excel.py	/^from Translate import Py4Js$/;"	i
+Translate_Excel	start_Excel.py	/^class Translate_Excel():$/;"	c
+__init__	start_Excel.py	/^	def __init__(self):$/;"	m	class:Translate_Excel
+client	start_Excel.py	/^import win32com.client$/;"	i
+copy	start_Excel.py	/^from xlutils.copy import copy$/;"	i
+datetime	start_Excel.py	/^import datetime$/;"	i
+etree	start_Excel.py	/^from lxml import etree$/;"	i
+json	start_Excel.py	/^import json$/;"	i
+os	start_Excel.py	/^import os$/;"	i
+random	start_Excel.py	/^import random$/;"	i
+re	start_Excel.py	/^import re$/;"	i
+requests	start_Excel.py	/^import requests$/;"	i
+save_excel	start_Excel.py	/^	def save_excel(self):$/;"	m	class:Translate_Excel
+sleep	start_Excel.py	/^from time import sleep$/;"	i
+sys	start_Excel.py	/^import sys$/;"	i
+test	start_Excel.py	/^	def test(self, word):$/;"	m	class:Translate_Excel
+time	start_Excel.py	/^import time$/;"	i
+tools	start_Excel.py	/^	tools = Translate_Excel()$/;"	v	class:Translate_Excel
+translate	start_Excel.py	/^	def translate(self):$/;"	m	class:Translate_Excel
+win32com	start_Excel.py	/^import win32com.client$/;"	i
+xlrd	start_Excel.py	/^import xlrd$/;"	i
+xlwt	start_Excel.py	/^import xlwt$/;"	i
+ERP_path	start_back.py	/^	ERP_path = os.getcwd()+'\\\\ERP0-3.xls'$/;"	v	class:Translate_Excel
+Py4Js	start_back.py	/^from translate import Py4Js$/;"	i
+Translate_Excel	start_back.py	/^class Translate_Excel():$/;"	c
+__init__	start_back.py	/^	def __init__(self, file):$/;"	m	class:Translate_Excel
+copy	start_back.py	/^from xlutils.copy import copy$/;"	i
+datetime	start_back.py	/^import datetime$/;"	i
+etree	start_back.py	/^from lxml import etree$/;"	i
+json	start_back.py	/^import json$/;"	i
+os	start_back.py	/^import os$/;"	i
+random	start_back.py	/^import random$/;"	i
+re	start_back.py	/^import re$/;"	i
+requests	start_back.py	/^import requests$/;"	i
+save_excel	start_back.py	/^	def save_excel(self):$/;"	m	class:Translate_Excel
+sleep	start_back.py	/^from time import sleep$/;"	i
+sys	start_back.py	/^import sys$/;"	i
+time	start_back.py	/^import time$/;"	i
+tools	start_back.py	/^	tools = Translate_Excel(ERP_path)$/;"	v	class:Translate_Excel
+translate	start_back.py	/^	def translate(self):$/;"	m	class:Translate_Excel
+xlrd	start_back.py	/^import xlrd$/;"	i
+xlwt	start_back.py	/^import xlwt$/;"	i
+txt_to_excel	txt_excel.py	/^def txt_to_excel():$/;"	f
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.8	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
