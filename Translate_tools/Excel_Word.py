@@ -40,7 +40,7 @@ class Translate_Excel():
 
 	def replace_title(self, word):
 		auxiliary = ['is','was','are','were','do','did','does','be']
-		special_characters = ['% S', '% s', '%S', '\\ N', '\\N', '\\ n', '\\ R', '\\R','\\ r',\
+		special_characters = ['% S', '% s', '%S', '% d','% D','%D', '\\ N', '\\N', '\\ n', '\\ R', '\\R','\\ r',\
 							 '\\ T', '\\T', '\\ t', ' & ', '\'S', ' \\ ', ' / ', ' Of ', '-Of-'\
 							 , ' And ', '-And-', '：', '，', '。', '！', '？']
 
@@ -58,6 +58,9 @@ class Translate_Excel():
 				trans_word = trans_word.replace('% S','%s')
 				trans_word = trans_word.replace('% s','%s')
 				trans_word = trans_word.replace('%S','%s')
+				trans_word = trans_word.replace('% D','%d')
+				trans_word = trans_word.replace('% d','%d')
+				trans_word = trans_word.replace('%D','%d')
 				trans_word = trans_word.replace('\\ N','\\n')
 				trans_word = trans_word.replace('\\N','\\n')
 				trans_word = trans_word.replace('\\ n','\\n')
@@ -74,7 +77,6 @@ class Translate_Excel():
 				trans_word = trans_word.replace('-And-','-and-')
 
 				continue
-
 		#判断是否是句子
 		if '.' not in trans_word and ',' not in trans_word and '!' not in trans_word and '?' not in trans_word:
 			#没有句子符号，进行切分判断
@@ -95,9 +97,7 @@ class Translate_Excel():
 					trans_list[i]=trans_list[i].title()
 			up_word = ' '.join(trans_list)
 		else:
-			need_write = 0
 			up_word = trans_word
-
 		# 替换结果中的特殊内容替换成小写防止出错
 		for characters in special_characters:
 			if characters in up_word:
@@ -105,6 +105,9 @@ class Translate_Excel():
 				up_word = up_word.replace('% S','%s')
 				up_word = up_word.replace('% s','%s')
 				up_word = up_word.replace('%S','%s')
+				up_word = up_word.replace('% D','%d')
+				up_word = up_word.replace('% d','%d')
+				up_word = up_word.replace('%D','%d')
 				up_word = up_word.replace('\\ N','\\n')
 				up_word = up_word.replace('\\N','\\n')
 				up_word = up_word.replace('\\ n','\\n')
@@ -122,26 +125,27 @@ class Translate_Excel():
 				up_word = up_word.replace(' And ',' and ')
 				up_word = up_word.replace('-And-','-and-')
 				trans_word = trans_word.replace('：',':')
-				trans_word = trans_word.replace('，',',')
-				trans_word = trans_word.replace('。','. ')
-				trans_word = trans_word.replace('！','! ')
-				trans_word = trans_word.replace('？','? ')
+				trans_word = trans_word.replace('，',', ')
+				trans_word = trans_word.replace('。','.')
+				trans_word = trans_word.replace('！','!')
+				trans_word = trans_word.replace('？','?')
 
 				continue
 		# %s前增加空格
 		if '%s' in up_word and ' %s' not in up_word and '<%s' not in up_word and '(%s' not in up_word \
-			and '-%s' not in up_word and ':%s' not in up_word:
+			and '-%s' not in up_word and ':%s' not in up_word and '[%s' not in up_word:
 			need_write = 1
-			print(1)
 			up_word = up_word.replace('%s',' %s')
+
+		# of后面紧跟着大写字母的，在of两侧加空格
+		def of_space(tar):
+			word = tar.group()
+			return word.replace('of',' of ')
+		if re.search(r'\Bof[A-Z]',up_word):
+			need_write = 1
 			print(up_word)
-
-		# 写入Excel开头带'的内容多加一个'
-		# if re.match('^\'',up_word):
-		# 	print(1)
-		# 	up_word = '\'' + up_word
-		# 	print(up_word)
-
+			up_word = re.sub(r'\Bof[A-Z]', of_space, up_word)
+			print(up_word)
 
 		return(need_write,up_word)
 
@@ -154,9 +158,10 @@ class Translate_Excel():
 			up_word = is_trans[1]
 			if is_trans[0] == 1:
 				try:
-					#self.sheet.Cells(row, 3).Value = trans_word
-					self.sheet.Cells(row, col).Value = up_word
-					#self.sheet.Cells(row, 4).Value = '需要转换'
+					if re.match(r'^\'',up_word):
+						self.sheet.Cells(row, col).Value= '\'' + up_word
+					else:
+						self.sheet.Cells(row, col).Value=up_word
 				except:
 					self.sheet.Cells(row, col+2).Value = '写入表格失败'
 			row = row + 1
@@ -176,9 +181,9 @@ class Translate_Excel():
 			chn_word = str(self.sheet.Cells(row,needc).Value)
 			if not re.search(r'[\u4e00-\u9fa5]',chn_word):
 				try:
-					self.sheet.Cells(row, toc).Value=self.sheet.Cells(row, 2).Value
+					self.sheet.Cells(row, toc).Value= ''
 				except Exception as e:
-					self.sheet.Cells(row, toc).Value= '\'' + self.sheet.Cells(row, 2).Value
+					self.sheet.Cells(row, toc).Value= '\''
 					self.sheet.Cells(row, toc+1).Value='写入了\'符号'
 				finally:
 					row = row + 1
@@ -187,10 +192,14 @@ class Translate_Excel():
 				#result = str(self.test(chn_word))
 				if result != '':
 					try:
-						self.sheet.Cells(row, toc).Value=result
 						if re.search(r'[\u4e00-\u9fa5]',result):
 							print('未完整翻译')
 							self.sheet.Cells(row, toc+1).Value='未完整翻译'
+						if re.mtch(r'^\'',result):
+							print(result)
+							self.sheet.Cells(row, toc).Value= '\'' + result
+						else:
+							self.sheet.Cells(row, toc).Value=result
 					except Exception as e:
 						self.sheet.Cells(row, toc).Value= '\'' + result
 						self.sheet.Cells(row, toc+1).Value='写入了\'符号'
@@ -323,7 +332,7 @@ class Translate_Excel():
 
 
 if __name__ == '__main__':
-	tools = Translate_Excel('need_trans_1220.xlsx',sheet=0)
+	tools = Translate_Excel('need_trans_1223.xlsx',sheet=0)
 	#tools.mysql_insert_words()
 	#tools.find_target(tar='?', col=2, row=2)
 	#记得表格设置成文本格式
