@@ -126,14 +126,14 @@ class Translate_Excel():
 				up_word = up_word.replace('-And-','-and-')
 				trans_word = trans_word.replace('：',':')
 				trans_word = trans_word.replace('，',', ')
-				trans_word = trans_word.replace('。','.')
-				trans_word = trans_word.replace('！','!')
-				trans_word = trans_word.replace('？','?')
+				trans_word = trans_word.replace('。','. ')
+				trans_word = trans_word.replace('！','! ')
+				trans_word = trans_word.replace('？','? ')
 
 				continue
 		# %s前增加空格
 		if '%s' in up_word and ' %s' not in up_word and '<%s' not in up_word and '(%s' not in up_word \
-			and '-%s' not in up_word and ':%s' not in up_word and '[%s' not in up_word:
+			and '-%s' not in up_word and ':%s' not in up_word and '[%s' not in up_word and '"%s' not in up_word:
 			need_write = 1
 			up_word = up_word.replace('%s',' %s')
 
@@ -195,7 +195,9 @@ class Translate_Excel():
 						if re.search(r'[\u4e00-\u9fa5]',result):
 							print('未完整翻译')
 							self.sheet.Cells(row, toc+1).Value='未完整翻译'
-						if re.mtch(r'^\'',result):
+						else:
+							pass
+						if re.match(r'^\'',result):
 							print(result)
 							self.sheet.Cells(row, toc).Value= '\'' + result
 						else:
@@ -332,7 +334,7 @@ class Translate_Excel():
 
 
 if __name__ == '__main__':
-	tools = Translate_Excel('need_trans_1223.xlsx',sheet=0)
+	tools = Translate_Excel('need_trans_1224.xlsx',sheet=0)
 	#tools.mysql_insert_words()
 	#tools.find_target(tar='?', col=2, row=2)
 	#记得表格设置成文本格式
