@@ -42,7 +42,7 @@ class Translate_Excel():
 		auxiliary = ['is','was','are','were','do','did','does','be']
 		special_characters = ['% S', '% s', '%S', '% d','% D','%D', '\\ N', '\\N', '\\ n', '\\ R', '\\R','\\ r',\
 							 '\\ T', '\\T', '\\ t', ' & ', '\'S', ' \\ ', ' / ', ' Of ', '-Of-'\
-							 , ' And ', '-And-', '：', '，', '。', '！', '？']
+							 , ' And ', '-And-', '：', '，', '。', '！', '？', '\\ "', '% 1', '% 2','% 3']
 
 		is_sentense = 1
 		need_write = 0
@@ -124,11 +124,16 @@ class Translate_Excel():
 				up_word = up_word.replace('-Of-','of')
 				up_word = up_word.replace(' And ',' and ')
 				up_word = up_word.replace('-And-','-and-')
-				trans_word = trans_word.replace('：',':')
-				trans_word = trans_word.replace('，',', ')
-				trans_word = trans_word.replace('。','. ')
-				trans_word = trans_word.replace('！','! ')
-				trans_word = trans_word.replace('？','? ')
+				up_word = up_word.replace('：',':')
+				up_word = up_word.replace('，',', ')
+				up_word = up_word.replace('。','. ')
+				up_word = up_word.replace('！','! ')
+				up_word = up_word.replace('？','? ')
+				up_word = up_word.replace('？','? ')
+				up_word = up_word.replace('\\ "','\\"')
+				up_word = up_word.replace('% 1','%1')
+				up_word = up_word.replace('% 2','%2')
+				up_word = up_word.replace('% 3','%3')
 
 				continue
 		# %s前增加空格
@@ -334,7 +339,7 @@ class Translate_Excel():
 
 
 if __name__ == '__main__':
-	tools = Translate_Excel('need_trans_1224.xlsx',sheet=0)
+	tools = Translate_Excel('need_trans_1225.xlsx',sheet=0)
 	#tools.mysql_insert_words()
 	#tools.find_target(tar='?', col=2, row=2)
 	#记得表格设置成文本格式
