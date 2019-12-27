@@ -39,7 +39,7 @@ class Translate_Excel():
 
 
 	def replace_title(self, word):
-		auxiliary = ['is','was','are','were','do','did','does','be']
+		auxiliary = ['is','was','are','were','do','did','does','be','Is','Are','Do']
 		special_characters = ['% S', '% s', '%S', '% d','% D','%D', '\\ N', '\\N', '\\ n', '\\ R', '\\R','\\ r',\
 							 '\\ T', '\\T', '\\ t', ' & ', '\'S', ' \\ ', ' / ', ' Of ', '-Of-'\
 							 , ' And ', '-And-', '：', '，', '。', '！', '？', '\\ "', '% 1', '% 2','% 3']
@@ -81,9 +81,7 @@ class Translate_Excel():
 		if '.' not in trans_word and ',' not in trans_word and '!' not in trans_word and '?' not in trans_word:
 			#没有句子符号，进行切分判断
 			trans_list = trans_word.split(' ')
-			if len(trans_list)>5:
-				is_sentense = 1
-			else:
+			if len(trans_list)<6:
 				is_sentense = 0
 				for aux in auxiliary:
 					if aux in trans_list:
@@ -339,7 +337,7 @@ class Translate_Excel():
 
 
 if __name__ == '__main__':
-	tools = Translate_Excel('need_trans_1225.xlsx',sheet=0)
+	tools = Translate_Excel('need_trans_1226.xlsx',sheet=0)
 	#tools.mysql_insert_words()
 	#tools.find_target(tar='?', col=2, row=2)
 	#记得表格设置成文本格式
