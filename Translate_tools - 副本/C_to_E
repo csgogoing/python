@@ -1,0 +1,152 @@
+操作步骤	Steps
+凭证新增	Create Journals
+凭证处理	Process Journals
+科目余额表	Account Balance Report
+总账自动化率	Automation Rate of Journals
+机制凭证	Automated Journals
+科目风险管控	Account Risks
+科目	Accounts
+关注项	Attentions
+当期金额	Current Period
+上年同期	Prior Period
+账表查询	Ledgers & Reports
+往来管理	AR/AP Manangement
+期末处理	Process Period-closing
+初始化	Opening Balance
+期末处理进度	Period-closing Progress
+凭证	Journals
+模式凭证	Journal Memory
+科目余额表	Account Balance Report
+日报表	Daybook
+辅助明细账	Auxiliary Detailed Ledger
+T型账户指定	T-Account Designation
+补充资料指定	Indirect Cash Flow Items Designation
+补充资料调整	Indirect Cash Flow Items Adjustment
+往来核销方案	AR/AP Clearing Scheme
+往来自动核销	Automatic Clear
+往来对账单	Reconcile Report
+往来查询	AP/AR Inquiry
+往来核销日志	Clearing Log
+账龄分析表	Aging Report
+往来通知单	AP/AR Notice
+现金流量通知单	Cash Flow Notice
+结转损益	Closing for P/L
+期末调汇	Closing for Exchange Reevaluation
+凭证摊销	Amortizations
+期末结账	Closing Period
+企业纳税表	Tax Return Form - China
+初始化	Opening Balance
+科目余额初始化	Accounts
+现金流量初始化	Cash Flow Items
+往来余额初始化	Receivables & Payables
+凭证类型	Journal Types
+现金流量项目	Cash Flow Items
+科目映射关系	Accounts Mapping
+从模式凭证引入	Create From Journal Memory
+引出为模式凭证	Save As Journal Memory
+记账凭证	Journal
+核算组织	Orgnization
+附件数	Attachment Pages
+管理附件	Attachments
+业务日期	Date
+记账日期	Posting Date
+凭证类型	Journal Type
+摘要	Description
+科目	Accounts
+借方	Debit
+贷方	Credit
+制单	Created By
+参考消息	References
+生成凭证	Generate Journals
+上查	Forward Transactions
+下查	Backward Transactions
+联查凭证	Review Journals
+已核销数量	Quantity (COGS matched)
+未核销数量	Quantity (COGS not matched)
+已核销金额	Amount (COGS matched）
+未核销金额	Amount (COGS not matched）
+已结算金额	Amount （A/R cleared）
+未结算金额	Amount （A/R uncleared）
+收款计划	Payment Plan
+结算方式	Payment Method
+应收金额	Amount
+已锁定金额	Amount (Locked)
+未锁定金额	Amount (Unlocked)
+已结算金额	Amount (A/R cleared）
+销售组织	Sales Organization
+审核	Approve
+冲回	Reverse
+反审核	Withdraw Approval
+暂存	Drafted
+采购管理	Procurement
+采购申请单	Purchase Request
+采购入库单	Warehouse Receipt
+快速发起	Shortcuts
+待审核	Pending Approval
+当月新签订单	New PO (Current Month)
+单数	Volume
+万元	Ten Thousand
+当月新签订单	New PO (Current Month)
+当年新签订单	New PO (Current Year)
+当年新签订单	New PO (Current Year)
+采购业务同比情况分析	YoY Trend of Procurement
+新增	Create
+申请管理	Requests
+采购执行	Excute Procurement
+采购退货	Purchase Returns
+报表查询	Reports
+需求申请单	Requirements Request
+采购申请单	Purchase Request
+采购订单	Purchase Order
+采购收货单	Goods Receipt
+采购入库单	Warehouse Receipt
+采购退货申请单	Purchase Return Request
+需求申请处理	Process Requirements Requests
+采购申请处理	Process Purchase Requests
+采购订单处理	Process Purchase Orders
+订单变更处理	Process Order Changes
+采购收货处理	Process Goods Receipts
+采购入库处理	Process Warehouse Receipts
+退货申请处理	Process Purchase Returns
+订单执行查询	Order Excution
+VMI收发明细	VMI Summary
+VMI收发汇总	VMI Details
+采购业务组	Procurement Group
+单据编号	Document Number
+单据类型	Form
+单据状态	Status
+订单日期	Transaction Date
+备注	Memo
+采购信息	Parties
+采购方	Procurement Organization
+添加供应商	Select Supplier
+供货供应商	Delivered By
+供货联系人	Contact
+供货联系人电话	Phone
+供货联系人职务	Job Title
+供货联系地址	Address
+出票供应商	Bill From Supplier
+收款供应商	Pay To Supplier
+结算币别	Transaction Currency
+本位币	Functional Currency
+汇率表	Exchange Rate Type
+结算方式	Payment Method
+付款条件	Supplier Payment Term
+含税	Enter Tax Inclusive Price
+价税合计	Gross Amount
+累计预付款金额	Amount (Total Prepaid)
+累计付款金额	Amount (Total Paid)
+列名参照销售模块，保持一致	
+金额（本位币）	Amount (Functional Currency)
+税额（本位币）	Tax Amount (Functional Currency)
+价税合计（本位币）	Gross Amount (Functional Currency)
+结算组织	Billing Organization
+付款组织	Payment Organization
+需求组织	Requirement Organization
+收货组织	Receiving Organization
+控制收货数	Quantity Control
+收货欠收比率（%）	Allowed Over Rate
+收货超收比率（%）	Allowed Underover Rate
+收货下限数量	Max Allowed Quantity
+收货上限数量	Min Allowed Quantity
+采购收货单	Goods Receipts
