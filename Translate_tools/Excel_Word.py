@@ -17,19 +17,20 @@ from Google_Translate import Google_translate
 
 class Translate_Excel():
 	#主类
-	def __init__(self, file_name, sheet):
+	def __init__(self):
+		self.wpsApp = win32com.client.Dispatch("Excel.Application")
+		self.wpsApp.Visible = 1
+
+
+	def open_excel(self, file_name, sheet):
 		ERP_path = os.getcwd()+'\\Excel\\' + file_name
-		#ERP_path = os.getcwd()+'\\ERP6-9.xls'
 		if os.path.exists(ERP_path):
-			self.wpsApp = win32com.client.Dispatch("Excel.Application")
-			self.wpsApp.Visible = 1
 			self.xlBook = self.wpsApp.Workbooks.Open(ERP_path, ReadOnly=0, Editable=1)
 			print('已找到ERP表格')
 		else:
 			sys.exit('当前目录下未找到ERP表格')
 		self.xlBook.Worksheets[sheet].Activate()
 		self.sheet = self.xlBook.ActiveSheet
-
 
 	def save_excel(self):
 		#保存Excel
@@ -41,11 +42,12 @@ class Translate_Excel():
 	def replace_title(self, word):
 		auxiliary = ['is','was','are','were','do','did','does','be','Is','Are','Do']
 		special_characters = ['% S', '% s', '%S', '% d','% D','%D', '\\ N', '\\N', '\\ n', '\\ R', '\\R','\\ r',\
-							 '\\ T', '\\T', '\\ t', ' & ', '\'S', ' \\ ', ' / ', ' Of ', '-Of-'\
+							 '\\ T', '\\T', '\\ t', 'R & D', 'Q & A', '\'S', ' \\ ', ' / ', ' Of ', '-Of-'\
 							 , ' And ', '-And-', '：', '，', '。', '！', '？', '\\ "', '% 1', '% 2','% 3']
 
 		is_sentense = 1
 		need_write = 0
+		is_pot = 0
 		trans_word = str(word)
 
 		if trans_word == 'None':
@@ -78,15 +80,25 @@ class Translate_Excel():
 
 				continue
 		#判断是否是句子
-		if '.' not in trans_word and ',' not in trans_word and '!' not in trans_word and '?' not in trans_word:
-			#没有句子符号，进行切分判断
-			trans_list = trans_word.split(' ')
-			if len(trans_list)<6:
-				is_sentense = 0
-				for aux in auxiliary:
-					if aux in trans_list:
+		if ',' not in trans_word and '!' not in trans_word and '?' not in trans_word:
+			#判断是否存在非No.字符的.符号
+			matlist = re.findall(r'.{2}\.',trans_word)
+			print(matlist)
+			if matlist != []:
+				for mat in matlist:
+					if mat !='No.':
 						is_sentense = 1
+						is_pot = 1
 						break
+			#没有句子符号，进行切分判断
+			if is_pot != 1:
+				trans_list = trans_word.split(' ')
+				if len(trans_list)<6:
+					is_sentense = 0
+					for aux in auxiliary:
+						if aux in trans_list:
+							is_sentense = 1
+							break
 		#如果不是句子，首字母大写
 		if is_sentense == 0:
 			need_write = 1
@@ -115,7 +127,8 @@ class Translate_Excel():
 				up_word = up_word.replace('\\ T','\\t')
 				up_word = up_word.replace('\\T','\\t')
 				up_word = up_word.replace('\\ t','\\t')
-				up_word = up_word.replace(' & ','&')
+				up_word = up_word.replace('R & D','R&D')
+				up_word = up_word.replace('Q & A','Q&A')
 				up_word = up_word.replace('\'S','\'s')
 				up_word = up_word.replace(' / ','/')
 				up_word = up_word.replace(' Of ','of')
@@ -130,8 +143,18 @@ class Translate_Excel():
 				up_word = up_word.replace('？','? ')
 				up_word = up_word.replace('\\ "','\\"')
 				up_word = up_word.replace('% 1','%1')
+				up_word = up_word.replace('% 1 $ s','%1$s')
+				up_word = up_word.replace('% 1 $s','%1$s')
+				up_word = up_word.replace('% 1$s','%1$s')
 				up_word = up_word.replace('% 2','%2')
-				up_word = up_word.replace('% 3','%3')
+				up_word = up_word.replace('% 2 $ s','%1$s')
+				up_word = up_word.replace('% 2 $s','%1$s')
+				up_word = up_word.replace('% 2$s','%1$s')
+				up_word = up_word.replace('% 3','%1')
+				up_word = up_word.replace('% 3 $ s','%1$s')
+				up_word = up_word.replace('% 3 $s','%1$s')
+				up_word = up_word.replace('% 3$s','%1$s')
+				up_word = up_word.replace('\\r \\n','\\r\\n')
 
 				continue
 		# %s前增加空格
@@ -146,9 +169,7 @@ class Translate_Excel():
 			return word.replace('of',' of ')
 		if re.search(r'\Bof[A-Z]',up_word):
 			need_write = 1
-			print(up_word)
 			up_word = re.sub(r'\Bof[A-Z]', of_space, up_word)
-			print(up_word)
 
 		return(need_write,up_word)
 
@@ -337,7 +358,10 @@ class Translate_Excel():
 
 
 if __name__ == '__main__':
-	tools = Translate_Excel('need_trans_1226.xlsx',sheet=0)
+
+	tools = Translate_Excel()
+
+	tools.open_excel('ERP_test.xlsx',sheet=0)
 	#tools.mysql_insert_words()
 	#tools.find_target(tar='?', col=2, row=2)
 	#记得表格设置成文本格式
