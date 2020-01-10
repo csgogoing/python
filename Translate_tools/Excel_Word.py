@@ -83,7 +83,6 @@ class Translate_Excel():
 		if ',' not in trans_word and '!' not in trans_word and '?' not in trans_word:
 			#判断是否存在非No.字符的.符号
 			matlist = re.findall(r'.{2}\.',trans_word)
-			print(matlist)
 			if matlist != []:
 				for mat in matlist:
 					if mat !='No.':
@@ -176,7 +175,7 @@ class Translate_Excel():
 
 	def excel_replace_title(self, col=2, row=2):
 		while self.sheet.Cells(row, 1).Value != None:
-			print(row)
+			print('当前替换第%s行'%(row))
 			trans_word = str(self.sheet.Cells(row, col).Value)
 			is_trans = self.replace_title(trans_word)
 			up_word = is_trans[1]
@@ -196,12 +195,11 @@ class Translate_Excel():
 		self.tran_google = Google_translate()
 
 		#找到当前未翻译的位置
-		while self.sheet.Cells(row, toc).Value != None:
+		while self.sheet.Cells(row, toc).Value != None and self.sheet.Cells(row, toc).Value != '':
 			row = row + 1
-		
 		while self.sheet.Cells(row, needc).Value != None:
 			sleep(1)
-			print('当前第%s行'%(row))
+			print('当前翻译第%s行'%(row))
 			chn_word = str(self.sheet.Cells(row,needc).Value)
 			if not re.search(r'[\u4e00-\u9fa5]',chn_word):
 				try:
@@ -361,11 +359,11 @@ if __name__ == '__main__':
 
 	tools = Translate_Excel()
 
-	tools.open_excel('ERP_test.xlsx',sheet=0)
+	tools.open_excel('need_trans_0110_1.xlsx',sheet=0)
 	#tools.mysql_insert_words()
 	#tools.find_target(tar='?', col=2, row=2)
 	#记得表格设置成文本格式
-	#tools.excel_translate_google(needc=1, toc=2, row=2)
+	tools.excel_translate_google(needc=1, toc=2, row=2)
 	tools.excel_replace_title(col=2, row=2)
 
 	# tools.replace_target('C_to_E', ori_r=1, bac_r=3, row=2):
