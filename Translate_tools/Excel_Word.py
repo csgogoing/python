@@ -18,11 +18,11 @@ from Google_Translate import Google_translate
 class Translate_Excel():
 	#主类
 	def __init__(self):
-		self.wpsApp = win32com.client.Dispatch("Excel.Application")
-		self.wpsApp.Visible = 1
-
+		pass
 
 	def open_excel(self, file_name, sheet):
+		self.wpsApp = win32com.client.Dispatch("Excel.Application")
+		self.wpsApp.Visible = 1
 		ERP_path = os.getcwd()+'\\Excel\\' + file_name
 		if os.path.exists(ERP_path):
 			self.xlBook = self.wpsApp.Workbooks.Open(ERP_path, ReadOnly=0, Editable=1)
@@ -174,7 +174,7 @@ class Translate_Excel():
 
 
 	def excel_replace_title(self, col=2, row=2):
-		while self.sheet.Cells(row, 1).Value != None:
+		while self.sheet.Cells(row, col).Value != None:
 			print('当前替换第%s行'%(row))
 			trans_word = str(self.sheet.Cells(row, col).Value)
 			is_trans = self.replace_title(trans_word)
