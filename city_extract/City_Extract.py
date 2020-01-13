@@ -7,9 +7,8 @@ import xlwt
 import time
 import json
 import win32com.client
+import urllib
 from lxml import etree
-
-
 from time import sleep
 
 
@@ -52,16 +51,48 @@ class City_extract():
 				return('','错误')
 
 
+	def Search_IATA_nameen(self, nameen):
+		#Search_IATA，并返回结果
+		text = urllib.parse.quote(nameen)
+		url = 'https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&search=%s'%text
+		print(url)
+		req = requests.get(url)
+		elements = etree.HTML(req.text)
+		try:
+			city_name = elements.xpath('//tbody/tr/td[1]/text()')
+			city_code = elements.xpath('//tbody/tr/td[2]/text()')
+			air_code = elements.xpath('//tbody/tr/td[4]/text()')
+			print(city_name)
+			print(city_code)
+			print(air_code)
+		except IndexError:
+			return('无数据','','')
+		else:
+			lens = len(city_name)
+			for i in range(lens):
+				if re.search(nameen, city_name[i], re.IGNORECASE) or re.search(city_name[i], nameen, re.IGNORECASE):
+					return('城市',city_name[i],city_code)
+				else:
+					pass
+			return('不匹配',str(city_name),str(city_code))
+
+
 
 	def Handle_data(self, needc=4, tcol=10, row=2):
+
+
 		#读取数据,调用Search_IATA，读取结果，并写入
 		while self.sheet.Cells(row, needc).Value != None:
 			print('当前替换第%s行'%(row))
 			t_code = str(self.sheet.Cells(row, needc).Value)
-			result = self.Search_IATA(t_code)
-			self.sheet.Cells(row, tcol).Value= result[1]
-			self.sheet.Cells(row, tcol+1).Value= result[0]
+			#result = self.Search_IATA(t_code)
+			result = self.Search_IATA_nameen(t_code)
+			self.sheet.Cells(row, tcol).Value= result[0]
+			self.sheet.Cells(row, tcol+1).Value= result[1]
+			self.sheet.Cells(row, tcol+2).Value= result[2]
 			row = row + 1
+
+
 
 
 
@@ -69,7 +100,7 @@ if __name__ == '__main__':
 
 	tools = City_extract()
 
-	tools.open_excel('City_List.xlsx')
-	tools.Handle_data(needc=4, tcol=10, row=8214)
+	tools.open_excel('city_list_0113.xlsx', sheet=1)
+	tools.Handle_data(needc=3, tcol=14, row=651)
 
 	#tools.save_excel()
