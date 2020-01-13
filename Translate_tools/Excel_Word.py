@@ -193,7 +193,14 @@ class Translate_Excel():
 	def excel_translate_google(self, needc=1, toc=2, row=2):
 		#实例化翻译类
 		self.tran_google = Google_translate()
-
+		# translator = Translator(
+		# service_urls=[
+		# 	'translate.google.cn'
+		# ],
+		# proxies={
+		# 	#"http"  : "112.64.233.130:9991",
+		# 	#"https" : "112.64.233.130:9991"
+		# })
 		#找到当前未翻译的位置
 		while self.sheet.Cells(row, toc).Value != None and self.sheet.Cells(row, toc).Value != '':
 			row = row + 1
@@ -211,7 +218,7 @@ class Translate_Excel():
 					row = row + 1
 			else:
 				result = str(self.tran_google.google_translate(chn_word))
-				#result = str(self.test(chn_word))
+				#result = str(translator(chn_word,dest='zh-cn', src='en'))
 				if result != '':
 					try:
 						if re.search(r'[\u4e00-\u9fa5]',result):
@@ -359,11 +366,11 @@ if __name__ == '__main__':
 
 	tools = Translate_Excel()
 
-	tools.open_excel('need_trans_0110_1.xlsx',sheet=0)
+	tools.open_excel('need_trans_0113_2.xlsx',sheet=0)
 	#tools.mysql_insert_words()
 	#tools.find_target(tar='?', col=2, row=2)
 	#记得表格设置成文本格式
-	tools.excel_translate_google(needc=1, toc=2, row=2)
+	#tools.excel_translate_google(needc=1, toc=2, row=2)
 	tools.excel_replace_title(col=2, row=2)
 
 	# tools.replace_target('C_to_E', ori_r=1, bac_r=3, row=2):
