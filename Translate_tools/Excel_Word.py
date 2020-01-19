@@ -13,6 +13,7 @@ from xlutils.copy import copy
 from time import sleep
 from Mysql_Use import Mysql
 from Google_Translate import Google_translate
+from googletrans import Translator
 
 
 class Translate_Excel():
@@ -190,40 +191,24 @@ class Translate_Excel():
 			row = row + 1
 
 
-	def excel_translate_google(self, needc=1, toc=2, row=2):
+	def excel_translate_google_mine(self, needc=1, toc=2, row=2, from_l='zh-cn', to_l='en'):
 		#实例化翻译类
 		self.tran_google = Google_translate()
-		# translator = Translator(
-		# service_urls=[
-		# 	'translate.google.cn'
-		# ],
-		# proxies={
-		# 	#"http"  : "112.64.233.130:9991",
-		# 	#"https" : "112.64.233.130:9991"
-		# })
-		#找到当前未翻译的位置
 		while self.sheet.Cells(row, toc).Value != None and self.sheet.Cells(row, toc).Value != '':
 			row = row + 1
 		while self.sheet.Cells(row, needc).Value != None:
 			sleep(1)
 			print('当前翻译第%s行'%(row))
 			chn_word = str(self.sheet.Cells(row,needc).Value)
-			if not re.search(r'[\u4e00-\u9fa5]',chn_word):
-				try:
-					self.sheet.Cells(row, toc).Value= ''
-				except Exception as e:
-					self.sheet.Cells(row, toc).Value= '\''
-					self.sheet.Cells(row, toc+1).Value='写入了\'符号'
-				finally:
-					row = row + 1
+			if not re.search(r'[\u4e00-\u9fa5]',chn_word) and from_l=='zh-cn':
+				self.sheet.Cells(row, toc+1).Value='待翻译内容未找到中文'
+				row = row + 1
 			else:
-				result = str(self.tran_google.google_translate(chn_word))
-				#result = str(translator(chn_word,dest='zh-cn', src='en'))
+				result = str(self.tran_google.google_translate(from_l,to_l,chn_word))
 				if result != '':
 					try:
 						if re.search(r'[\u4e00-\u9fa5]',result):
-							print('未完整翻译')
-							self.sheet.Cells(row, toc+1).Value='未完整翻译'
+							self.sheet.Cells(row, toc+1).Value='翻译结果包含中文'
 						else:
 							pass
 						if re.match(r'^\'',result):
@@ -240,28 +225,70 @@ class Translate_Excel():
 				row = row + 1
 
 
+	def excel_translate_google(self, needc=1, toc=2, row=2, from_l='zh-cn', to_l='en'):
+		#实例化翻译类
+		url = "https://translation.googleapis.com/language/translate/v2"
+		headers = {'X-HTTP-Method-Override': 'GET'}
+		data = {
+			'key': '', #你自己的api密钥
+			'source': '%s'%from_l,
+			'target': '%s'%to_l,
+			'q': '',
+			'format': 'text'
+		}
+		#找到当前未翻译的位置
+		while self.sheet.Cells(row, toc).Value != None and self.sheet.Cells(row, toc).Value != '':
+			row = row + 1
+		while self.sheet.Cells(row, needc).Value != None:
+			print('当前翻译第%s行'%(row))
+			chn_word = str(self.sheet.Cells(row,needc).Value)
+			if not re.search(r'[\u4e00-\u9fa5]',chn_word) and from_l=='zh-cn':
+				self.sheet.Cells(row, toc+1).Value='待翻译内容未找到中文'
+				row = row + 1
+			else:
+				data['q'] = chn_word
+				response = requests.post(url, data=data, headers=headers)
+				res = response.json()
+
+				result = res["data"]["translations"][0]["translatedText"]
+
+				if result != '':
+					try:
+						if re.match(r'^\'',result):
+							print(result)
+							self.sheet.Cells(row, toc).Value= '\'' + result
+						else:
+							self.sheet.Cells(row, toc).Value=result
+					except Exception as e:
+						self.sheet.Cells(row, toc).Value= '\'' + result
+						self.sheet.Cells(row, toc+4).Value='写入了\'符号'
+				else:
+					print('第%s行数据翻译失败'%row)
+					self.sheet.Cells(row, toc+4).Value='未翻译'
+				row = row + 1
+
 	def replace_target(self, file_name, ori_r=1, bac_r=3, row=2):
 
 		#读取目标文件
 		file_OT = open(file_name,'r',encoding='utf-8')
-		word_lists_OT=[]
+		word_lists_OT={}
 
-		while file_OT.readline():
-			word_line_OT = file_OT.readline().replace('\n','')
-			if word_line_OT != '':
-				words_kv_OT = word_line_OT.split('	')
-				word_lists_OT.append(words_kv_OT)
-		words_dict_OT = dict(word_lists_OT)
+		while True:
+			t_line = file_OT.readline()
+			if t_line:
+				word_line_OT = t_line.replace('\n','')
+				if word_line_OT != '':
+					words_kv_OT = word_line_OT.split('	')
+					word_lists_OT[words_kv_OT[2]]=words_kv_OT[0]
+			else:
+				break
+		print(word_lists_OT)
 
 		while self.sheet.Cells(row, ori_r).Value != None:
 			print(row)
-			target_E = str(self.sheet.Cells(row, ori_r).Value)
-			if target_E in words_dict_OT.keys():
-				self.sheet.Cells(row, bac_r).Value = target_E
-				replaced_word = words_dict_OT[target_E]
-
-			result_word = self.replace_title(replaced_word)
-			self.sheet.Cells(row, ori_r).Value = result_word
+			target = str(self.sheet.Cells(row, ori_r).Value)
+			if target in word_lists_OT.keys():
+				self.sheet.Cells(row, bac_r).Value = word_lists_OT[target]
 			row = row + 1
 
 		file_OT.close()
@@ -366,14 +393,16 @@ if __name__ == '__main__':
 
 	tools = Translate_Excel()
 
-	tools.open_excel('need_trans_0113_2.xlsx',sheet=0)
+	tools.open_excel('ERP_test.xlsx',sheet=0)
 	#tools.mysql_insert_words()
 	#tools.find_target(tar='?', col=2, row=2)
 	#记得表格设置成文本格式
-	#tools.excel_translate_google(needc=1, toc=2, row=2)
-	tools.excel_replace_title(col=2, row=2)
+	tools.excel_translate_google(needc=1, toc=2, row=2, from_l='zh-cn', to_l='en')
 
-	# tools.replace_target('C_to_E', ori_r=1, bac_r=3, row=2):
+	#tools.excel_translate_google_mine(needc=1, toc=2, row=2, from_l='zh-cn', to_l='en')
+	#tools.excel_replace_title(col=2, row=2)
+
+	#tools.replace_target('CountryName', ori_r=1, bac_r=2, row=72)
 	# tools.find_repeat('find_re', ori_r=1, bac_r=3, row=2)
 
 	#tools.save_excel()
