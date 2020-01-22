@@ -44,7 +44,7 @@ class Translate_Excel():
 		auxiliary = ['is','was','are','were','do','did','does','be','Is','Are','Do']
 		special_characters = ['% S', '% s', '%S', '% d','% D','%D', '\\ N', '\\N', '\\ n', '\\ R', '\\R','\\ r',\
 							 '\\ T', '\\T', '\\ t', 'R & D', 'Q & A', '\'S', ' \\ ', ' / ', ' Of ', '-Of-'\
-							 , ' And ', '-And-', '：', '，', '。', '！', '？', '\\ "', '% 1', '% 2','% 3']
+							 , ' And ', '-And-', '：', '，', '。', '！', '？', '\\ "', '% 1', '% 2','% 3', '# {']
 
 		is_sentense = 1
 		need_write = 0
@@ -155,6 +155,7 @@ class Translate_Excel():
 				up_word = up_word.replace('% 3 $s','%1$s')
 				up_word = up_word.replace('% 3$s','%1$s')
 				up_word = up_word.replace('\\r \\n','\\r\\n')
+				up_word = up_word.replace('# {','#{')
 
 				continue
 		# %s前增加空格
@@ -174,20 +175,20 @@ class Translate_Excel():
 		return(need_write,up_word)
 
 
-	def excel_replace_title(self, col=2, row=2):
-		while self.sheet.Cells(row, col).Value != None:
+	def excel_replace_title(self, toc=2, row=2):
+		while self.sheet.Cells(row, toc).Value != None:
 			print('当前替换第%s行'%(row))
-			trans_word = str(self.sheet.Cells(row, col).Value)
+			trans_word = str(self.sheet.Cells(row, toc).Value)
 			is_trans = self.replace_title(trans_word)
 			up_word = is_trans[1]
 			if is_trans[0] == 1:
 				try:
 					if re.match(r'^\'',up_word):
-						self.sheet.Cells(row, col).Value= '\'' + up_word
+						self.sheet.Cells(row, toc).Value= '\'' + up_word
 					else:
-						self.sheet.Cells(row, col).Value=up_word
+						self.sheet.Cells(row, toc).Value=up_word
 				except:
-					self.sheet.Cells(row, col+2).Value = '写入表格失败'
+					self.sheet.Cells(row, toc+2).Value = '写入表格失败'
 			row = row + 1
 
 
@@ -230,7 +231,7 @@ class Translate_Excel():
 		url = "https://translation.googleapis.com/language/translate/v2"
 		headers = {'X-HTTP-Method-Override': 'GET'}
 		data = {
-			'key': '', #你自己的api密钥
+			'key': 'AIzaSyBRxrAZo2JhTluS7lziPu0VHSapjMwg9HA', #你自己的api密钥
 			'source': '%s'%from_l,
 			'target': '%s'%to_l,
 			'q': '',
@@ -393,14 +394,14 @@ if __name__ == '__main__':
 
 	tools = Translate_Excel()
 
-	tools.open_excel('ERP_test.xlsx',sheet=0)
+	tools.open_excel('exportCommonWord-2.xlsx',sheet=0)
 	#tools.mysql_insert_words()
 	#tools.find_target(tar='?', col=2, row=2)
 	#记得表格设置成文本格式
-	tools.excel_translate_google(needc=1, toc=2, row=2, from_l='zh-cn', to_l='en')
+	#tools.excel_translate_google(needc=1, toc=2, row=2, from_l='zh-cn', to_l='en')
 
-	#tools.excel_translate_google_mine(needc=1, toc=2, row=2, from_l='zh-cn', to_l='en')
-	#tools.excel_replace_title(col=2, row=2)
+	#tools.excel_translate_google_mine(needc=3, toc=4, row=2, from_l='zh-cn', to_l='en')
+	tools.excel_replace_title(toc=4, row=2)
 
 	#tools.replace_target('CountryName', ori_r=1, bac_r=2, row=72)
 	# tools.find_repeat('find_re', ori_r=1, bac_r=3, row=2)
