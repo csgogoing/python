@@ -231,7 +231,7 @@ class Translate_Excel():
 		url = "https://translation.googleapis.com/language/translate/v2"
 		headers = {'X-HTTP-Method-Override': 'GET'}
 		data = {
-			'key': 'AIzaSyBRxrAZo2JhTluS7lziPu0VHSapjMwg9HA', #你自己的api密钥
+			'key': '', #你自己的api密钥
 			'source': '%s'%from_l,
 			'target': '%s'%to_l,
 			'q': '',
