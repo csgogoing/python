@@ -11,9 +11,8 @@ import json
 import win32com.client
 from xlutils.copy import copy
 from time import sleep
-from Mysql_Use import Mysql
+# from Mysql_Use import Mysql
 from Google_Translate import Google_translate
-from googletrans import Translator
 
 
 class Translate_Excel():
@@ -38,6 +37,7 @@ class Translate_Excel():
 		self.xlBook.Save()
 		self.xlBook.Close(True)
 		self.wpsApp.Quit()
+
 
 
 	def replace_title(self, word):
@@ -75,7 +75,7 @@ class Translate_Excel():
 				trans_word = trans_word.replace('\\ t','\\t')
 				trans_word = trans_word.replace('\'S','\'s')
 				trans_word = trans_word.replace(' Of ','of')
-				trans_word = trans_word.replace('-Of-','of')
+				trans_word = trans_word.replace('-Of-','-of-')
 				trans_word = trans_word.replace(' And ',' and ')
 				trans_word = trans_word.replace('-And-','-and-')
 
@@ -132,7 +132,7 @@ class Translate_Excel():
 				up_word = up_word.replace('\'S','\'s')
 				up_word = up_word.replace(' / ','/')
 				up_word = up_word.replace(' Of ','of')
-				up_word = up_word.replace('-Of-','of')
+				up_word = up_word.replace('-Of-','-of-')
 				up_word = up_word.replace(' And ',' and ')
 				up_word = up_word.replace('-And-','-and-')
 				up_word = up_word.replace('：',':')
@@ -140,22 +140,30 @@ class Translate_Excel():
 				up_word = up_word.replace('。','. ')
 				up_word = up_word.replace('！','! ')
 				up_word = up_word.replace('？','? ')
-				up_word = up_word.replace('？','? ')
 				up_word = up_word.replace('\\ "','\\"')
 				up_word = up_word.replace('% 1','%1')
 				up_word = up_word.replace('% 1 $ s','%1$s')
 				up_word = up_word.replace('% 1 $s','%1$s')
 				up_word = up_word.replace('% 1$s','%1$s')
+				up_word = up_word.replace('%1 $ s','%1$s')
 				up_word = up_word.replace('% 2','%2')
-				up_word = up_word.replace('% 2 $ s','%1$s')
-				up_word = up_word.replace('% 2 $s','%1$s')
-				up_word = up_word.replace('% 2$s','%1$s')
-				up_word = up_word.replace('% 3','%1')
-				up_word = up_word.replace('% 3 $ s','%1$s')
-				up_word = up_word.replace('% 3 $s','%1$s')
-				up_word = up_word.replace('% 3$s','%1$s')
+				up_word = up_word.replace('% 2 $ s','%2$s')
+				up_word = up_word.replace('% 2 $s','%2$s')
+				up_word = up_word.replace('% 2$s','%2$s')
+				up_word = up_word.replace('%2 $ s','%2$s')
+				up_word = up_word.replace('% 3','%3')
+				up_word = up_word.replace('% 3 $ s','%3$s')
+				up_word = up_word.replace('% 3 $s','%3$s')
+				up_word = up_word.replace('% 3$s','%3$s')
+				up_word = up_word.replace('%3 $ s','%3$s')
 				up_word = up_word.replace('\\r \\n','\\r\\n')
 				up_word = up_word.replace('# {','#{')
+				up_word = up_word.replace('& lt','&lt')
+				up_word = up_word.replace('& gt','&gt')
+				up_word = up_word.replace('& nbsp','&nbsp')
+				up_word = up_word.replace('< p >','<p>')
+				up_word = up_word.replace('< / p >','</p>')
+				up_word = up_word.replace('</ span>','</span>')
 
 				continue
 		# %s前增加空格
@@ -172,12 +180,14 @@ class Translate_Excel():
 			need_write = 1
 			up_word = re.sub(r'\Bof[A-Z]', of_space, up_word)
 
+		#ABC{字母}这类原文，{}内的翻译结果照搬，待实现
+
 		return(need_write,up_word)
 
 
+
 	def excel_replace_title(self, toc=2, row=2):
-		while self.sheet.Cells(row, toc).Value != None:
-			print('当前替换第%s行'%(row))
+		while self.sheet.Cells(row, 1).Value != None:
 			trans_word = str(self.sheet.Cells(row, toc).Value)
 			is_trans = self.replace_title(trans_word)
 			up_word = is_trans[1]
@@ -188,8 +198,9 @@ class Translate_Excel():
 					else:
 						self.sheet.Cells(row, toc).Value=up_word
 				except:
-					self.sheet.Cells(row, toc+2).Value = '写入表格失败'
+					print('第%s行写入失败'%(row))
 			row = row + 1
+		print('共替换了%s行'%(row-1))
 
 
 	def excel_translate_google_mine(self, needc=1, toc=2, row=2, from_l='zh-cn', to_l='en'):
@@ -243,30 +254,56 @@ class Translate_Excel():
 		while self.sheet.Cells(row, needc).Value != None:
 			print('当前翻译第%s行'%(row))
 			chn_word = str(self.sheet.Cells(row,needc).Value)
-			if not re.search(r'[\u4e00-\u9fa5]',chn_word) and from_l=='zh-cn':
-				self.sheet.Cells(row, toc+1).Value='待翻译内容未找到中文'
-				row = row + 1
-			else:
-				data['q'] = chn_word
-				response = requests.post(url, data=data, headers=headers)
-				res = response.json()
 
-				result = res["data"]["translations"][0]["translatedText"]
+			#校验中文
+			# if not re.search(r'[\u4e00-\u9fa5]',chn_word) and from_l=='zh-cn':
+			# 	self.sheet.Cells(row, toc+1).Value='待翻译内容未找到中文'
+			# 	row = row + 1
+			# else:
+			# 	data['q'] = chn_word
+			# 	response = requests.post(url, data=data, headers=headers)
+			# 	res = response.json()
 
-				if result != '':
-					try:
-						if re.match(r'^\'',result):
-							print(result)
-							self.sheet.Cells(row, toc).Value= '\'' + result
-						else:
-							self.sheet.Cells(row, toc).Value=result
-					except Exception as e:
+			# 	result = res["data"]["translations"][0]["translatedText"]
+
+			# 	if result != '':
+			# 		try:
+			# 			if re.match(r'^\'',result):
+			# 				print(result)
+			# 				self.sheet.Cells(row, toc).Value= '\'' + result
+			# 			else:
+			# 				self.sheet.Cells(row, toc).Value=result
+			# 		except Exception as e:
+			# 			self.sheet.Cells(row, toc).Value= '\'' + result
+			# 			self.sheet.Cells(row, toc+4).Value='写入了\'符号'
+			# 	else:
+			# 		print('第%s行数据翻译失败'%row)
+			# 		self.sheet.Cells(row, toc+4).Value='未翻译'
+			# 	row = row + 1
+
+
+			#不校验中文
+			data['q'] = chn_word
+			response = requests.post(url, data=data, headers=headers)
+			res = response.json()
+			result = res["data"]["translations"][0]["translatedText"]
+
+			if result != '':
+				try:
+					if re.match(r'^\'',result):
+						print(result)
 						self.sheet.Cells(row, toc).Value= '\'' + result
-						self.sheet.Cells(row, toc+4).Value='写入了\'符号'
-				else:
-					print('第%s行数据翻译失败'%row)
-					self.sheet.Cells(row, toc+4).Value='未翻译'
-				row = row + 1
+					else:
+						self.sheet.Cells(row, toc).Value=result
+				except Exception as e:
+					self.sheet.Cells(row, toc).Value= '\'' + result
+					#self.sheet.Cells(row, toc+4).Value='写入了\'符号'
+			else:
+				print('第%s行数据翻译失败'%row)
+				self.sheet.Cells(row, toc+4).Value='未翻译'
+			row = row + 1
+
+
 
 	def replace_target(self, file_name, ori_r=1, bac_r=3, row=2):
 
@@ -391,19 +428,37 @@ class Translate_Excel():
 
 
 if __name__ == '__main__':
-
 	tools = Translate_Excel()
+	b=['','','']
+	# a = input('''文件名(如引出列表_程序提示语_0708.xlsx),原语言,目标语言
+	# 	''')
+	# b = a.split(',')
+	# print(b[0])
+	# print(b[1])
+	# print(b[2])
+	b[0]='引出列表_界面元数据_1031.xlsx'
+	b[1]='zh_CN'
+	b[2]='en'
+	t_sheet=0 #需要翻译的页签(从0计数)
+	t_needc=1 #需要翻译的列
+	t_toc=2 #翻译结果列
+	t_row=4 #从第几行开始翻译
 
-	tools.open_excel('exportCommonWord-2.xlsx',sheet=0)
+
+
+	to_language = b[2]
+	tools.open_excel(b[0],sheet=t_sheet)
 	#tools.mysql_insert_words()
 	#tools.find_target(tar='?', col=2, row=2)
 	#记得表格设置成文本格式
-	#tools.excel_translate_google(needc=1, toc=2, row=2, from_l='zh-cn', to_l='en')
+	tools.excel_translate_google(needc=t_needc, toc=t_toc, row=t_row, from_l=b[1], to_l=to_language)
 
-	#tools.excel_translate_google_mine(needc=3, toc=4, row=2, from_l='zh-cn', to_l='en')
-	tools.excel_replace_title(toc=4, row=2)
+	#tools.excel_translate_google_mine(needc=3, toc=4, row=2, from_l='zh-cn', to_l='zh-TW')
+	if to_language == 'en':
+		tools.excel_replace_title(toc=t_toc, row=t_row)
 
 	#tools.replace_target('CountryName', ori_r=1, bac_r=2, row=72)
 	# tools.find_repeat('find_re', ori_r=1, bac_r=3, row=2)
 
 	#tools.save_excel()
+
